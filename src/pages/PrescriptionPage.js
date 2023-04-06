@@ -5,7 +5,7 @@ import PrescriptionList from "../components/Prescription/PrescriptionList/Prescr
 const PrescriptionPage = () => {
   return (
     <LayoutUser>
-      <h4>Tất cả toa thuốc</h4>
+      <h3 className="text-center my-3">Tất cả toa thuốc</h3>
       <PrescriptionList />
     </LayoutUser>
   );

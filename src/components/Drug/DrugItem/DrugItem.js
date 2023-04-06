@@ -4,15 +4,16 @@ import React from "react";
 const DrugItem = () => {
   return (
     <Row className="my-2 align-items-center">
-      <Col span={3}>
-        <Image src="https://picsum.photos/100" />
+      <Col span={8}>
+        <p className="mb-0 fw-bold">Tên thuốc</p>
+        <small>Cách sử dụng</small>
       </Col>
-      <Col span={7}>
-        <h5>Tên thuốc</h5>
-        <span>Cách sử dụng</span>
+      <Col span={8}>
+        <span>Số lượng</span>
       </Col>
-      <Col span={7}>Số lượng</Col>
-      <Col span={7}>Thành tiền</Col>
+      <Col span={8}>
+        <span>Thành tiền</span>
+      </Col>
     </Row>
   );
 };

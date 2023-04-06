@@ -4,8 +4,8 @@ import { Button, Card } from "antd";
 
 const PrescriptionItem = () => {
   return (
-    <div className="my-2">
-      <span>Ngày đặt: 01.04.2023</span>
+    <div className="my-3">
+      <span>Ngày mua: 01.04.2023</span>
       <Card className="w-100">
         <div className="row">
           <div className="col-12 col-md-12 col-lg-12">
