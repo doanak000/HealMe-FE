@@ -64,7 +64,7 @@ const Header = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
+        <div className="container">
           <a className="navbar-brand" href="/">
             <div className="header__logo overflow-hidden">
               <img src={logo} className="w-50" />

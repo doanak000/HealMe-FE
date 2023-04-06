@@ -5,9 +5,11 @@ import Header from "../../components/Header/Header";
 
 const LayoutUser = ({ children }) => {
   return (
-    <div className="container">
+    <div className="container-fluid">
       <Header />
-      <Content>{children}</Content>
+      <div className="container">
+        <Content>{children}</Content>
+      </div>
       <Footer />
     </div>
   );
