@@ -1,20 +1,46 @@
 import { Button, Drawer, Form, Input, Select, Space, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
-import { getAllUsers } from "../../api/api";
+import { getAllUsers, updateUser } from "../../api/api.js";
+import { NOTIFICATION_TYPE, PATH } from "../../constants/common";
+import { Notification } from "../../components/Notification/Notification";
+
 const { Option } = Select;
 const Users = () => {
   const [open, setOpen] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
   const [dataUsers, setDataUsers] = useState(null);
-  const showDrawer = () => {
+  const [selectedUser, setSelectedUser] = useState(null);
+  const showDrawer = (record) => {
+    console.log("helo", record);
+    setSelectedUser(record);
     setOpen(true);
+  };
+  const getAllUsersApi = async () => {
+    const data = await getAllUsers();
+    setDataUsers(data[0]);
   };
   const onClose = () => {
     setOpen(false);
   };
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log("Success:", values);
-    setOpen(false);
+
+    try {
+      await updateUser(selectedUser.id, values);
+      Notification({
+        type: NOTIFICATION_TYPE.SUCCESS,
+        message: "Edit success",
+        description: null,
+      });
+      getAllUsersApi();
+      setOpen(false);
+    } catch (error) {
+      Notification({
+        type: NOTIFICATION_TYPE.ERROR,
+        message: "Edit fail",
+        description: null,
+      });
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -36,12 +62,8 @@ const Users = () => {
   };
 
   useEffect(() => {
-    const getAllUsersApi = async () => {
-      const data = await getAllUsers();
-      setDataUsers(data);
-    };
     getAllUsersApi();
-  });
+  }, []);
 
   const columns = [
     {
@@ -85,7 +107,7 @@ const Users = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={showDrawer}>Edit</Button>
+          <Button onClick={() => showDrawer(record)}>Edit</Button>
           <Button>Delete</Button>
         </Space>
       ),
@@ -108,15 +130,24 @@ const Users = () => {
           autoComplete="off"
         >
           <Form.Item label="Email" name="email">
-            <Input />
+            <Input
+              defaultValue={selectedUser?.email}
+              key={selectedUser?.email}
+            />
           </Form.Item>
 
           <Form.Item label="Phone Number" name="phone">
-            <Input />
+            <Input
+              defaultValue={selectedUser?.phone}
+              key={selectedUser?.phone}
+            />
           </Form.Item>
 
-          <Form.Item label="Address" name="adress">
-            <Input />
+          <Form.Item label="Address" name="address">
+            <Input
+              defaultValue={selectedUser?.address}
+              key={selectedUser?.address}
+            />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -171,7 +202,7 @@ const Users = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item label="Address" name="adress">
+          <Form.Item label="Address" name="address">
             <Input />
           </Form.Item>
 

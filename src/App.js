@@ -13,7 +13,7 @@ const App = () => {
   return (
     <Router>
       {window.location.pathname.includes("admin") &&
-      userInfo.role == "admin" ? (
+      userInfo?.role == "admin" ? (
         <Suspense
           fallback={
             <LayoutAdmin>

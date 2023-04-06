@@ -35,7 +35,10 @@ export const getAllUsers = async () => {
 };
 
 export const updateUser = async (userId, userData) => {
-  const response = await authAxios.put(`/users/${userId}`, userData);
+  const response = await authAxios.post(
+    `/users/api/update/${userId}`,
+    userData
+  );
   return response.data;
 };
 
