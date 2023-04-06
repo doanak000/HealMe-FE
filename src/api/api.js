@@ -29,7 +29,7 @@ export const getUserProfile = async () => {
   return response.data;
 };
 
-export const getUsers = async () => {
+export const getAllUsers = async () => {
   const response = await authAxios.get("/users");
   return response.data;
 };
@@ -43,6 +43,6 @@ export const updateUser = async (userId, userData) => {
 export default {
   login,
   getUserProfile,
-  getUsers,
+  getAllUsers,
   updateUser,
 };

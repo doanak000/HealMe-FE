@@ -1,9 +1,11 @@
 import { Button, Drawer, Form, Input, Select, Space, Table, Tag } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getAllUsers } from "../../api/api";
 const { Option } = Select;
 const Users = () => {
   const [open, setOpen] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
+  const [dataUsers, setDataUsers] = useState(null);
   const showDrawer = () => {
     setOpen(true);
   };
@@ -33,19 +35,27 @@ const Users = () => {
     setOpenCreate(false);
   };
 
+  useEffect(() => {
+    const getAllUsersApi = async () => {
+      const data = await getAllUsers();
+      setDataUsers(data);
+    };
+    getAllUsersApi();
+  });
+
   const columns = [
     {
       width: "100",
       title: "UserName",
-      dataIndex: "userName",
+      dataIndex: "username",
       key: "name",
       render: (text) => <a>{text}</a>,
     },
     {
       width: "200",
-      title: "User Type",
-      dataIndex: "userType",
-      key: "userType",
+      title: "User Role",
+      dataIndex: "role",
+      key: "role",
       render: (text) => <a>{text}</a>,
     },
     {
@@ -58,8 +68,8 @@ const Users = () => {
     {
       width: "150",
       title: "Phone number",
-      dataIndex: "phoneNumber",
-      key: "phoneNumber",
+      dataIndex: "phone",
+      key: "phone",
       render: (text) => <a>{text}</a>,
     },
     {
@@ -81,54 +91,12 @@ const Users = () => {
       ),
     },
   ];
-  const data = [
-    {
-      key: "1",
-      userName: "doanCute",
-      userType: "duoc si",
-      email: "doan@gmail.com",
-      phoneNumber: "0483944343",
-      address: "4838/434 tp HCM",
-    },
-    {
-      key: "2",
-      userName: "doanCute",
-      userType: "duoc si",
-      email: "doan@gmail.com",
-      phoneNumber: "0483944343",
-      address: "4838/434 tp HCM",
-    },
-    {
-      key: "3",
-      userName: "doanCute",
-      userType: "duoc si",
-      email: "doan@gmail.com",
-      phoneNumber: "0483944343",
-      address: "4838/434 tp HCM",
-    },
-    {
-      key: "4",
-      userName: "doanCute",
-      userType: "duoc si",
-      email: "doan@gmail.com",
-      phoneNumber: "0483944343",
-      address: "4838/434 tp HCM",
-    },
-    {
-      key: "5",
-      userName: "doanCute",
-      userType: "duoc si",
-      email: "doan@gmail.com",
-      phoneNumber: "0483944343",
-      address: "4838/434 tp HCM",
-    },
-  ];
   return (
     <>
       <Button onClick={showDrawerCreate} style={{ marginBottom: "10px" }}>
         Create User
       </Button>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={dataUsers} />
       <Drawer title="Edit User" placement="right" onClose={onClose} open={open}>
         <Form
           name="basic"
@@ -143,7 +111,7 @@ const Users = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item label="Phone Number" name="phoneNumber">
+          <Form.Item label="Phone Number" name="phone">
             <Input />
           </Form.Item>
 
@@ -178,7 +146,7 @@ const Users = () => {
           onFinishFailedCreate={onFinishFailedCreate}
           autoComplete="off"
         >
-          <Form.Item label="User Name" name="userName">
+          <Form.Item label="User Name" name="username">
             <Input />
           </Form.Item>
           <Form.Item label="Password" name="password">
@@ -187,7 +155,7 @@ const Users = () => {
           <Form.Item label="Refill Password" name="password2">
             <Input />
           </Form.Item>
-          <Form.Item label="userType" name="userType">
+          <Form.Item label="USER ROLE" name="role">
             <Select>
               <Option value="duocSi">Dược sĩ</Option>
               <Option value="bacSi">Bác sĩ</Option>
@@ -199,7 +167,7 @@ const Users = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item label="Phone Number" name="phoneNumber">
+          <Form.Item label="Phone Number" name="phone">
             <Input />
           </Form.Item>
 
