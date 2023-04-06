@@ -9,9 +9,11 @@ import "./App.css";
 
 const App = () => {
   console.log("location", window.location.pathname);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   return (
     <Router>
-      {window.location.pathname.includes("admin") ? (
+      {window.location.pathname.includes("admin") &&
+      userInfo.role == "admin" ? (
         <Suspense
           fallback={
             <LayoutAdmin>

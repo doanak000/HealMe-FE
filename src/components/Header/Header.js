@@ -13,14 +13,21 @@ import {
 } from "../../features/login/loginSlice";
 import { PATH } from "../../constants/common";
 import { Link } from "react-router-dom";
+import { confirm } from "../ConfirmModal/ConfirmModal";
 
 const Header = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const userInfo = useSelector(selectUserInfo);
-  console.log("user", userInfo);
+  const userInfo =
+    useSelector(selectUserInfo) || JSON.parse(localStorage.getItem("userInfo"));
+
   const dispatch = useDispatch();
   const logoutHandle = () => {
-    dispatch(logout());
+    confirm({
+      content: "Are you sure you want to logout?",
+      onOk: () => {
+        dispatch(logout());
+      },
+    });
   };
   ///login Data lấy data từ cái login slice về
   const items = [

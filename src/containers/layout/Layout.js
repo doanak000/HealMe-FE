@@ -34,7 +34,8 @@ const LayoutAdmin = (props) => {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const dispatch = useDispatch();
   const location = useLocation();
-  const userInfo = useSelector(selectUserInfo);
+  const userInfo =
+    useSelector(selectUserInfo) || JSON.parse(localStorage.getItem("userInfo"));
   const translation = useSelector(selectTranslation);
   const [tabName, setTabName] = useState(translation.TAB_USER);
   useEffect(() => {
@@ -58,7 +59,7 @@ const LayoutAdmin = (props) => {
         width={theme.sideBarWidth}
         style={!isLoggedIn ? { display: "none" } : {}}
       >
-        <Logo>H4U</Logo>
+        <Logo>HEALTH ME</Logo>
         <CustomMenu
           theme="dark"
           mode="inline"
@@ -121,12 +122,12 @@ const LayoutAdmin = (props) => {
         <CustomHeader style={!isLoggedIn ? { display: "none" } : {}}>
           <TabName>{tabName}</TabName>
           <UserInfo>
+            <DisplayName>{userInfo.username}</DisplayName>
             <Avatar
               size="default"
               icon={<UserOutlined />}
               style={{ color: theme.colors.primary }}
             />
-            <DisplayName>{userInfo.displayName}</DisplayName>
           </UserInfo>
         </CustomHeader>
         <CustomContent>{children}</CustomContent>
