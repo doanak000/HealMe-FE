@@ -115,7 +115,6 @@ const Login = () => {
               name="username"
             />
           </Form.Item>
-
           <Form.Item
             id="password"
             label={<LoginLable>Password</LoginLable>}
@@ -134,11 +133,9 @@ const Login = () => {
               type="password"
             />
           </Form.Item>
-
-          <Link to={PATH.REGISTER}>Register</Link>
-
+          No account? <Link to={PATH.REGISTER}>Register</Link>
           <Form.Item {...tailLayout}>
-            <LoginButton type="primary" htmlType="submit">
+            <LoginButton type="primary" htmlType="submit" className="mt-3">
               Submit
             </LoginButton>
           </Form.Item>

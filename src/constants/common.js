@@ -5,11 +5,11 @@ export const PATH = Object.freeze({
   LOGIN: "/login",
   REGISTER: "/register",
   HOME: "/home",
-  PROFILE: "/home/profile",
-  DOCTOR: "/home/doctor/:id",
+  PROFILE: "/profile",
+  DOCTOR: "/doctor/:id",
   PHARMACIST: "/pharmacist",
-  PRESCRIPTION: "/home/prescription",
-  PRESCRIPTION_NEW: "/home/prescription-new",
+  PRESCRIPTION: "/prescription",
+  PRESCRIPTION_NEW: "/prescription-new",
 });
 
 export const SIDEBAR = Object.freeze({
