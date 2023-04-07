@@ -9,9 +9,11 @@ export const loginSlice = createSlice({
   },
   reducers: {
     loginSuccess: (state, action) => {
+      console.log("action", action);
       state.isLoggedIn = true;
-      // state?.userInfo = action.payload.userInfo
-      // localStorage.setItem('userInfo', JSON.stringify(action?.payload?.userInfo))
+      state.userInfo = action.payload.user;
+      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("userInfo", JSON.stringify(action.payload.user));
       localStorage.setItem("lastOnlineTime", new Date().getTime());
     },
     loginFail: (state, action) => {

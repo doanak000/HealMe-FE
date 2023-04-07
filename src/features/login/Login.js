@@ -56,8 +56,7 @@ const Login = () => {
     setLoadingState(true);
     try {
       const userData = await login(user);
-      localStorage.setItem("token", userData.token);
-      localStorage.setItem("userInfo", JSON.stringify(userData.user));
+      dispatch(loginSuccess(userData));
       console.log(userData);
       Notification({
         type: NOTIFICATION_TYPE.SUCCESS,
@@ -65,7 +64,6 @@ const Login = () => {
         description: null,
       });
       history.replace(from);
-
       setLoadingState(false);
     } catch (error) {
       console.log(error);

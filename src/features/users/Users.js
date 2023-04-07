@@ -1,6 +1,6 @@
 import { Button, Drawer, Form, Input, Select, Space, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
-import { getAllUsers, updateUser } from "../../api/api.js";
+import { deleteUserById, getAllUsers, updateUser } from "../../api/api.js";
 import { NOTIFICATION_TYPE, PATH } from "../../constants/common";
 import { Notification } from "../../components/Notification/Notification";
 
@@ -60,6 +60,24 @@ const Users = () => {
   const onFinishFailedCreate = (errorInfo) => {
     setOpenCreate(false);
   };
+  const handleDelete = async (record) => {
+    try {
+      await deleteUserById(record.id);
+      Notification({
+        type: NOTIFICATION_TYPE.SUCCESS,
+        message: "Delete success",
+        description: null,
+      });
+      getAllUsersApi();
+      setOpen(false);
+    } catch (error) {
+      Notification({
+        type: NOTIFICATION_TYPE.ERROR,
+        message: "Delete fail",
+        description: null,
+      });
+    }
+  };
 
   useEffect(() => {
     getAllUsersApi();
@@ -72,6 +90,13 @@ const Users = () => {
       dataIndex: "username",
       key: "name",
       render: (text) => <a>{text}</a>,
+    },
+    {
+      width: "70",
+      title: "Account Status",
+      dataIndex: "account_status",
+      key: "account_status",
+      render: (text) => <a>{text == 1 ? "Active" : "InActive"}</a>,
     },
     {
       width: "200",
@@ -108,7 +133,9 @@ const Users = () => {
       render: (_, record) => (
         <Space size="middle">
           <Button onClick={() => showDrawer(record)}>Edit</Button>
-          <Button>Delete</Button>
+          <Button onClick={() => handleDelete(record)}>
+            {_.account_status == 1 ? "Disbale" : "Enable"}
+          </Button>
         </Space>
       ),
     },

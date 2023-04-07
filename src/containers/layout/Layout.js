@@ -122,7 +122,9 @@ const LayoutAdmin = (props) => {
         <CustomHeader style={!isLoggedIn ? { display: "none" } : {}}>
           <TabName>{tabName}</TabName>
           <UserInfo>
-            <DisplayName>{userInfo.username}</DisplayName>
+            <DisplayName style={{ paddingRight: "10px" }}>
+              {userInfo.username}
+            </DisplayName>
             <Avatar
               size="default"
               icon={<UserOutlined />}

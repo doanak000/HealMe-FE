@@ -42,10 +42,16 @@ export const updateUser = async (userId, userData) => {
   return response.data;
 };
 
+export const deleteUserById = async (userId) => {
+  const response = await authAxios.post(`/users/api/delete/${userId}`);
+  return response.data;
+};
+
 // Export all API call functions
 export default {
   login,
   getUserProfile,
   getAllUsers,
   updateUser,
+  deleteUserById,
 };
