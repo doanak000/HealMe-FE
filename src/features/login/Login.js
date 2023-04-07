@@ -56,6 +56,9 @@ const Login = () => {
     setLoadingState(true);
     try {
       const userData = await login(user);
+      if (userData.user.role == "admin") {
+        throw Error("This is Account Admin");
+      }
       dispatch(loginSuccess(userData));
       console.log(userData);
       Notification({

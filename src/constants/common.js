@@ -29,11 +29,7 @@ export const ROLE = Object.freeze({
 });
 
 export const ROUTES = Object.freeze({
-  PRIVATE: [
-    { path: PATH.USER, component: "UsersPage" },
-    { path: PATH.EVENT, component: "EventPage" },
-    { path: PATH.VIDEO, component: "VideoPage" },
-  ],
+  PRIVATE: [],
 
   PUBLIC: [
     { path: PATH.LOGIN, component: "LoginPage" },
