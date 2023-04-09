@@ -32,7 +32,7 @@ const Header = () => {
   ///login Data lấy data từ cái login slice về
   const items = [
     {
-      key: "1",
+      key: 1,
       label: (
         <a target="_self" href="/profile" className="text-decoration-none">
           My Profile
@@ -40,7 +40,7 @@ const Header = () => {
       ),
     },
     {
-      key: "2",
+      key: 2,
       label: (
         <a
           target="_self"
@@ -52,7 +52,7 @@ const Header = () => {
       ),
     },
     {
-      key: "3",
+      key: 3,
       label: (
         <a className="mb-0" onClick={logoutHandle}>
           Logout
@@ -84,8 +84,8 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               {navbarList.map((item) => (
-                <li className="header__navbar-item">
-                  <a className="nav-link" href="/" key={item.key}>
+                <li className="header__navbar-item" key={item.key}>
+                  <a className="nav-link" href="/">
                     {item.value}
                   </a>
                 </li>
