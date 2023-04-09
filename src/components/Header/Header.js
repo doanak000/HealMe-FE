@@ -3,7 +3,7 @@ import { UserOutlined } from "@ant-design/icons";
 import React from "react";
 import logo from "../../assets/img/HealMe.png";
 import "../../assets/styles/component/Header/Header.css";
-import { navbarList } from "../../static/data";
+import { navbarList } from "../../static/navbar";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {

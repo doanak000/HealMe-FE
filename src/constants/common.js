@@ -10,6 +10,7 @@ export const PATH = Object.freeze({
   PHARMACIST: "/pharmacist",
   PRESCRIPTION: "/prescription",
   PRESCRIPTION_NEW: "/prescription-new",
+  PRESCRIPTION_DETAIL: "/prescription/:idPrescription",
 });
 
 export const SIDEBAR = Object.freeze({
@@ -22,6 +23,7 @@ export const SIDEBAR = Object.freeze({
   PHARMACIST: PATH.PHARMACIST,
   PRESCRIPTION: PATH.PRESCRIPTION,
   PRESCRIPTION_NEW: PATH.PRESCRIPTION_NEW,
+  PRESCRIPTION_DETAIL: PATH.PRESCRIPTION_DETAIL,
 });
 
 export const ROLE = Object.freeze({
@@ -39,8 +41,9 @@ export const ROUTES = Object.freeze({
     { path: PATH.HOME, component: "HomePage", exact: true },
     { path: PATH.PROFILE, component: "ProfilePage" },
     { path: PATH.DOCTOR, component: "DoctorDetailPage" },
-    { path: PATH.PRESCRIPTION, component: "PrescriptionPage" },
+    { path: PATH.PRESCRIPTION, component: "PrescriptionPage", exact: true },
     { path: PATH.PRESCRIPTION_NEW, component: "PrescriptionNewPage" },
+    { path: PATH.PRESCRIPTION_DETAIL, component: "PrescriptionDetailPage" },
   ],
 });
 

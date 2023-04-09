@@ -13,7 +13,7 @@ const nonAuthAxios = axios.create({
   baseURL: process.env.REACT_APP_ENDPOINT,
 });
 
-// Define functions for each API call
+// Define functions for each API calls
 export const login = async (credentials) => {
   const response = await nonAuthAxios.post("/users/api/login", credentials);
   return response.data;
