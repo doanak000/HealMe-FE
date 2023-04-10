@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Create an Axios instance for authenticated requests
-const authAxios = axios.create({
+export const authAxios = axios.create({
   baseURL: process.env.REACT_APP_ENDPOINT,
   headers: {
     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -9,11 +9,11 @@ const authAxios = axios.create({
 });
 
 // Create an Axios instance for non-authenticated requests
-const nonAuthAxios = axios.create({
+export const nonAuthAxios = axios.create({
   baseURL: process.env.REACT_APP_ENDPOINT,
 });
 
-// Define functions for each API call
+// Define functions for each API calls
 export const login = async (credentials) => {
   const response = await nonAuthAxios.post("/users/api/login", credentials);
   return response.data;

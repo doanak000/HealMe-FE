@@ -1,17 +1,35 @@
 import React from "react";
 import { Button, Col, DatePicker, Form, Input, Row, Radio } from "antd";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectIsLoggedIn,
+  selectUserInfo,
+} from "../../../features/login/loginSlice";
+import { Redirect } from "react-router-dom";
+import { useFormik } from "formik";
+import { profileValidationSchema } from "../../../validations/profileValidationSchema";
 
 const ProfileDetail = () => {
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
-  };
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userInfo = useSelector(selectUserInfo);
 
-  const [value, setValue] = useState(1);
-  const onChangeRadioGroup = (e) => {
-    console.log("radio checked", e.target.value);
-    setValue(e.target.value);
-  };
+  const dispatch = useDispatch();
+
+  const { username, phone, email } = userInfo;
+
+  if (!isLoggedIn) return Redirect("/");
+
+  const form = useFormik({
+    initialValues: {
+      email: "",
+      username: "",
+    },
+    validationSchema: profileValidationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
   return (
     <div>
       <Form
@@ -26,12 +44,12 @@ const ProfileDetail = () => {
             <Form.Item
               label={
                 <>
-                  <span className="me-1">Họ và tên</span>
+                  <span className="me-1">Username</span>
                   <span className="text-danger">*</span>
                 </>
               }
             >
-              <Input placeholder="Trần Văn A" />
+              <Input value={username} />
             </Form.Item>
           </Col>
           <Col lg={12} md={12}>
@@ -43,12 +61,12 @@ const ProfileDetail = () => {
                 </>
               }
             >
-              <Input placeholder="tranvana@gmail.com" />
+              <Input value={email} />
             </Form.Item>
           </Col>
           <Col lg={12} md={12}>
             <Form.Item label="Số điện thoại">
-              <Input placeholder="0123456789" />
+              <Input value={phone} />
             </Form.Item>
           </Col>
           <Col lg={12} md={12}>
@@ -63,7 +81,7 @@ const ProfileDetail = () => {
           </Col>
           <Col lg={12} md={12}>
             <Form.Item label="Giới tính" name="radio-group">
-              <Radio.Group onChange={onChangeRadioGroup} value={value}>
+              <Radio.Group value={value}>
                 <Radio value={1}>Nam</Radio>
                 <Radio value={2}>Nư</Radio>
                 <Radio value={3}>Khác</Radio>

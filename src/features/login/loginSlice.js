@@ -21,9 +21,7 @@ export const loginSlice = createSlice({
       state.message = action.payload;
     },
     logout: (state) => {
-      console.log("hello");
       state.isLoggedIn = false;
-
       localStorage.removeItem("token");
       localStorage.removeItem("userInfo");
     },

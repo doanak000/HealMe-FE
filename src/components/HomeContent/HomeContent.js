@@ -1,11 +1,31 @@
 import { Select, Input, Button } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DoctorList from "../Doctor/DoctorList/DoctorList";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProvinceApi } from "../../features/area/areaSlice";
+import AreaSelect from "../AreaSelect/AreaSelect";
 
 const HomeContent = () => {
+  const { provinces } = useSelector((state) => state.area);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllProvinceApi());
+  }, []);
+
+  const provincesOptions = provinces.map(
+    ({ id: value, name: label, ...rest }) => ({
+      value,
+      label,
+      ...rest,
+    })
+  );
+
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
+
   return (
     <div className="my-3">
       <h5>Tìm kiếm bác sĩ/dược sĩ</h5>
@@ -34,7 +54,7 @@ const HomeContent = () => {
         </div>
       </div>
       <div className="row w-100 mt-2">
-        <div className="col-lg-5 col-md-12 col-12 my-1">
+        <div className="col-lg-2 col-md-12 col-12 my-1">
           <Input
             placeholder="Tìm kiếm theo tên"
             style={{
@@ -44,23 +64,8 @@ const HomeContent = () => {
             className="w-100"
           />
         </div>
-        <div className="col-lg-2 col-md-12 col-12 my-1">
-          <Select
-            placeholder="Khu Vực"
-            onChange={handleChange}
-            options={[
-              {
-                value: "Quận 1",
-                label: "Quận 1",
-              },
-              {
-                value: "Quận 2",
-                label: "Quận 2",
-              },
-            ]}
-            size="large"
-            className="w-100"
-          />
+        <div className="col-lg-5 col-md-12 col-12 my-1">
+          <AreaSelect />
         </div>
         <div className="col-lg-3 col-md-12 col-12 my-1">
           <Select
