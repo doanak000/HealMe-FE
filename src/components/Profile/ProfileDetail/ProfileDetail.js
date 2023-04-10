@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Col, DatePicker, Form, Input, Row, Radio } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,16 +8,21 @@ import {
 import { Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import { profileValidationSchema } from "../../../validations/profileValidationSchema";
+import { getPatientProfileApi } from "../../../features/profile/profileSlice";
 
 const ProfileDetail = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const userInfo = useSelector(selectUserInfo);
 
-  const dispatch = useDispatch();
-
-  const { username, phone, email } = userInfo;
+  const { id, username, phone, email } = userInfo;
 
   if (!isLoggedIn) return Redirect("/");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPatientProfileApi(id));
+  }, [dispatch, id]);
 
   const form = useFormik({
     initialValues: {
@@ -71,7 +76,10 @@ const ProfileDetail = () => {
           </Col>
           <Col lg={12} md={12}>
             <Form.Item label="Ngày tháng năm sinh">
-              <DatePicker onChange={onChange} className="w-100" />
+              <DatePicker
+                onChange={() => console.log("something")}
+                className="w-100"
+              />
             </Form.Item>
           </Col>
           <Col lg={12} md={12}>
@@ -81,7 +89,7 @@ const ProfileDetail = () => {
           </Col>
           <Col lg={12} md={12}>
             <Form.Item label="Giới tính" name="radio-group">
-              <Radio.Group value={value}>
+              <Radio.Group value={1}>
                 <Radio value={1}>Nam</Radio>
                 <Radio value={2}>Nư</Radio>
                 <Radio value={3}>Khác</Radio>
