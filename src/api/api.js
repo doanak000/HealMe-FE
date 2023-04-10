@@ -47,6 +47,25 @@ export const deleteUserById = async (userId) => {
   return response.data;
 };
 
+export const getAllProvince = async () => {
+  const response = await nonAuthAxios.get("/area/province");
+  return response.data;
+};
+export const getDistrictInProvince = async (provinceId) => {
+  const response = await nonAuthAxios.get(
+    `/area/province/${provinceId}/district`
+  );
+  return response.data;
+};
+export const getWardInDistrict = async (districtId) => {
+  const response = await nonAuthAxios.get(`/area/district/${districtId}/ward`);
+  return response.data;
+};
+
+export const createPatientProfile = async (data) => {
+  const response = await nonAuthAxios.post("/patient/api/create", data);
+  return response.data;
+};
 // Export all API call functions
 export default {
   login,
@@ -54,4 +73,8 @@ export default {
   getAllUsers,
   updateUser,
   deleteUserById,
+  getAllProvince,
+  getDistrictInProvince,
+  getWardInDistrict,
+  createPatientProfile,
 };
