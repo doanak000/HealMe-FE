@@ -4,10 +4,16 @@ import DoctorList from "../Doctor/DoctorList/DoctorList";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProvinceApi } from "../../features/area/areaSlice";
 import AreaSelect from "../AreaSelect/AreaSelect";
+import { getChatbotResponse } from "../../api/api";
+import { NOTIFICATION_TYPE } from "../../constants/common";
+import { Notification } from "../Notification/Notification";
+import "./index.style.scss";
 
+const { TextArea } = Input;
 const HomeContent = () => {
   const { provinces } = useSelector((state) => state.area);
-
+  const [question, setQuestion] = useState(null);
+  const [res, setRes] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,8 +32,51 @@ const HomeContent = () => {
     console.log(`selected ${value}`);
   };
 
+  const handleQuestion = (event) => {
+    setQuestion(event?.target?.value);
+  };
+
+  const sendQuestion = async () => {
+    try {
+      const chatRes = await getChatbotResponse(question);
+      setRes(chatRes?.content);
+    } catch (error) {
+      console.log(error);
+      Notification({
+        type: NOTIFICATION_TYPE.ERROR,
+        message: "Chatbot got some mistakes",
+        description: null,
+      });
+      console.error(error);
+      setLoadingState(false);
+    }
+  };
+
   return (
     <div className="my-3">
+      <div className="chatbox-area">
+        <h5>AI tư vấn sức khỏe </h5>
+        <div className="chatbox-area-input">
+          <Input
+            onChange={handleQuestion}
+            placeholder="Mô tả sơ lược triệu chứng bệnh của bạn"
+          ></Input>
+          <Button
+            onClick={sendQuestion}
+            disabled={!question}
+            style={{ marginLeft: "20px" }}
+          >
+            Send
+          </Button>
+        </div>
+        <TextArea
+          rows={4}
+          value={res}
+          disabled
+          style={{ backgroundColor: "#ffffff !important" }}
+          placeholder="AI sẽ tư vấn cho bạn sơ lược vè sức khỏe cũng như đưa ra lời khuyên"
+        />
+      </div>
       <h5>Tìm kiếm bác sĩ/dược sĩ</h5>
       <div className="row">
         <div className="col-12 col-md-12 col-lg-12">

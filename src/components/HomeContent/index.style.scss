@@ -1,0 +1,12 @@
+.chatbox-area {
+    margin-bottom: 20px;
+    .ant-input-disabled {
+        background-color: #ffffff !important;
+    }
+    .chatbox-area-input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+}

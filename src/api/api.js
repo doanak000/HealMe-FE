@@ -66,6 +66,15 @@ export const createPatientProfile = async (data) => {
   const response = await nonAuthAxios.post("/patient/api/create", data);
   return response.data;
 };
+
+export const getChatbotResponse = async (data) => {
+  const response = await nonAuthAxios.post("/chatbot", {
+    question: data,
+    maxWords: 100,
+    creativity: 0.7,
+  });
+  return response.data;
+};
 // Export all API call functions
 export default {
   login,
@@ -77,4 +86,5 @@ export default {
   getDistrictInProvince,
   getWardInDistrict,
   createPatientProfile,
+  getChatbotResponse,
 };
