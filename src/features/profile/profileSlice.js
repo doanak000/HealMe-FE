@@ -5,7 +5,7 @@ import { NOTIFICATION_TYPE } from "../../constants/common";
 
 const initialState = {
   userInfo: JSON.parse(localStorage.getItem("userInfo")) || null,
-  patientProfile: {},
+  patientProfile: JSON.parse(localStorage.getItem("patientProfile")),
 };
 
 const profileSlice = createSlice({
@@ -34,7 +34,18 @@ export const getPatientProfileApi = (profileId) => {
         });
         return;
       }
+      localStorage.setItem("patientProfile", JSON.stringify(result.data[0][0]));
       dispatch(getPatientProfileAction(result.data[0][0]));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updatePatientProfileApi = (patientId, values) => {
+  return async (dispatch) => {
+    try {
+      await authAxios.post(`/patient/${patientId}/api/update`, values);
     } catch (error) {
       console.log(error);
     }

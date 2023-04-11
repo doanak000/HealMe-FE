@@ -19,6 +19,7 @@
     "bootstrap": "^5.2.3",
     "caniuse-lite": "^1.0.30001418",
     "craco-less": "^1.17.1",
+    "dayjs": "^1.11.7",
     "formik": "^2.2.9",
     "graphql": "^15.5.0",
     "openai": "^3.2.1",
