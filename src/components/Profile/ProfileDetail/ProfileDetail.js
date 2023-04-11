@@ -5,24 +5,21 @@ import {
   selectIsLoggedIn,
   selectUserInfo,
 } from "../../../features/login/loginSlice";
-import { Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import { profileValidationSchema } from "../../../validations/profileValidationSchema";
 import { getPatientProfileApi } from "../../../features/profile/profileSlice";
 
 const ProfileDetail = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
   const userInfo = useSelector(selectUserInfo);
+  const { patientProfile } = useSelector((state) => state.profile);
 
-  const { id, username, phone, email } = userInfo;
-
-  if (!isLoggedIn) return Redirect("/");
+  const { username, phone, email, user_role_id } = userInfo;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPatientProfileApi(id));
-  }, [dispatch, id]);
+    dispatch(getPatientProfileApi(user_role_id));
+  }, [dispatch, user_role_id]);
 
   const form = useFormik({
     initialValues: {
@@ -43,6 +40,7 @@ const ProfileDetail = () => {
           maxWidth: 600,
         }}
         size="large"
+        onSubmit={form.handleSubmit}
       >
         <Row gutter={18}>
           <Col lg={12} md={12}>
@@ -70,29 +68,36 @@ const ProfileDetail = () => {
             </Form.Item>
           </Col>
           <Col lg={12} md={12}>
+            <Form.Item label="Họ và tên">
+              <Input value={patientProfile?.fullname} />
+            </Form.Item>
+          </Col>
+          <Col lg={12} md={12}>
             <Form.Item label="Số điện thoại">
               <Input value={phone} />
             </Form.Item>
           </Col>
-          <Col lg={12} md={12}>
+          {/* <Col lg={12} md={12}>
             <Form.Item label="Ngày tháng năm sinh">
               <DatePicker
                 onChange={() => console.log("something")}
                 className="w-100"
+                value={patientProfile?.date_of_birth}
               />
             </Form.Item>
-          </Col>
-          <Col lg={12} md={12}>
+          </Col> */}
+          <Col lg={24} md={24}>
             <Form.Item label="Địa chỉ">
-              <Input placeholder="Quận Bình Thạnh" />
+              <Input value={patientProfile?.fulladdress} />
             </Form.Item>
           </Col>
           <Col lg={12} md={12}>
             <Form.Item label="Giới tính" name="radio-group">
-              <Radio.Group value={1}>
-                <Radio value={1}>Nam</Radio>
-                <Radio value={2}>Nư</Radio>
-                <Radio value={3}>Khác</Radio>
+              <Radio.Group
+                value={patientProfile?.gender === "Male" ? "1" : "2"}
+              >
+                <Radio value="1">Nam</Radio>
+                <Radio value="2">Nư</Radio>
               </Radio.Group>
             </Form.Item>
           </Col>

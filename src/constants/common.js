@@ -33,17 +33,18 @@ export const ROLE = Object.freeze({
 });
 
 export const ROUTES = Object.freeze({
-  PRIVATE: [],
+  PRIVATE: [
+    { path: PATH.PROFILE, component: "ProfilePage" },
+    { path: PATH.PRESCRIPTION, component: "PrescriptionPage", exact: true },
+    { path: PATH.PRESCRIPTION_NEW, component: "PrescriptionNewPage" },
+    { path: PATH.PRESCRIPTION_DETAIL, component: "PrescriptionDetailPage" },
+  ],
 
   PUBLIC: [
     { path: PATH.LOGIN, component: "LoginPage" },
     { path: PATH.REGISTER, component: "RegisterPage" },
     { path: PATH.HOME, component: "HomePage", exact: true },
-    { path: PATH.PROFILE, component: "ProfilePage" },
     { path: PATH.DOCTOR, component: "DoctorDetailPage" },
-    { path: PATH.PRESCRIPTION, component: "PrescriptionPage", exact: true },
-    { path: PATH.PRESCRIPTION_NEW, component: "PrescriptionNewPage" },
-    { path: PATH.PRESCRIPTION_DETAIL, component: "PrescriptionDetailPage" },
   ],
 });
 

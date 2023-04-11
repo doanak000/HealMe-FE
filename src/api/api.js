@@ -4,7 +4,7 @@ import axios from "axios";
 export const authAxios = axios.create({
   baseURL: process.env.REACT_APP_ENDPOINT,
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 });
 

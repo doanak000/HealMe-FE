@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { nonAuthAxios } from "../../api/api";
+import { authAxios, http } from "../../api/api";
 import { Notification } from "../../components/Notification/Notification";
 import { NOTIFICATION_TYPE } from "../../constants/common";
 
 const initialState = {
   userInfo: JSON.parse(localStorage.getItem("userInfo")) || null,
-  patientProfile: null,
+  patientProfile: {},
 };
 
 const profileSlice = createSlice({
@@ -25,22 +25,18 @@ export default profileSlice.reducer;
 export const getPatientProfileApi = (profileId) => {
   return async (dispatch) => {
     try {
-      const result = await nonAuthAxios.get(`/patient/${profileId}`);
+      const result = await authAxios.get(`/patient/${profileId}`);
       if (result.data.length === 0) {
         Notification({
           type: NOTIFICATION_TYPE.ERROR,
           message: "You must be register patient to have profile info",
           description: null,
         });
+        return;
       }
-      dispatch(getPatientProfileAction(result.data));
+      dispatch(getPatientProfileAction(result.data[0][0]));
     } catch (error) {
       console.log(error);
-      Notification({
-        type: NOTIFICATION_TYPE.ERROR,
-        message: "You must be register patient to have profile info",
-        description: null,
-      });
     }
   };
 };

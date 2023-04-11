@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DrugItem from "../../Drug/DrugItem/DrugItem";
 import { Button, Card } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { getPrescriptionDetailByIdApi } from "../../../features/prescription/prescriptionSlice";
 
 const PrescriptionItem = () => {
+  const { prescriptionDetail } = useSelector((state) => state.prescription);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPrescriptionDetailByIdApi(2));
+  }, [dispatch]);
+
+  // console.log(prescriptionDetail[0]?.pres_id);
   return (
     <div className="my-3">
-      <span>Ngày mua: 01.04.2023</span>
+      <span>Mã toa thuốc {prescriptionDetail?.pres_id}</span>
       <Card className="w-100">
         <div className="row">
-          <div className="col-12 col-md-12 col-lg-12">
+          {/* <div className="col-12 col-md-12 col-lg-12">
             <DrugItem />
           </div>
           <div className="col-12 col-md-12 col-lg-12">
@@ -16,7 +26,12 @@ const PrescriptionItem = () => {
           </div>
           <div className="col-12 col-md-12 col-lg-12">
             <DrugItem />
-          </div>
+          </div> */}
+          {prescriptionDetail?.map((item) => (
+            <div className="col-12 col-md-12 col-lg-12">
+              <DrugItem item={item} key={item.id} />
+            </div>
+          ))}
         </div>
         <div className="row text-end">
           <div className="text-end">
