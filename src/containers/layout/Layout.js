@@ -59,7 +59,7 @@ const LayoutAdmin = (props) => {
         width={theme.sideBarWidth}
         style={!isLoggedIn ? { display: "none" } : {}}
       >
-        <Logo>HEALTH ME</Logo>
+        <Logo>HEALME</Logo>
         <CustomMenu
           theme="dark"
           mode="inline"
