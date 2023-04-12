@@ -46,6 +46,7 @@ export const updatePatientProfileApi = (patientId, values) => {
   return async (dispatch) => {
     try {
       await authAxios.post(`/patient/${patientId}/api/update`, values);
+      console.log("Successfully updated patient");
     } catch (error) {
       console.log(error);
     }

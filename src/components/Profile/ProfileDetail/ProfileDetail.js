@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUserInfo } from "../../../features/login/loginSlice";
 import { useFormik } from "formik";
 import { profileValidationSchema } from "../../../validations/profileValidationSchema";
-import { getPatientProfileApi } from "../../../features/profile/profileSlice";
+import {
+  getPatientProfileApi,
+  updatePatientProfileApi,
+} from "../../../features/profile/profileSlice";
 import {
   CalendarOutlined,
   HomeOutlined,
@@ -13,7 +16,6 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { DATE_FORMAT } from "../../../constants/dateFormat";
 
 const ProfileDetail = () => {
   const userInfo = useSelector(selectUserInfo);
@@ -34,23 +36,20 @@ const ProfileDetail = () => {
       email: email,
       fullName: patientProfile?.fullname,
       phone: phone,
-      dateOfBirth: patientProfile?.date_of_birth,
+      dateOfBirth: new Date(),
       gender: patientProfile?.gender,
       address: patientProfile?.fulladdress,
     },
     validationSchema: profileValidationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-    },
   });
 
   const handleChangeProfile = () => {
-    console.log(form.values);
+    dispatch(updatePatientProfileApi(user_role_id, form.values));
   };
 
-  const onChange = (date, dateString) => {
-    console.log(date);
-    console.log(dateString);
+  const disabledDate = (current) => {
+    // Can not select days after today and today
+    return current && current > dayjs().endOf("day");
   };
 
   return (
@@ -130,14 +129,15 @@ const ProfileDetail = () => {
             <Form.Item label="Ngày tháng năm sinh">
               <DatePicker
                 className="w-100"
-                defaultValue={dayjs(patientProfile?.date_of_birth, DATE_FORMAT)}
-                format={DATE_FORMAT}
+                format="YYYY-MM-DD"
                 prefix={<CalendarOutlined />}
-                // onChange={form.handleChange}
                 onBlur={form.handleBlur}
                 disabled={isDisabled}
                 name="dateOfBirth"
-                onChange={onChange}
+                onChange={(_, dateString) =>
+                  form.setFieldValue("dateOfBirth", dateString)
+                }
+                disabledDate={disabledDate}
               />
             </Form.Item>
           </Col>
