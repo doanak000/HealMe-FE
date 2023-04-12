@@ -70,9 +70,14 @@ export const createPatientProfile = async (data) => {
 export const getChatbotResponse = async (data) => {
   const response = await nonAuthAxios.post("/chatbot", {
     question: data,
-    maxWords: 100,
-    creativity: 0.7,
+    maxWords: 500,
+    creativity: 1,
   });
+  return response.data;
+};
+
+export const registerWorkSchedule = async (data) => {
+  const response = await authAxios.post("/schedule/api/create", data);
   return response.data;
 };
 // Export all API call functions
@@ -87,4 +92,5 @@ export default {
   getWardInDistrict,
   createPatientProfile,
   getChatbotResponse,
+  registerWorkSchedule,
 };
