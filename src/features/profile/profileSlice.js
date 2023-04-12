@@ -51,3 +51,13 @@ export const updatePatientProfileApi = (patientId, values) => {
     }
   };
 };
+
+export const updateUserProfileApi = (userId, values) => {
+  return async (dispatch) => {
+    try {
+      await authAxios.post(`/users/api/update/${userId}`, values);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
