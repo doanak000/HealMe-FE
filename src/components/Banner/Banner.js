@@ -6,30 +6,29 @@ import "../../assets/styles/component/Banner/Banner.css";
 const Banner = () => {
   return (
     <div className="banner row my-3 align-items-center">
-      <div className="col-lg-7 col-md-12 col-12">
+      <div className="col-lg-6 col-md-12 col-12">
         <div className="banner__info">
           <h1 className="banner__heading fw-bold">
-            HealMe - Heal your pain =))
+            HealMe - Khám chữa bệnh toàn diện
           </h1>
-          <p className="banner__desc text-justify">
-            Adipisicing laborum id tempor Lorem.Lorem labore nostrud pariatur
-            dolore. Eiusmod commodo officia velit eu consequat ut. Exercitation
-            proident tempor minim amet incididunt esse eiusmod fugiat incididunt
-            nisi veniam ipsum elit. Dolore cupidatat dolore in magna ea elit
-            deserunt laboris est excepteur.
-          </p>
+          <h2 className="banner__desc text-justify">
+            Với đội ngũ bác sĩ chuyên nghiệp và nhiều năm kinh nghiệm trong lĩnh
+            vực y tế, HealMe sẽ giúp bạn đặt lịch hẹn khám bệnh trực tuyến nhanh
+            chóng và dễ dàng. Với sự tiện lợi và chất lượng dịch vụ tốt nhất,
+            HealMe sẽ đồng hành cùng bạn trên con đường khỏe mạnh và hạnh phúc.
+          </h2>
           <Button
             size="large"
             type="primary"
             className="text-uppercase fw-bold"
           >
-            Join With Us
+            Đặt lịch khám
           </Button>
         </div>
       </div>
-      <div className="col-lg-5 col-md-12 col-12">
-        <img src={banner} className="w-lg-100 w-100 py-2 banner__img" alt="" />
-      </div>
+      {/* <div className="col-lg-5 col-md-12 col-12">
+          <img src={banner} className="w-lg-100 w-100 py-2 banner__img" alt="" />
+        </div> */}
     </div>
   );
 };
