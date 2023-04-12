@@ -32,11 +32,11 @@ const ProfileDetail = () => {
     initialValues: {
       username: username,
       email: email,
-      fullName: patientProfile.fullname,
+      fullName: patientProfile?.fullname,
       phone: phone,
-      dateOfBirth: patientProfile.date_of_birth,
-      gender: patientProfile.gender,
-      address: patientProfile.fulladdress,
+      dateOfBirth: patientProfile?.date_of_birth,
+      gender: patientProfile?.gender,
+      address: patientProfile?.fulladdress,
     },
     validationSchema: profileValidationSchema,
     onSubmit: (values) => {

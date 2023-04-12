@@ -80,6 +80,10 @@ export const registerWorkSchedule = async (data) => {
   const response = await authAxios.post("/schedule/api/create", data);
   return response.data;
 };
+export const getWorkSchedule = async (doctorId) => {
+  const response = await nonAuthAxios.get(`/schedule/doc/${doctorId}`);
+  return response.data;
+};
 // Export all API call functions
 export default {
   login,
@@ -93,4 +97,5 @@ export default {
   createPatientProfile,
   getChatbotResponse,
   registerWorkSchedule,
+  getWorkSchedule,
 };

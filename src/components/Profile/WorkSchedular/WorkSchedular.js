@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, DatePicker, Form, Input, Row, Radio, Select } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Row,
+  Radio,
+  Select,
+  Table,
+  Space,
+} from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { registerWorkSchedule } from "../../../api/api";
+import { getWorkSchedule, registerWorkSchedule } from "../../../api/api";
 import {
   RegisterButton,
   RegisterLable,
   TitleRegister,
 } from "./WorkSchedular.style";
+import { NOTIFICATION_TYPE } from "../../../constants/common";
+import { Notification } from "../../Notification/Notification";
 const layout = {
   labelCol: {
     span: 24,
@@ -25,6 +38,7 @@ const tailLayout = {
 const WorkSchedular = () => {
   const dispatch = useDispatch();
   const [timeId, setTimeId] = useState(1);
+  const [dataWorkSchedule, setDataWorkSchedule] = useState(null);
   const disabledDate = (current) => {
     return current && current < moment().startOf("day");
   };
@@ -41,6 +55,7 @@ const WorkSchedular = () => {
     };
     try {
       await registerWorkSchedule(data);
+      await getWorkScheduleData();
       Notification({
         type: NOTIFICATION_TYPE.SUCCESS,
         message: "Register success",
@@ -55,6 +70,49 @@ const WorkSchedular = () => {
       });
     }
   };
+
+  const getWorkScheduleData = async () => {
+    const data = await getWorkSchedule(userInfo?.role_id);
+    setDataWorkSchedule(data[0]);
+  };
+
+  const columns = [
+    {
+      width: "100",
+      title: "Work Day",
+      dataIndex: "workday",
+      key: "workday",
+      render: (text) => <a>{moment(text).format("YYYY-MM-DD")}</a>,
+    },
+    {
+      width: "100",
+      title: "Buổi",
+      dataIndex: "time_id",
+      key: "time_id",
+      render: (time_id) => <a>{time_id == 1 ? "Buổi sáng" : "Buổi chiều"}</a>,
+    },
+    {
+      width: "100",
+      title: "Ngày tạo",
+      dataIndex: "created_date",
+      key: "created_date",
+      render: (text) => <a>{moment(text).format("YYYY-MM-DD")}</a>,
+    },
+    {
+      width: "200",
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Button onClick={() => showDrawer(record)}>Edit</Button>
+          <Button onClick={() => handleDelete(record)}>Delete</Button>
+        </Space>
+      ),
+    },
+  ];
+  useEffect(() => {
+    getWorkScheduleData();
+  }, []);
   return (
     <div>
       <div className="register-work-schedular">
@@ -113,6 +171,7 @@ const WorkSchedular = () => {
             </RegisterButton>
           </Form.Item>
         </Form>
+        <Table columns={columns} dataSource={dataWorkSchedule} />
       </div>
     </div>
   );
