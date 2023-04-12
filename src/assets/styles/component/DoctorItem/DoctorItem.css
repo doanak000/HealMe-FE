@@ -3,6 +3,18 @@
 }
 
 .doctor-name:hover {
-  color: red;
   font-weight: bold;
+}
+
+.doctor-item-container h4 {
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: 20px;
+  color: #2c4964;
+  margin-left: 8px;
+}
+
+.doctor-item-container p {
+  margin: 10px 16px 8px 8px;
+  font-size: 15px;
 }

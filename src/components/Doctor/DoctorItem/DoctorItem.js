@@ -15,11 +15,11 @@ const DoctorItem = () => {
         />
       </div>
       <div className="col-9 text-justify">
-        <p className="text-justify doctor-name">
+        <h4 className="text-justify doctor-name">
           <Link to={`/home/doctor/${id}`} style={{ textDecoration: "none" }}>
-            <b>Họ tên: </b> Bs. Võ Triệu Đạt
+            Bs. Võ Triệu Đạt
           </Link>
-        </p>
+        </h4>
         <p className="text-justify">
           <b>Chuyên khoa:</b> Khoa Sản Phụ khoa Trung tâm điều trị bệnh lý tuyến
           vú
