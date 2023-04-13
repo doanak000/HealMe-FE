@@ -7,6 +7,7 @@ import { profileValidationSchema } from "../../../validations/profileValidationS
 import {
   getPatientProfileApi,
   updatePatientProfileApi,
+  updateUserProfileApi,
 } from "../../../features/profile/profileSlice";
 import {
   CalendarOutlined,
@@ -22,7 +23,7 @@ const ProfileDetail = () => {
   const patientProfile = JSON.parse(localStorage.getItem("patientProfile"));
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const { username, phone, email, user_role_id } = userInfo;
+  const { id, username, phone, email, user_role_id } = userInfo;
 
   const dispatch = useDispatch();
 
@@ -44,7 +45,22 @@ const ProfileDetail = () => {
   });
 
   const handleChangeProfile = () => {
-    dispatch(updatePatientProfileApi(user_role_id, form.values));
+    console.log(form.values);
+    const { username, email, phone, address } = form.values;
+    const { fullname, dob, gender } = form.values;
+    const userUpdatedData = {
+      username,
+      email,
+      phone,
+      address,
+    };
+    const patientUpdatedData = {
+      fullname,
+      dob,
+      gender,
+    };
+    dispatch(updateUserProfileApi(id, userUpdatedData));
+    dispatch(updatePatientProfileApi(user_role_id, patientUpdatedData));
   };
 
   const disabledDate = (current) => {
