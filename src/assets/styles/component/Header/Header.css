@@ -1,5 +1,5 @@
 .navbar {
-  box-shadow: 0 4px 4px 0 rgb(0 0 0 / 10%);
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
 }
 
 .header__navbar-list {
@@ -27,4 +27,14 @@
 
 .login-btn {
   color: #0059a7;
+}
+
+.healme-logo {
+  width: 15vw
+}
+
+@media only screen and (max-width: 480px) {
+  .healme-logo {
+    width: 30vw !important;
+  }
 }
