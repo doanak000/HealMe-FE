@@ -1,7 +1,7 @@
 import { Dropdown, Avatar, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import React from "react";
-import logo from "../../assets/img/HealMe.png";
+import logo from "../../assets/img/HealMe-logo.svg";
 import "../../assets/styles/component/Header/Header.css";
 import { navbarList } from "../../static/navbar";
 import { useSelector } from "react-redux";
@@ -23,7 +23,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const logoutHandle = () => {
     confirm({
-      content: "Are you sure you want to logout?",
+      content: "Bạn muốn đăng xuất?",
       onOk: () => {
         dispatch(logout());
       },
@@ -35,7 +35,7 @@ const Header = () => {
       key: 1,
       label: (
         <a target="_self" href="/profile" className="text-decoration-none">
-          My Profile
+          Hồ sơ của tôi
         </a>
       ),
     },
@@ -47,7 +47,7 @@ const Header = () => {
           href="/profile/change-password"
           className="text-decoration-none"
         >
-          Change Password
+          Đổi mật khẩu
         </a>
       ),
     },
@@ -55,7 +55,7 @@ const Header = () => {
       key: 3,
       label: (
         <a className="mb-0" onClick={logoutHandle}>
-          Logout
+          Đăng xuất
         </a>
       ),
     },
@@ -67,7 +67,7 @@ const Header = () => {
         <div className="container">
           <a className="navbar-brand" href="/">
             <div className="header__logo overflow-hidden">
-              <img src={logo} className="w-50" />
+              <img src={logo} className="w-50 healme-logo" />
             </div>
           </a>
           <button
@@ -129,13 +129,13 @@ const Header = () => {
                   {" "}
                   <Button className="mx-2 login-btn">
                     <Link to={PATH.LOGIN} style={{ textDecoration: "none" }}>
-                      Sign In
+                      Đăng nhập
                     </Link>
                   </Button>
                   <Button className="mx-2 register-btn" type="primary">
                     <Link to={PATH.REGISTER} style={{ textDecoration: "none" }}>
                       {" "}
-                      Sign Up
+                      Đăng kí
                     </Link>
                   </Button>
                 </>
