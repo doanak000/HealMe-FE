@@ -1,6 +1,5 @@
 import { Button } from "antd";
 import React from "react";
-import banner from "../../assets/img/banner2.png";
 import "../../assets/styles/component/Banner/Banner.css";
 
 const Banner = () => {

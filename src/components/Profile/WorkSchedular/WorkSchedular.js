@@ -10,10 +10,16 @@ import {
   Select,
   Table,
   Space,
+  Modal,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { getWorkSchedule, registerWorkSchedule } from "../../../api/api";
+import {
+  deleteWorkSchedule,
+  getWorkSchedule,
+  registerWorkSchedule,
+  updateWorkSchedule,
+} from "../../../api/api";
 import {
   RegisterButton,
   RegisterLable,
@@ -39,6 +45,9 @@ const WorkSchedular = () => {
   const dispatch = useDispatch();
   const [timeId, setTimeId] = useState(1);
   const [dataWorkSchedule, setDataWorkSchedule] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [schedularId, setSchedularId] = useState(null);
+  const [selectedTimeIdEdit, setSelectedTimeIdEdit] = useState(null);
   const disabledDate = (current) => {
     return current && current < moment().startOf("day");
   };
@@ -50,7 +59,7 @@ const WorkSchedular = () => {
     const data = {
       ...values,
       date: moment(values?.date).format("YYYY-MM-DD"),
-      doc_id: userInfo?.role_id,
+      doc_id: userInfo?.user_role_id,
       time_id: timeId,
     };
     try {
@@ -72,8 +81,30 @@ const WorkSchedular = () => {
   };
 
   const getWorkScheduleData = async () => {
-    const data = await getWorkSchedule(userInfo?.role_id);
+    const data = await getWorkSchedule(userInfo?.user_role_id);
     setDataWorkSchedule(data[0]);
+  };
+  const showModal = (record) => {
+    setSchedularId(record.id);
+    setIsModalOpen(true);
+  };
+  const handleDelete = async (record) => {
+    try {
+      await deleteWorkSchedule(record.id);
+      await getWorkScheduleData();
+      Notification({
+        type: NOTIFICATION_TYPE.SUCCESS,
+        message: "Delete success",
+        description: null,
+      });
+    } catch (error) {
+      console.log(error);
+      Notification({
+        type: NOTIFICATION_TYPE.ERROR,
+        message: "Delete fail",
+        description: error?.response?.data?.msg,
+      });
+    }
   };
 
   const columns = [
@@ -104,12 +135,34 @@ const WorkSchedular = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showDrawer(record)}>Edit</Button>
+          <Button onClick={() => showModal(record)}>Edit</Button>
           <Button onClick={() => handleDelete(record)}>Delete</Button>
         </Space>
       ),
     },
   ];
+  const handleSelectTimeIdEdit = (value) => {
+    setSelectedTimeIdEdit(value);
+  };
+  const handleOk = async () => {
+    try {
+      await updateWorkSchedule(schedularId, { time_id: selectedTimeIdEdit });
+      await getWorkScheduleData();
+      Notification({
+        type: NOTIFICATION_TYPE.SUCCESS,
+        message: "Edit success",
+        description: null,
+      });
+      setIsModalOpen(false);
+    } catch (error) {
+      console.log(error);
+      Notification({
+        type: NOTIFICATION_TYPE.ERROR,
+        message: "Edit fail",
+        description: error?.response?.data?.msg,
+      });
+    }
+  };
   useEffect(() => {
     getWorkScheduleData();
   }, []);
@@ -172,6 +225,18 @@ const WorkSchedular = () => {
           </Form.Item>
         </Form>
         <Table columns={columns} dataSource={dataWorkSchedule} />
+        <Modal title="Edit Work Schedular" open={isModalOpen} onOk={handleOk}>
+          <Select
+            style={{
+              width: "100%",
+            }}
+            defaultValue={"1"}
+            onChange={handleSelectTimeIdEdit}
+          >
+            <Option value="1">Buổi sáng</Option>
+            <Option value="2">Buổi chiều</Option>
+          </Select>
+        </Modal>
       </div>
     </div>
   );

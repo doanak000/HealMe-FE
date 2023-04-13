@@ -81,7 +81,17 @@ export const registerWorkSchedule = async (data) => {
   return response.data;
 };
 export const getWorkSchedule = async (doctorId) => {
-  const response = await nonAuthAxios.get(`/schedule/doc/${doctorId}`);
+  const response = await authAxios.get(`/schedule/doc/${doctorId}`);
+  return response.data;
+};
+
+export const updateWorkSchedule = async (id, data) => {
+  const response = await authAxios.post(`/schedule/api/update/${id}`, data);
+  return response.data;
+};
+
+export const deleteWorkSchedule = async (id) => {
+  const response = await authAxios.post(`/schedule/api/delete/${id}`);
   return response.data;
 };
 // Export all API call functions
@@ -98,4 +108,6 @@ export default {
   getChatbotResponse,
   registerWorkSchedule,
   getWorkSchedule,
+  updateWorkSchedule,
+  deleteWorkSchedule,
 };

@@ -35,7 +35,7 @@ const ProfileContent = () => {
   return (
     <Tabs
       defaultActiveKey="1"
-      items={userInfo.id == 2 ? items : itemsOfDoctor}
+      items={userInfo.role_id == 2 ? items : itemsOfDoctor}
       onChange={onChange}
       size="large"
     />
