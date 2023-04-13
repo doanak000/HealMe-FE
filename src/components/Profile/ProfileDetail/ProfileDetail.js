@@ -47,7 +47,7 @@ const ProfileDetail = () => {
   const handleChangeProfile = () => {
     console.log(form.values);
     const { username, email, phone, address } = form.values;
-    const { fullname, dob, gender } = form.values;
+    const { fullName, dateOfBirth, gender } = form.values;
     const userUpdatedData = {
       username,
       email,
@@ -55,10 +55,11 @@ const ProfileDetail = () => {
       address,
     };
     const patientUpdatedData = {
-      fullname,
-      dob,
-      gender,
+      fullName,
+      dateOfBirth,
+      gender: gender,
     };
+    console.log(patientUpdatedData);
     dispatch(updateUserProfileApi(id, userUpdatedData));
     dispatch(updatePatientProfileApi(user_role_id, patientUpdatedData));
   };
