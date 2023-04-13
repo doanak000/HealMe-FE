@@ -94,6 +94,14 @@ export const deleteWorkSchedule = async (id) => {
   const response = await authAxios.post(`/schedule/api/delete/${id}`);
   return response.data;
 };
+export const getApptByScheduleId = async (id) => {
+  const response = await authAxios.get(`/appt/sched/${id}`);
+  return response.data;
+};
+export const createAppt = async (data) => {
+  const response = await authAxios.post(`/appt/api/create`, data);
+  return response.data;
+};
 // Export all API call functions
 export default {
   login,
@@ -110,4 +118,6 @@ export default {
   getWorkSchedule,
   updateWorkSchedule,
   deleteWorkSchedule,
+  getApptByScheduleId,
+  createAppt,
 };
