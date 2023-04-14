@@ -1,5 +1,5 @@
 .navbar {
-  box-shadow: 0 4px 4px 0 rgb(0 0 0 / 10%);
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
 }
 
 .header__navbar-list {
@@ -16,6 +16,12 @@
   font-size: 16px;
 }
 
+.header__navbar-item .nav-link {
+  color: #2d4964;
+  font-weight: 500;
+  font-family: 'Open Sans', sans-serif;
+}
+
 .header__navbar-item:hover {
   cursor: pointer;
   color: #0059a7;
@@ -27,4 +33,14 @@
 
 .login-btn {
   color: #0059a7;
+}
+
+.header__logo .healme-logo {
+  width: 15vw
+}
+
+@media only screen and (max-width: 480px) {
+  .header__logo .healme-logo {
+    width: 30vw !important;
+  }
 }

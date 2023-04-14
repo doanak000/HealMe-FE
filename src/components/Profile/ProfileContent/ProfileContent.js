@@ -3,6 +3,7 @@ import React from "react";
 import ProfileDetail from "../ProfileDetail/ProfileDetail";
 import WorkSchedular from "../WorkSchedular/WorkSchedular";
 import { memo } from "react";
+import PatientAppointment from "../PatientAppointment/PatientAppointment";
 
 const ProfileContent = () => {
   const onChange = (key) => {
@@ -18,7 +19,7 @@ const ProfileContent = () => {
     {
       key: "2",
       label: `Lich sử đơn hàng`,
-      children: `Content of Tab Pane 2`,
+      children: <PatientAppointment />,
     },
   ];
   const itemsOfDoctor = [
@@ -36,7 +37,7 @@ const ProfileContent = () => {
   return (
     <Tabs
       defaultActiveKey="1"
-      items={userInfo.id == 2 ? items : itemsOfDoctor}
+      items={userInfo.role_id == 2 ? items : itemsOfDoctor}
       onChange={onChange}
       size="large"
     />
