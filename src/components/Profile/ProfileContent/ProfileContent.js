@@ -2,6 +2,7 @@ import { Tabs } from "antd";
 import React from "react";
 import ProfileDetail from "../ProfileDetail/ProfileDetail";
 import WorkSchedular from "../WorkSchedular/WorkSchedular";
+import { memo } from "react";
 
 const ProfileContent = () => {
   const onChange = (key) => {
@@ -42,4 +43,4 @@ const ProfileContent = () => {
   );
 };
 
-export default ProfileContent;
+export default memo(ProfileContent);

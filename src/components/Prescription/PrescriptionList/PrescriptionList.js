@@ -7,14 +7,12 @@ import { getPrescriptionsOfPatientIdApi } from "../../../features/prescription/p
 const PrescriptionList = () => {
   const userInfo = useSelector(selectUserInfo);
   const { prescriptions } = useSelector((state) => state.prescription);
-  const { role_id } = userInfo;
-  console.log(role_id);
+  const { user_role_id } = userInfo;
   const dispatch = useDispatch();
   useEffect(() => {
-    // dispatch(getPrescriptionsOfPatientIdApi(id));
-    dispatch(getPrescriptionsOfPatientIdApi(role_id));
-  }, [dispatch, role_id]);
-  console.log(userInfo);
+    dispatch(getPrescriptionsOfPatientIdApi(user_role_id));
+  }, [dispatch, user_role_id]);
+  console.log(prescriptions);
   return (
     <div className="row">
       <div className="col-12 col-md-12 col-lg-6">

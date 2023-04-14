@@ -47,7 +47,7 @@ const Footer = () => {
           <AiFillYoutube className="fs-2" />
         </div>
       </div>
-      <p className="text-center mt-3 py-4 bg-secondary bg-gradient text-white">
+      <p className="text-center mt-3 py-4 mb-0 bg-secondary bg-gradient text-white">
         DATN ©2023 Created by BDSM
       </p>
     </div>

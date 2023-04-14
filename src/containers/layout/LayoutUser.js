@@ -5,9 +5,9 @@ import Header from "../../components/Header/Header";
 
 const LayoutUser = ({ children }) => {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid overflow-hidden px-0">
       <Header />
-      <div className="container">
+      <div className="container px-0">
         <Content>{children}</Content>
       </div>
       <Footer />
