@@ -7,7 +7,7 @@ import AreaSelect from "../AreaSelect/AreaSelect";
 import { getChatbotResponse } from "../../api/api";
 import { NOTIFICATION_TYPE } from "../../constants/common";
 import { Notification } from "../Notification/Notification";
-import "./index.style.scss";
+import "./HomeContent.scss";
 
 const { TextArea } = Input;
 const HomeContent = () => {
@@ -59,13 +59,9 @@ const HomeContent = () => {
         <div className="chatbox-area-input">
           <Input
             onChange={handleQuestion}
-            placeholder="Mô tả sơ lược triệu chứng bệnh của bạn"
+            placeholder="Mô tả triệu chứng bệnh"
           ></Input>
-          <Button
-            onClick={sendQuestion}
-            disabled={!question}
-            style={{ marginLeft: "20px" }}
-          >
+          <Button onClick={sendQuestion} disabled={!question}>
             Send
           </Button>
         </div>
@@ -73,32 +69,34 @@ const HomeContent = () => {
           rows={4}
           value={res}
           disabled
-          style={{ backgroundColor: "#ffffff !important" }}
-          placeholder="AI sẽ tư vấn cho bạn sơ lược vè sức khỏe cũng như đưa ra lời khuyên"
+          placeholder="AI sẽ tư vấn cho bạn sơ lược về sức khỏe cũng như đưa ra lời khuyên"
         />
       </div>
-      <h5>Tìm kiếm bác sĩ/dược sĩ</h5>
-      <div className="row">
-        <div className="col-12 col-md-12 col-lg-12">
-          <div className="my-1">
-            <Select
-              defaultValue="Bác Sĩ"
-              style={{
-                width: 100,
-              }}
-              onChange={handleChange}
-              options={[
-                {
-                  value: 1,
-                  label: "Bác Sĩ",
-                },
-                {
-                  value: 2,
-                  label: "Dược Sĩ",
-                },
-              ]}
-              size="large"
-            />
+      <div className="find-business-area">
+        <h5>Tìm kiếm bác sĩ/dược sĩ</h5>
+        <div className="row">
+          <div className="col-12 col-md-12 col-lg-12">
+            <div className="my-1">
+              <Select
+                defaultValue="Bác Sĩ"
+                style={{
+                  width: 100,
+                  color: "#2d4964",
+                }}
+                onChange={handleChange}
+                options={[
+                  {
+                    value: 1,
+                    label: "Bác Sĩ",
+                  },
+                  {
+                    value: 2,
+                    label: "Dược Sĩ",
+                  },
+                ]}
+                size="large"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -140,7 +138,7 @@ const HomeContent = () => {
         </div>
         <div className="col-lg-2 col-md-12 col-12 my-1">
           <Button type="primary" size="large" className="w-100">
-            Search
+            Tìm kiếm
           </Button>
         </div>
       </div>
