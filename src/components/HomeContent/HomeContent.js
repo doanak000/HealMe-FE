@@ -53,7 +53,7 @@ const HomeContent = () => {
   };
 
   return (
-    <div className="my-3">
+    <div className="my-3 content-area">
       <div className="chatbox-area">
         <h5>AI tư vấn sức khỏe </h5>
         <div className="chatbox-area-input">
