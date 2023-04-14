@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Button, Col, DatePicker, Form, Input, Row, Radio } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserInfo } from "../../../features/login/loginSlice";
 import { useFormik } from "formik";
 import { profileValidationSchema } from "../../../validations/profileValidationSchema";
-import { getPatientProfileApi } from "../../../features/profile/profileSlice";
+import {
+  getPatientProfileApi,
+  getUserProfileApi,
+  updatePatientProfileApi,
+  updateUserProfileApi,
+} from "../../../features/profile/profileSlice";
 import {
   CalendarOutlined,
   HomeOutlined,
@@ -13,44 +18,75 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { DATE_FORMAT } from "../../../constants/dateFormat";
 
 const ProfileDetail = () => {
   const userInfo = useSelector(selectUserInfo);
-  const patientProfile = JSON.parse(localStorage.getItem("patientProfile"));
+  const { patientProfile, userProfile } = useSelector((state) => state.profile);
   const [isDisabled, setIsDisabled] = useState(true);
-
-  const { username, phone, email, user_role_id } = userInfo;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPatientProfileApi(user_role_id));
-  }, [dispatch, user_role_id]);
+    dispatch(getUserProfileApi(userInfo.id));
+    dispatch(getPatientProfileApi(userInfo.user_role_id));
+  }, []);
+
+  console.log(userInfo?.id);
 
   const form = useFormik({
     initialValues: {
-      username: username,
-      email: email,
+      username: userProfile?.username,
+      email: userProfile?.email,
       fullName: patientProfile?.fullname,
-      phone: phone,
-      dateOfBirth: patientProfile?.date_of_birth,
+      phone: userProfile?.phone,
+      dateOfBirth: new Date(),
       gender: patientProfile?.gender,
       address: patientProfile?.fulladdress,
     },
     validationSchema: profileValidationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    enableReinitialize: true,
   });
 
+  // const handleChangeUserProfile = (e) => {
+  //   const value = e.target.value;
+  //   setUserProfileForm({
+  //     ...userProfileForm,
+  //     [e.target.name]: value,
+  //   });
+  // };
+
+  // const handleChangePatientProfile = (e) => {
+  //   const value = e.target.value;
+  //   setPatientProfileForm({
+  //     ...patientProfileForm,
+  //     [e.target.name]: value,
+  //   });
+  // };
+
   const handleChangeProfile = () => {
+    // const { id, email, phone, username, role_id, user_role_id } =
+    //   userProfileForm;
+    // const updatedUserProfile = {
+    //   email,
+    //   phone,
+    //   username,
+    //   role_id,
+    // };
     console.log(form.values);
+    // dispatch(
+    //   updateUserProfileApi(id, updatedUserProfile, () => {
+    //     dispatch(getPatientProfileApi(user_role_id));
+    //   })
+    // );
+    // dispatch(
+    //   updatePatientProfileApi(user_role_id, patientProfileForm, () => {
+    //     dispatch(getPatientProfileApi(user_role_id));
+    //   })
+    // );
   };
 
-  const onChange = (date, dateString) => {
-    console.log(date);
-    console.log(dateString);
+  const disabledDate = (current) => {
+    return current && current > dayjs().endOf("day");
   };
 
   return (
@@ -74,12 +110,13 @@ const ProfileDetail = () => {
               }
             >
               <Input
-                defaultValue={username}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
+                defaultValue={userProfile?.username}
                 name="username"
                 prefix={<UserOutlined />}
                 disabled={isDisabled}
+                // onChange={handleChangeUserProfile}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
               />
             </Form.Item>
           </Col>
@@ -93,12 +130,13 @@ const ProfileDetail = () => {
               }
             >
               <Input
-                defaultValue={email}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
+                defaultValue={userProfile?.email}
                 name="email"
                 prefix={<MailOutlined />}
                 disabled={isDisabled}
+                // onChange={handleChangeUserProfile}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
               />
             </Form.Item>
           </Col>
@@ -106,23 +144,25 @@ const ProfileDetail = () => {
             <Form.Item label="Họ và tên">
               <Input
                 defaultValue={patientProfile?.fullname}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-                name="fullName"
+                name="fullname"
                 prefix={<UserOutlined />}
                 disabled={isDisabled}
+                // onChange={handleChangePatientProfile}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
               />
             </Form.Item>
           </Col>
           <Col lg={12} md={12}>
             <Form.Item label="Số điện thoại">
               <Input
-                defaultValue={phone}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
+                defaultValue={userProfile?.phone}
                 name="phone"
                 prefix={<PhoneOutlined />}
                 disabled={isDisabled}
+                // onChange={handleChangeUserProfile}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
               />
             </Form.Item>
           </Col>
@@ -130,14 +170,12 @@ const ProfileDetail = () => {
             <Form.Item label="Ngày tháng năm sinh">
               <DatePicker
                 className="w-100"
-                defaultValue={dayjs(patientProfile?.date_of_birth, DATE_FORMAT)}
-                format={DATE_FORMAT}
+                format="YYYY-MM-DD"
                 prefix={<CalendarOutlined />}
-                // onChange={form.handleChange}
-                onBlur={form.handleBlur}
                 disabled={isDisabled}
-                name="dateOfBirth"
-                onChange={onChange}
+                name="date_of_birth"
+                disabledDate={disabledDate}
+                // onChange={handleChangePatientProfile}
               />
             </Form.Item>
           </Col>
@@ -145,10 +183,11 @@ const ProfileDetail = () => {
             <Form.Item label="Giới tính" name="radio-group">
               <Radio.Group
                 defaultValue={patientProfile?.gender === "Male" ? "1" : "2"}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
                 name="gender"
                 disabled={isDisabled}
+                // onChange={handleChangePatientProfile}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
               >
                 <Radio value="1">Nam</Radio>
                 <Radio value="2">Nư</Radio>
@@ -159,11 +198,12 @@ const ProfileDetail = () => {
             <Form.Item label="Địa chỉ">
               <Input
                 defaultValue={patientProfile?.fulladdress}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-                name="address"
+                name="fulladdress"
                 prefix={<HomeOutlined />}
                 disabled={isDisabled}
+                // onChange={handleChangePatientProfile}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
               />
             </Form.Item>
           </Col>
@@ -192,4 +232,4 @@ const ProfileDetail = () => {
   );
 };
 
-export default ProfileDetail;
+export default memo(ProfileDetail);

@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Image } from "antd";
+import { memo } from "react";
 const { Meta } = Card;
 
 const ProfileCard = () => {
@@ -26,4 +27,4 @@ const ProfileCard = () => {
   );
 };
 
-export default ProfileCard;
+export default memo(ProfileCard);

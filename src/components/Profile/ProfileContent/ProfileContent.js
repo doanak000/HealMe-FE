@@ -2,6 +2,7 @@ import { Tabs } from "antd";
 import React from "react";
 import ProfileDetail from "../ProfileDetail/ProfileDetail";
 import WorkSchedular from "../WorkSchedular/WorkSchedular";
+import { memo } from "react";
 import PatientAppointment from "../PatientAppointment/PatientAppointment";
 
 const ProfileContent = () => {
@@ -43,4 +44,4 @@ const ProfileContent = () => {
   );
 };
 
-export default ProfileContent;
+export default memo(ProfileContent);

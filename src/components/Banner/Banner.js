@@ -25,9 +25,6 @@ const Banner = () => {
           </Button>
         </div>
       </div>
-      {/* <div className="col-lg-5 col-md-12 col-12">
-          <img src={banner} className="w-lg-100 w-100 py-2 banner__img" alt="" />
-        </div> */}
     </div>
   );
 };
