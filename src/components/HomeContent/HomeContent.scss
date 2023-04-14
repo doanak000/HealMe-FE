@@ -10,8 +10,14 @@
 //         margin-bottom: 20px;
 //     }
 // }
-
-.chatbox-area {
+.content-area {
+  h5 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2d4964;
+  }
+  .chatbox-area {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,10 +28,6 @@
     margin: 40px 80px;
   
     h5 {
-      font-size: 1.5rem;
-      font-weight: 500;
-      margin-bottom: 10px;
-      color: #2d4964;
       text-align: center;
     }
   
@@ -81,9 +83,4 @@
         }
     }
   }
-
-  .find-business-area {
-    h5 {
-        color: #2d4964;
-    }
-  }
+}

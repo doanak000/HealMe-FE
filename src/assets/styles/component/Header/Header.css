@@ -18,7 +18,8 @@
 
 .header__navbar-item .nav-link {
   color: #2d4964;
-  font-weight: 400;
+  font-weight: 700;
+  font-family: Open Sans, sans-serif;
 }
 
 .header__navbar-item:hover {
