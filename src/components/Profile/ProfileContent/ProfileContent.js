@@ -2,6 +2,7 @@ import { Tabs } from "antd";
 import React from "react";
 import ProfileDetail from "../ProfileDetail/ProfileDetail";
 import WorkSchedular from "../WorkSchedular/WorkSchedular";
+import PatientAppointment from "../PatientAppointment/PatientAppointment";
 
 const ProfileContent = () => {
   const onChange = (key) => {
@@ -17,7 +18,7 @@ const ProfileContent = () => {
     {
       key: "2",
       label: `Lich sử đơn hàng`,
-      children: `Content of Tab Pane 2`,
+      children: <PatientAppointment />,
     },
   ];
   const itemsOfDoctor = [

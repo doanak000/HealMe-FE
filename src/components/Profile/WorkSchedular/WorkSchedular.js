@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import {
   deleteWorkSchedule,
+  getApptByScheduleId,
   getWorkSchedule,
   registerWorkSchedule,
   updateWorkSchedule,
@@ -46,14 +47,16 @@ const WorkSchedular = () => {
   const [timeId, setTimeId] = useState(1);
   const [dataWorkSchedule, setDataWorkSchedule] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState();
   const [schedularId, setSchedularId] = useState(null);
   const [selectedTimeIdEdit, setSelectedTimeIdEdit] = useState(null);
+  const [dataApptByScheduleId, setDataApptByScheduleId] = useState(null);
   const disabledDate = (current) => {
     return current && current < moment().startOf("day");
   };
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const handleSelectTimeId = (event) => {
-    setTimeId(event?.target?.value);
+  const handleSelectTimeId = (value) => {
+    setTimeId(value);
   };
   const onRegisterSchedular = async (values) => {
     const data = {
@@ -88,10 +91,25 @@ const WorkSchedular = () => {
     setSchedularId(record.id);
     setIsModalOpen(true);
   };
+  const showDetailModal = async (record) => {
+    try {
+      setIsModalDetailOpen(true);
+      const res = await getApptByScheduleId(record.id);
+      console.log("res", res);
+      setDataApptByScheduleId(res[0]);
+    } catch (error) {
+      Notification({
+        type: NOTIFICATION_TYPE.ERROR,
+        message: "Hệ thống lỗi",
+        description: error?.response?.data?.msg,
+      });
+    }
+  };
   const handleDelete = async (record) => {
     try {
-      await deleteWorkSchedule(record.id);
+      const res = await deleteWorkSchedule(record.id);
       await getWorkScheduleData();
+      if (res[0][0].error_message) throw new Error();
       Notification({
         type: NOTIFICATION_TYPE.SUCCESS,
         message: "Delete success",
@@ -137,11 +155,65 @@ const WorkSchedular = () => {
         <Space size="middle">
           <Button onClick={() => showModal(record)}>Edit</Button>
           <Button onClick={() => handleDelete(record)}>Delete</Button>
+          <Button
+            onClick={() => {
+              showDetailModal(record);
+            }}
+          >
+            Detail
+          </Button>
         </Space>
       ),
     },
   ];
+  const columnsDetail = [
+    {
+      width: "100",
+      title: "Work Day",
+      dataIndex: "workday",
+      key: "workday",
+      render: (text) => <a>{moment(text).format("YYYY-MM-DD")}</a>,
+    },
+    {
+      width: "100",
+      title: "Buổi",
+      dataIndex: "time_id",
+      key: "time_id",
+      render: (time_id) => <a>{time_id == 1 ? "Buổi sáng" : "Buổi chiều"}</a>,
+    },
+    {
+      width: "100",
+      title: "Khung giờ",
+      dataIndex: "details",
+      key: "details",
+      render: (details) => <a>{details}</a>,
+    },
+    {
+      width: "100",
+      title: "Tên bệnh nhân",
+      dataIndex: "patient_name",
+      key: "patient_name",
+      render: (patient_name) => (
+        <a>{patient_name ? patient_name : "Chưa có"}</a>
+      ),
+    },
+    {
+      width: "100",
+      title: "Link khám",
+      dataIndex: "meeting_url",
+      key: "meeting_url",
+      render: (meeting_url) =>
+        meeting_url ? (
+          <a href={meeting_url} target="_blank">
+            Ấn vào đây
+          </a>
+        ) : (
+          "Chưa có"
+        ),
+    },
+  ];
   const handleSelectTimeIdEdit = (value) => {
+    console.log("value", value);
     setSelectedTimeIdEdit(value);
   };
   const handleOk = async () => {
@@ -225,7 +297,14 @@ const WorkSchedular = () => {
           </Form.Item>
         </Form>
         <Table columns={columns} dataSource={dataWorkSchedule} />
-        <Modal title="Edit Work Schedular" open={isModalOpen} onOk={handleOk}>
+        <Modal
+          title="Edit Work Schedular"
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={() => {
+            setIsModalOpen(false);
+          }}
+        >
           <Select
             style={{
               width: "100%",
@@ -237,6 +316,19 @@ const WorkSchedular = () => {
             <Option value="2">Buổi chiều</Option>
           </Select>
         </Modal>
+        <div className="schedular-detail">
+          <Modal
+            title="Chi tiết lịch khám"
+            open={isModalDetailOpen}
+            // onOk={handleModalDetailOk}
+            onCancel={() => {
+              setIsModalDetailOpen(false);
+            }}
+            width={"90%"}
+          >
+            <Table columns={columnsDetail} dataSource={dataApptByScheduleId} />
+          </Modal>
+        </div>
       </div>
     </div>
   );

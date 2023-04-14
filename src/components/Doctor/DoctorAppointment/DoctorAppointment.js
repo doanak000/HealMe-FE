@@ -104,25 +104,6 @@ const DoctorAppointment = () => {
     setDataAppointmentByScheduleId(data[0]);
     setIsModalOpen(true);
   };
-  const handleOk = async () => {
-    // try {
-    //   await updateWorkSchedule(schedularId, { time_id: selectedTimeIdEdit });
-    //   await getWorkScheduleData();
-    //   Notification({
-    //     type: NOTIFICATION_TYPE.SUCCESS,
-    //     message: "Edit success",
-    //     description: null,
-    //   });
-    //   setIsModalOpen(false);
-    // } catch (error) {
-    //   console.log(error);
-    //   Notification({
-    //     type: NOTIFICATION_TYPE.ERROR,
-    //     message: "Edit fail",
-    //     description: error?.response?.data?.msg,
-    //   });
-    // }
-  };
   const createAppointment = async (record) => {
     try {
       const data = {

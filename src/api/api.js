@@ -102,6 +102,14 @@ export const createAppt = async (data) => {
   const response = await authAxios.post(`/appt/api/create`, data);
   return response.data;
 };
+export const cancelAppt = async (id) => {
+  const response = await authAxios.post(`/appt/api/delete/${id}`);
+  return response.data;
+};
+export const getAppt = async (id) => {
+  const response = await authAxios.get(`/appt/pt/${id}`);
+  return response.data;
+};
 // Export all API call functions
 export default {
   login,
