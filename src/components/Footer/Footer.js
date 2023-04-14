@@ -51,7 +51,7 @@ const FooterLinks = () => {
 const FooterValue = () => {
   return (
     <div className="col-lg-2 col-md-6 footer-links">
-      <h4>Giá trị</h4>
+      <h4>Giá trị cốt lõi</h4>
       <ul>
         <li>Hiệu quả</li>
         <li>Nhanh chóng</li>
