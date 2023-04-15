@@ -19,6 +19,7 @@ import { loginSuccess } from "./loginSlice";
 import { NOTIFICATION_TYPE, PATH } from "../../constants/common";
 import { translation } from "../../configs/translation";
 import { login } from "../../api/api.js";
+import { useEffect } from "react";
 
 const layout = {
   labelCol: {
@@ -44,6 +45,15 @@ const Login = () => {
     username: "",
     password: "",
   });
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+
+    // return a cleanup function that cancels all subscriptions and asynchronous tasks
+    return () => {
+      setMounted(false);
+    };
+  }, []);
 
   const handleChange = (event) => {
     setUser({
@@ -52,6 +62,9 @@ const Login = () => {
     });
   };
   const loginHandler = async () => {
+    if (!mounted) {
+      return;
+    }
     setStopLogin(true);
     setLoadingState(true);
     try {
