@@ -1,35 +1,41 @@
 import { Image } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../../assets/styles/component/DoctorItem/DoctorItem.css";
 import { PATH } from "../../../constants/common";
+import { getClinicInfoApi } from "../../../api/api";
 
-const DoctorItem = () => {
-  const id = 123;
+const DoctorItem = (props) => {
+  const { item } = props;
+  const [clinicInfo, setClinicInfo] = useState(null);
+
+  useEffect(async () => {
+    const result = await getClinicInfoApi(item?.id);
+    setClinicInfo(result[0][0]);
+  }, []);
+
   return (
     <div className="row my-2 doctor-item-container p-2 mb-2 bg-body rounded bg-body rounded g-2">
-      <div className="col-3">
+      {/* <div className="col-3">
         <Image
           src="https://www.fvhospital.com/wp-content/uploads/2018/03/dr-vo-trieu-dat-2020.jpg"
           className="rounded"
         />
-      </div>
-      <div className="col-9 text-justify">
+      </div> */}
+      <div className="col-12 text-justify">
         <h4 className="text-justify doctor-name">
-          <Link to={`/home/doctor/${id}`} style={{ textDecoration: "none" }}>
-            Bs. Võ Triệu Đạt
+          <Link to={`/doctor/${item?.id}`} style={{ textDecoration: "none" }}>
+            {item?.business_name}
           </Link>
         </h4>
         <p className="text-justify">
-          <b>Chuyên khoa:</b> Khoa Sản Phụ khoa Trung tâm điều trị bệnh lý tuyến
-          vú
+          <b>Email:</b> {clinicInfo?.email}
         </p>
         <p className="text-justify">
-          <b>Kinh nghiệm:</b> Bác sĩ điều trị, Khoa Sản Phụ Khoa, Bệnh viện Hùng
-          Vương, thành phố Hồ Chí Minh, Việt Nam, 2005 – 2009
-          <br />
-          Bác sĩ trợ lý bác sĩ bên ngoài và bác sĩ hợp tác, Khoa Sản Phụ Khoa,
-          Bệnh viện FV, 2009 – 2010
+          <b>Phone:</b> {clinicInfo?.phone}
+        </p>
+        <p className="text-justify">
+          <b>Địa chỉ:</b> {clinicInfo?.fulladdress}
         </p>
       </div>
     </div>

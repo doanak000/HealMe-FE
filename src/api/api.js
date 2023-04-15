@@ -120,6 +120,18 @@ export const getPresDetail = async (id) => {
   return response.data;
 };
 
+export const getAllClinic = async (data) => {
+  const response = await authAxios.get(`/clinic`);
+  return response.data;
+};
+export const getFilterClinicByDeptIdApi = async (data) => {
+  const response = await authAxios.post("/clinic/search", data);
+  return response.data;
+};
+export const getClinicInfoApi = async (clinicId) => {
+  const response = await authAxios.get(`/clinic/${clinicId}`);
+  return response.data;
+};
 // Export all API call functions
 export default {
   login,
@@ -140,4 +152,6 @@ export default {
   createAppt,
   getPresByApptId,
   getPresDetail,
+  getAllClinic,
+  getFilterClinicByDeptIdApi,
 };
