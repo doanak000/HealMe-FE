@@ -1,36 +1,43 @@
-import { Select, Input, Button } from "antd";
+import { Select, Input, Button, Row, Col } from "antd";
 import React, { useEffect, useState } from "react";
 import DoctorList from "../Doctor/DoctorList/DoctorList";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllProvinceApi } from "../../features/area/areaSlice";
-import AreaSelect from "../AreaSelect/AreaSelect";
-import { getChatbotResponse } from "../../api/api";
+import {
+  getAllClinic,
+  getAllProvince,
+  getChatbotResponse,
+  getDistrictInProvince,
+  getFilterClinicByDeptIdApi,
+  getWardInDistrict,
+} from "../../api/api";
 import { NOTIFICATION_TYPE } from "../../constants/common";
 import { Notification } from "../Notification/Notification";
 import "./HomeContent.scss";
 
 const { TextArea } = Input;
 const HomeContent = () => {
-  const { provinces } = useSelector((state) => state.area);
   const [question, setQuestion] = useState(null);
   const [res, setRes] = useState(null);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllProvinceApi());
+  const [filterValue, setFilterValue] = useState(1);
+  const [departmentId, setDepartmentId] = useState("");
+
+  const [clinics, setClinics] = useState([]);
+
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+  const [provinceId, setProvinceId] = useState("");
+  const [districtId, setDistrictId] = useState("");
+  const [wardId, setWardId] = useState("");
+  const [disabledDistrict, setDisableDistrict] = useState(true);
+  const [disabledWard, setDisableWard] = useState(true);
+  const [districtsOptions, setDistrictsOptions] = useState([]);
+  const [wardsOptions, setWardsOptions] = useState([]);
+
+  useEffect(async () => {
+    await getAllClinic().then((res) => setClinics(res));
+    await getAllProvince().then((res) => setProvinces(res));
   }, []);
-
-  const provincesOptions = provinces.map(
-    ({ id: value, name: label, ...rest }) => ({
-      value,
-      label,
-      ...rest,
-    })
-  );
-
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
 
   const handleQuestion = (event) => {
     setQuestion(event?.target?.value);
@@ -49,6 +56,58 @@ const HomeContent = () => {
       });
       console.error(error);
       setLoadingState(false);
+    }
+  };
+
+  const provincesOptions = provinces.map(
+    ({ id: value, name: label, ...rest }) => ({
+      value,
+      label,
+      ...rest,
+    })
+  );
+
+  const handleChangeProvince = async (value) => {
+    setProvinceId(value);
+    const result = await getDistrictInProvince(value);
+    if (result[0].length === 0) return;
+    setDisableDistrict(false);
+    setDistrictsOptions(
+      result[0].map(({ id: value, title: label, ...rest }) => ({
+        value,
+        label,
+        ...rest,
+      }))
+    );
+  };
+
+  const handleChangeDistrict = async (value) => {
+    setDistrictId(value);
+    const result = await getWardInDistrict(value);
+    setDisableWard(false);
+    setWardsOptions(
+      result[0].map(({ id: value, title: label, ...rest }) => ({
+        value,
+        label,
+        ...rest,
+      }))
+    );
+  };
+
+  const handleFilterBusiness = async () => {
+    try {
+      const result = await getFilterClinicByDeptIdApi({
+        dept: departmentId,
+        ward: wardId,
+        district: districtId === "" ? districtId : districtId - 1,
+        province: provinceId,
+      });
+      // if (result.length === 0) return;
+      // const temp = [];
+      // temp.push(result[0]);
+      setClinics(result[0]);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -83,7 +142,7 @@ const HomeContent = () => {
                   width: 100,
                   color: "#2d4964",
                 }}
-                onChange={handleChange}
+                onChange={(value) => setFilterValue(value)}
                 options={[
                   {
                     value: 1,
@@ -99,52 +158,150 @@ const HomeContent = () => {
             </div>
           </div>
         </div>
+        <div className="row w-100 mt-2">
+          <div className="col-lg-6 col-md-12 col-12 my-1">
+            <Row gutter={8}>
+              <Col xs={8}>
+                <Select
+                  onChange={handleChangeProvince}
+                  options={provincesOptions}
+                  placeholder="Tỉnh/Thành phố"
+                  size="large"
+                  className="w-100"
+                />
+              </Col>
+              <Col xs={8}>
+                <Select
+                  onChange={handleChangeDistrict}
+                  options={districtsOptions}
+                  placeholder="Quận"
+                  size="large"
+                  className="w-100"
+                  disabled={disabledDistrict}
+                />
+              </Col>
+              <Col xs={8}>
+                <Select
+                  onChange={(value) => setWardId(value)}
+                  options={wardsOptions}
+                  placeholder="Huyện"
+                  size="large"
+                  className="w-100"
+                  disabled={disabledWard}
+                />
+              </Col>
+            </Row>
+          </div>
+          <div className="col-lg-4 col-md-12 col-12 my-1">
+            <Select
+              placeholder="Chuyên Môn"
+              onChange={(value) => setDepartmentId(value)}
+              options={[
+                {
+                  value: 1,
+                  label: "Tai - Mũi - Họng",
+                },
+                {
+                  value: 2,
+                  label: "Hô hấp",
+                },
+                {
+                  value: 3,
+                  label: "Dị ứng - Miễn dịch",
+                },
+                {
+                  value: 4,
+                  label: "Y học cổ truyền",
+                },
+                {
+                  value: 5,
+                  label: "Vật lý trị liệu - Phục hồi chức năng",
+                },
+                {
+                  value: 6,
+                  label: "Răng - Hàm - Mặt",
+                },
+                {
+                  value: 7,
+                  label: "Cơ Xương Khớp",
+                },
+                {
+                  value: 8,
+                  label: "Dinh dưỡng",
+                },
+                {
+                  value: 9,
+                  label: "Thận - Tiết niệu",
+                },
+                {
+                  value: 10,
+                  label: "Tim mạch",
+                },
+                {
+                  value: 11,
+                  label: "Chấn thương chỉnh hình - Cột sống",
+                },
+                {
+                  value: 12,
+                  label: "Thần kinh",
+                },
+                {
+                  value: 13,
+                  label: "Nhãn khoa",
+                },
+                {
+                  value: 14,
+                  label: "Nội tiết",
+                },
+                {
+                  value: 15,
+                  label: "Ung bướu",
+                },
+                {
+                  value: 16,
+                  label: "Vô sinh - Hiếm muộn",
+                },
+                {
+                  value: 17,
+                  label: "Nhi",
+                },
+                {
+                  value: 18,
+                  label: "Sản phụ khoa",
+                },
+                {
+                  value: 19,
+                  label: "Tiêu hóa - Gan mật",
+                },
+                {
+                  value: 20,
+                  label: "Da liễu - Thẩm mỹ",
+                },
+                {
+                  value: 21,
+                  label: "Đa Khoa",
+                },
+              ]}
+              size="large"
+              className="w-100"
+            />
+          </div>
+          <div className="col-lg-2 col-md-12 col-12 my-1">
+            <Button
+              type="primary"
+              size="large"
+              className="w-100"
+              onClick={handleFilterBusiness}
+            >
+              Tìm kiếm
+            </Button>
+          </div>
+        </div>
       </div>
-      <div className="row w-100 mt-2">
-        <div className="col-lg-2 col-md-12 col-12 my-1">
-          <Input
-            placeholder="Tìm kiếm theo tên"
-            style={{
-              width: 200,
-            }}
-            size="large"
-            className="w-100"
-          />
-        </div>
-        <div className="col-lg-5 col-md-12 col-12 my-1">
-          <AreaSelect />
-        </div>
-        <div className="col-lg-3 col-md-12 col-12 my-1">
-          <Select
-            placeholder="Chuyên Môn"
-            onChange={handleChange}
-            options={[
-              {
-                value: "Cơ - Xương - Khớp",
-                label: "Cơ - Xương - Khớp",
-              },
-              {
-                value: "Tai - Mũi - Họng",
-                label: "Tai - Mũi - Họng",
-              },
-              {
-                value: "Tim Mạch",
-                label: "Tim Mạch",
-              },
-            ]}
-            size="large"
-            className="w-100"
-          />
-        </div>
-        <div className="col-lg-2 col-md-12 col-12 my-1">
-          <Button type="primary" size="large" className="w-100">
-            Tìm kiếm
-          </Button>
-        </div>
-      </div>
+
       <div className="row">
         <div className="list-doctor my-3">
-          <DoctorList />
+          <DoctorList clinics={clinics} />
         </div>
       </div>
     </div>
