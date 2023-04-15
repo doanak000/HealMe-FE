@@ -28,6 +28,7 @@ import {
 } from "./WorkSchedular.style";
 import { NOTIFICATION_TYPE } from "../../../constants/common";
 import { Notification } from "../../Notification/Notification";
+import { confirm } from "../../ConfirmModal/ConfirmModal";
 const layout = {
   labelCol: {
     span: 24,
@@ -106,23 +107,28 @@ const WorkSchedular = () => {
     }
   };
   const handleDelete = async (record) => {
-    try {
-      const res = await deleteWorkSchedule(record.id);
-      await getWorkScheduleData();
-      if (res[0][0].error_message) throw new Error();
-      Notification({
-        type: NOTIFICATION_TYPE.SUCCESS,
-        message: "Delete success",
-        description: null,
-      });
-    } catch (error) {
-      console.log(error);
-      Notification({
-        type: NOTIFICATION_TYPE.ERROR,
-        message: "Delete fail",
-        description: error?.response?.data?.msg,
-      });
-    }
+    confirm({
+      content: "Bạn có chắc xóa không",
+      onOk: async () => {
+        try {
+          const res = await deleteWorkSchedule(record.id);
+          await getWorkScheduleData();
+          if (res[0][0].error_message) throw new Error();
+          Notification({
+            type: NOTIFICATION_TYPE.SUCCESS,
+            message: "Delete success",
+            description: null,
+          });
+        } catch (error) {
+          console.log(error);
+          Notification({
+            type: NOTIFICATION_TYPE.ERROR,
+            message: "Delete fail",
+            description: error?.response?.data?.msg,
+          });
+        }
+      },
+    });
   };
 
   const columns = [

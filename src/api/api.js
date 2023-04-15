@@ -110,6 +110,16 @@ export const getAppt = async (id) => {
   const response = await authAxios.get(`/appt/pt/${id}`);
   return response.data;
 };
+
+export const getPresByApptId = async (id) => {
+  const response = await authAxios.get(`/prescription/appt/${id}`);
+  return response.data;
+};
+export const getPresDetail = async (id) => {
+  const response = await authAxios.get(`/prescription/${id}`);
+  return response.data;
+};
+
 // Export all API call functions
 export default {
   login,
@@ -128,4 +138,6 @@ export default {
   deleteWorkSchedule,
   getApptByScheduleId,
   createAppt,
+  getPresByApptId,
+  getPresDetail,
 };

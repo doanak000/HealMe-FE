@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { deleteUserById, getAllUsers, updateUser } from "../../api/api.js";
 import { NOTIFICATION_TYPE, PATH } from "../../constants/common";
 import { Notification } from "../../components/Notification/Notification";
+import { confirm } from "../../components/ConfirmModal/ConfirmModal.js";
 
 const { Option } = Select;
 const Users = () => {
@@ -61,22 +62,27 @@ const Users = () => {
     setOpenCreate(false);
   };
   const handleDelete = async (record) => {
-    try {
-      await deleteUserById(record.id);
-      Notification({
-        type: NOTIFICATION_TYPE.SUCCESS,
-        message: "Delete success",
-        description: null,
-      });
-      getAllUsersApi();
-      setOpen(false);
-    } catch (error) {
-      Notification({
-        type: NOTIFICATION_TYPE.ERROR,
-        message: "Delete fail",
-        description: null,
-      });
-    }
+    confirm({
+      content: "Bạn có chắc xóa không?",
+      onOk: async () => {
+        try {
+          await deleteUserById(record.id);
+          Notification({
+            type: NOTIFICATION_TYPE.SUCCESS,
+            message: "Delete success",
+            description: null,
+          });
+          getAllUsersApi();
+          setOpen(false);
+        } catch (error) {
+          Notification({
+            type: NOTIFICATION_TYPE.ERROR,
+            message: "Delete fail",
+            description: null,
+          });
+        }
+      },
+    });
   };
 
   useEffect(() => {

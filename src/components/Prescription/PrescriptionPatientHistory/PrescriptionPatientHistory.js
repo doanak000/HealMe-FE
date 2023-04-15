@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table, Space, Modal } from "antd";
+import { Button, Table, Space } from "antd";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import { NOTIFICATION_TYPE } from "../../../constants/common";
 import { Notification } from "../../Notification/Notification";
-import {
-  cancelAppt,
-  getAppt,
-  getPresByApptId,
-  getPresDetail,
-} from "../../../api/api";
+import { cancelAppt, getAppt } from "../../../api/api";
 import { confirm } from "../../ConfirmModal/ConfirmModal";
 const layout = {
   labelCol: {
@@ -25,12 +20,11 @@ const tailLayout = {
     span: 24,
   },
 };
-const PatientAppointment = () => {
+const PrescriptionPatientHistory = () => {
   const dispatch = useDispatch();
 
   const [apptData, setApptData] = useState(null);
-  const [isModalPresOpen, setIsModalPresOpen] = useState(false);
-  const [pres, setPres] = useState(null);
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const getApptData = async () => {
     const data = await getAppt(userInfo?.user_role_id);
@@ -59,35 +53,13 @@ const PatientAppointment = () => {
       },
     });
   };
-  const handleShowModalPres = async (record) => {
-    try {
-      const getPresByApptIdRes = await getPresByApptId(4);
-      const getPresDetailRes = await getPresDetail(
-        getPresByApptIdRes[0][0]?.pres_id
-      );
-      const presTemp = {
-        ...getPresByApptIdRes[0][0],
-        presDetail: getPresDetailRes[0],
-      };
-      console.log("presTemp", presTemp);
-      await setPres(presTemp);
-      await setIsModalPresOpen(true);
-    } catch (error) {
-      console.log(error);
-      Notification({
-        type: NOTIFICATION_TYPE.ERROR,
-        message: "Có lỗi xảy ra",
-        description: error?.response?.data?.msg,
-      });
-    }
-  };
 
   const columns = [
     {
       width: "100",
-      title: "Work Day",
-      dataIndex: "workday",
-      key: "workday",
+      title: "Ngày tạo",
+      dataIndex: "created_date",
+      key: "created_date",
       render: (text) => <a>{moment(text).format("YYYY-MM-DD")}</a>,
     },
     {
@@ -122,9 +94,6 @@ const PatientAppointment = () => {
       render: (_, record) => (
         <Space size="middle">
           <Button onClick={() => handleCancelAppt(record)}>Hủy lịch</Button>
-          <Button onClick={() => handleShowModalPres(record)}>
-            Xem toa thuốc được kê
-          </Button>
         </Space>
       ),
     },
@@ -137,44 +106,9 @@ const PatientAppointment = () => {
     <div>
       <div className="register-work-schedular">
         <Table columns={columns} dataSource={apptData} />
-        <Modal
-          title="Toa thuốc"
-          open={isModalPresOpen}
-          onOk={() => {
-            setIsModalPresOpen(false);
-          }}
-          onCancel={() => {
-            setIsModalPresOpen(false);
-          }}
-        >
-          <div>
-            <p>
-              Người khám: <span>{pres?.business_name}</span>
-            </p>
-            <p>
-              Ngày tạo:{" "}
-              <span>{moment(pres?.created_date).format("YYYY-MM-DD")}</span>
-            </p>
-            <p>
-              Chẩn đoán: <span>{pres?.diagnosis}</span>
-            </p>
-            <p>Thuốc được kê:</p>
-            {pres?.presDetail.map((item, index) => {
-              return (
-                <div key={index} style={{ borderBottom: "1px solid black" }}>
-                  <p>Tên thuốc: {item?.title}</p>
-                  <p>Dạng: {item?.med_type}</p>
-                  <p>Note: {item?.note}</p>
-                  {/* <p>Nhà cung cấp: {item?.supplier}</p>
-                  <p>Thành phần: {item?.ingredients}</p> */}
-                </div>
-              );
-            })}
-          </div>
-        </Modal>
       </div>
     </div>
   );
 };
 
-export default PatientAppointment;
+export default PrescriptionPatientHistory;
