@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import DoctorList from "../Doctor/DoctorList/DoctorList";
 import {
   getAllClinic,
+  getAllPharmacy,
   getAllProvince,
   getChatbotResponse,
   getDistrictInProvince,
   getFilterClinicByDeptIdApi,
+  getFilterPharmacy,
   getWardInDistrict,
 } from "../../api/api";
 import { NOTIFICATION_TYPE } from "../../constants/common";
@@ -22,6 +24,7 @@ const HomeContent = () => {
   const [departmentId, setDepartmentId] = useState("");
 
   const [clinics, setClinics] = useState([]);
+  const [pharmacy, setPharmacy] = useState([]);
 
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -32,11 +35,13 @@ const HomeContent = () => {
   const [disabledDistrict, setDisableDistrict] = useState(true);
   const [disabledWard, setDisableWard] = useState(true);
   const [districtsOptions, setDistrictsOptions] = useState([]);
+  const [disabledDepartment, setDisabledDepartment] = useState(false);
   const [wardsOptions, setWardsOptions] = useState([]);
 
   useEffect(async () => {
     await getAllClinic().then((res) => setClinics(res));
     await getAllProvince().then((res) => setProvinces(res));
+    await getAllPharmacy().then((res) => setPharmacy(res));
   }, []);
 
   const handleQuestion = (event) => {
@@ -96,16 +101,23 @@ const HomeContent = () => {
 
   const handleFilterBusiness = async () => {
     try {
-      const result = await getFilterClinicByDeptIdApi({
-        dept: departmentId,
-        ward: wardId,
-        district: districtId === "" ? districtId : districtId - 1,
-        province: provinceId,
-      });
-      // if (result.length === 0) return;
-      // const temp = [];
-      // temp.push(result[0]);
-      setClinics(result[0]);
+      if (filterValue === 1) {
+        setDisabledDepartment(false);
+        const result = await getFilterClinicByDeptIdApi({
+          dept: departmentId,
+          ward: wardId,
+          district: districtId === "" ? districtId : districtId - 1,
+          province: provinceId,
+        });
+        setClinics(result[0]);
+      } else {
+        setDisabledDepartment(true);
+        const result = await getFilterPharmacy({
+          ward: wardId,
+          district: districtId === "" ? districtId : districtId - 1,
+          province: provinceId,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -154,6 +166,7 @@ const HomeContent = () => {
                   },
                 ]}
                 size="large"
+                onBlur={handleFilterBusiness}
               />
             </div>
           </div>
@@ -284,6 +297,7 @@ const HomeContent = () => {
               ]}
               size="large"
               className="w-100"
+              disabled={disabledDepartment}
             />
           </div>
           <div className="col-lg-2 col-md-12 col-12 my-1">
@@ -301,7 +315,11 @@ const HomeContent = () => {
 
       <div className="row">
         <div className="list-doctor my-3">
-          <DoctorList clinics={clinics} />
+          <DoctorList
+            clinics={clinics}
+            pharmacy={pharmacy}
+            filterValue={filterValue}
+          />
         </div>
       </div>
     </div>
