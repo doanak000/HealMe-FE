@@ -3,9 +3,16 @@ import DoctorItem from "../DoctorItem/DoctorItem";
 import { Pagination } from "antd";
 
 const DoctorList = (props) => {
-  const { clinics } = props;
+  const { clinics, pharmacy, filterValue } = props;
+  let listBusiness = [];
   const ITEMS_PER_PAGE = 4;
   const [state, setState] = useState({ minValue: 0, maxValue: 4 });
+
+  if (filterValue === 1) {
+    listBusiness = clinics;
+  } else {
+    listBusiness = pharmacy;
+  }
 
   const handleChange = (value) => {
     setState({
@@ -22,7 +29,7 @@ const DoctorList = (props) => {
           <DoctorItem item={item} key={item?.id} />
         </div>
       ))} */}
-      {clinics.slice(state.minValue, state.maxValue).map((item) => (
+      {listBusiness.slice(state.minValue, state.maxValue).map((item) => (
         <div className="col-12 col-md-12 col-lg-6">
           <DoctorItem item={item} key={item?.id} />
         </div>
@@ -31,7 +38,7 @@ const DoctorList = (props) => {
         defaultCurrent={1}
         defaultPageSize={ITEMS_PER_PAGE} //default size of page
         onChange={handleChange}
-        total={clinics.length}
+        total={listBusiness.length}
       />
     </div>
   );
