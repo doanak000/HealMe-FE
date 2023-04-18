@@ -120,8 +120,12 @@ export const getPresDetail = async (id) => {
   return response.data;
 };
 
-export const getAllClinic = async (data) => {
+export const getAllClinic = async () => {
   const response = await authAxios.get(`/clinic`);
+  return response.data;
+};
+export const getAllPharmacy = async () => {
+  const response = await authAxios.get(`/pharmacy`);
   return response.data;
 };
 export const getFilterClinicByDeptIdApi = async (data) => {
@@ -130,6 +134,10 @@ export const getFilterClinicByDeptIdApi = async (data) => {
 };
 export const getClinicInfoApi = async (clinicId) => {
   const response = await authAxios.get(`/clinic/${clinicId}`);
+  return response.data;
+};
+export const getFilterPharmacy = async (data) => {
+  const response = await authAxios.post(`/pharmacy/search`, data);
   return response.data;
 };
 // Export all API call functions
@@ -153,5 +161,7 @@ export default {
   getPresByApptId,
   getPresDetail,
   getAllClinic,
+  getAllPharmacy,
   getFilterClinicByDeptIdApi,
+  getFilterPharmacy,
 };
