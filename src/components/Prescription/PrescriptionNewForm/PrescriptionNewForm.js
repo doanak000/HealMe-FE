@@ -59,23 +59,82 @@
 
 // export default PrescriptionNewForm;
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Space, Select } from "antd";
+import debounce from "lodash/debounce";
 import { drugs } from "../../../static/drug";
+import {
+  getPresDetail,
+  getSearchMedicine,
+  updateArrPres,
+} from "../../../api/api";
+import { Notification } from "../../Notification/Notification";
+import { NOTIFICATION_TYPE } from "../../../constants/common";
 
-const PrescriptionNewForm = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form:", values);
+const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
+  const [form] = Form.useForm();
+  const [presDetailRes, setPresDetailRes] = useState(null);
+  const [optionsMedicine, setOptionsMedicine] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const initialState = [
+    {
+      med_id: "",
+      quantity: "",
+      note: "",
+    },
+  ];
+  const onFinish = async (values) => {
+    try {
+      await updateArrPres(presId, { details: values.details });
+      Notification({
+        type: NOTIFICATION_TYPE.SUCCESS,
+        message: "Thành công",
+        description: null,
+      });
+      setIsCreatePresModalOpen(false);
+    } catch (error) {
+      console.log(error);
+      Notification({
+        type: NOTIFICATION_TYPE.ERROR,
+        message: "Hệ thống lỗi",
+        description: error?.response?.data?.msg,
+      });
+    }
   };
+  const getPresDetailsById = async (presId) => {
+    const tempRes = await getPresDetail(presId);
+    setPresDetailRes(tempRes[0]);
+    form.setFieldsValue({
+      details: tempRes?.[0].length < 1 ? initialState : tempRes[0],
+    });
+  };
+  const getOptionsMedicine = async () => {
+    const res = await getSearchMedicine({ search_text: "" });
+    const newArrayOfObj = res?.[0].map(
+      ({ id: value, title: label, ...rest }) => ({
+        value,
+        label,
+        ...rest,
+      })
+    );
+    setOptionsMedicine(newArrayOfObj);
+  };
+
+  useEffect(() => {
+    getPresDetailsById(presId);
+    getOptionsMedicine();
+  }, []);
+
   return (
     <Form
       name="dynamic_form_nest_item"
       onFinish={onFinish}
       autoComplete="off"
       size="large"
+      form={form}
     >
-      <Form.List name="presciption">
+      <Form.List name="details">
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
@@ -89,7 +148,7 @@ const PrescriptionNewForm = () => {
               >
                 <Form.Item
                   {...restField}
-                  name={[name, "drugName"]}
+                  name={[name, "med_id"]}
                   rules={[
                     {
                       required: true,
@@ -99,25 +158,32 @@ const PrescriptionNewForm = () => {
                 >
                   <Select
                     showSearch
+                    loading={loading}
                     style={{
                       width: 200,
                     }}
                     placeholder="Nhập tên thuốc"
                     optionFilterProp="children"
                     filterOption={(input, option) =>
-                      (option?.label ?? "").includes(input)
+                      (option?.label ?? "")?.includes(input)
                     }
                     filterSort={(optionA, optionB) =>
                       (optionA?.label ?? "")
-                        .toLowerCase()
-                        .localeCompare((optionB?.label ?? "").toLowerCase())
+                        ?.toLowerCase()
+                        ?.localeCompare((optionB?.label ?? "")?.toLowerCase())
                     }
-                    options={drugs}
-                  />
+                    options={optionsMedicine}
+                  >
+                    {optionsMedicine?.map((option) => (
+                      <Select.Option key={option.id} value={option.id}>
+                        {option.title}
+                      </Select.Option>
+                    ))}
+                  </Select>
                 </Form.Item>
                 <Form.Item
                   {...restField}
-                  name={[name, "drugQuantity"]}
+                  name={[name, "quantity"]}
                   rules={[
                     {
                       required: true,
@@ -129,7 +195,7 @@ const PrescriptionNewForm = () => {
                 </Form.Item>
                 <Form.Item
                   {...restField}
-                  name={[name, "drugUsage"]}
+                  name={[name, "note"]}
                   rules={[
                     {
                       required: true,

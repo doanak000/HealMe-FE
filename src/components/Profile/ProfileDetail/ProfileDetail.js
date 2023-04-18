@@ -20,32 +20,32 @@ import {
 import dayjs from "dayjs";
 
 const ProfileDetail = () => {
-  const userInfo = useSelector(selectUserInfo);
-  const { patientProfile, userProfile } = useSelector((state) => state.profile);
-  const [isDisabled, setIsDisabled] = useState(true);
+  // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  // const { patientProfile, userProfile } = null;
+  // const [isDisabled, setIsDisabled] = useState(true);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getUserProfileApi(userInfo.id));
-    dispatch(getPatientProfileApi(userInfo.user_role_id));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getUserProfileApi(userInfo.id));
+  //   dispatch(getPatientProfileApi(userInfo.user_role_id));
+  // }, []);
 
-  console.log(userInfo?.id);
+  // console.log(userInfo?.id);
 
-  const form = useFormik({
-    initialValues: {
-      username: userProfile?.username,
-      email: userProfile?.email,
-      fullName: patientProfile?.fullname,
-      phone: userProfile?.phone,
-      dateOfBirth: new Date(),
-      gender: patientProfile?.gender,
-      address: patientProfile?.fulladdress,
-    },
-    validationSchema: profileValidationSchema,
-    enableReinitialize: true,
-  });
+  // const form = useFormik({
+  //   initialValues: {
+  //     username: userProfile?.username,
+  //     email: userProfile?.email,
+  //     fullName: patientProfile?.fullname,
+  //     phone: userProfile?.phone,
+  //     dateOfBirth: new Date(),
+  //     gender: patientProfile?.gender,
+  //     address: patientProfile?.fulladdress,
+  //   },
+  //   validationSchema: profileValidationSchema,
+  //   enableReinitialize: true,
+  // });
 
   // const handleChangeUserProfile = (e) => {
   //   const value = e.target.value;
@@ -88,15 +88,15 @@ const ProfileDetail = () => {
   const disabledDate = (current) => {
     return current && current > dayjs().endOf("day");
   };
-
   return (
     <div>
-      <Form
+      {/* <Form
         layout="vertical"
         style={{
           maxWidth: 600,
         }}
         size="large"
+        onFinish={onFinish}
         onSubmit={form.handleSubmit}
       >
         <Row gutter={18}>
@@ -227,7 +227,7 @@ const ProfileDetail = () => {
             Lưu
           </Button>
         </Form.Item>
-      </Form>
+      </Form> */}
     </div>
   );
 };

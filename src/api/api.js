@@ -132,6 +132,18 @@ export const getClinicInfoApi = async (clinicId) => {
   const response = await authAxios.get(`/clinic/${clinicId}`);
   return response.data;
 };
+export const createPres = async (data) => {
+  const response = await authAxios.post(`/prescription/api/create`, data);
+  return response.data;
+};
+export const getSearchMedicine = async (search) => {
+  const response = await authAxios.post(`/medicine/search`, search);
+  return response.data;
+};
+export const updateArrPres = async (id, data) => {
+  const response = await authAxios.post(`/prescription/${id}/api/update`, data);
+  return response.data;
+};
 // Export all API call functions
 export default {
   login,
@@ -154,4 +166,7 @@ export default {
   getPresDetail,
   getAllClinic,
   getFilterClinicByDeptIdApi,
+  createPres,
+  getSearchMedicine,
+  updateArrPres,
 };

@@ -4,6 +4,7 @@ import ProfileDetail from "../ProfileDetail/ProfileDetail";
 import WorkSchedular from "../WorkSchedular/WorkSchedular";
 import { memo } from "react";
 import PatientAppointment from "../PatientAppointment/PatientAppointment";
+import WorkSchedularManage from "../WorkSchedularManage/WorkSchedularManage";
 
 const ProfileContent = () => {
   const onChange = (key) => {
@@ -32,6 +33,11 @@ const ProfileContent = () => {
       key: "2",
       label: `Đăng ký lịch khám`,
       children: <WorkSchedular />,
+    },
+    {
+      key: "3",
+      label: "Quản lý lịch khám",
+      children: <WorkSchedularManage />,
     },
   ];
   return (
