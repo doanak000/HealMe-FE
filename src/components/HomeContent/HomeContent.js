@@ -40,7 +40,9 @@ const HomeContent = () => {
 
   useEffect(async () => {
     await getAllClinic().then((res) => setClinics(res));
-    await getAllProvince().then((res) => setProvinces(res));
+    await getAllProvince().then((res) =>
+      setProvinces([{ label: "All", value: "" }, ...res])
+    );
     await getAllPharmacy().then((res) => setPharmacy(res));
   }, []);
 
@@ -75,28 +77,30 @@ const HomeContent = () => {
   const handleChangeProvince = async (value) => {
     setProvinceId(value);
     const result = await getDistrictInProvince(value);
-    if (result[0].length === 0) return;
+    if (result?.[0].length < 1) return;
     setDisableDistrict(false);
-    setDistrictsOptions(
-      result[0].map(({ id: value, title: label, ...rest }) => ({
+    setDistrictsOptions([
+      { label: "All", value: "" },
+      ...result[0].map(({ id: value, title: label, ...rest }) => ({
         value,
         label,
         ...rest,
-      }))
-    );
+      })),
+    ]);
   };
 
   const handleChangeDistrict = async (value) => {
     setDistrictId(value);
     const result = await getWardInDistrict(value);
     setDisableWard(false);
-    setWardsOptions(
-      result[0].map(({ id: value, title: label, ...rest }) => ({
+    setWardsOptions([
+      { label: "All", value: "" },
+      ...result[0].map(({ id: value, title: label, ...rest }) => ({
         value,
         label,
         ...rest,
-      }))
-    );
+      })),
+    ]);
   };
 
   const handleFilterBusiness = async () => {
@@ -116,6 +120,32 @@ const HomeContent = () => {
           ward: wardId,
           district: districtId === "" ? districtId : districtId - 1,
           province: provinceId,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleClearFilter = async () => {
+    setProvinceId("");
+    setDistrictId("");
+    setWardId("");
+    try {
+      if (filterValue === 1) {
+        setDisabledDepartment(false);
+        const result = await getFilterClinicByDeptIdApi({
+          dept: "",
+          ward: "",
+          district: "",
+          province: "",
+        });
+        setClinics(result[0]);
+      } else {
+        setDisabledDepartment(true);
+        const result = await getFilterPharmacy({
+          ward: "",
+          district: "",
+          province: "",
         });
       }
     } catch (error) {
@@ -181,6 +211,7 @@ const HomeContent = () => {
                   placeholder="Tỉnh/Thành phố"
                   size="large"
                   className="w-100"
+                  value={provinceId}
                 />
               </Col>
               <Col xs={8}>
@@ -190,7 +221,8 @@ const HomeContent = () => {
                   placeholder="Quận"
                   size="large"
                   className="w-100"
-                  disabled={disabledDistrict}
+                  disabled={disabledDistrict || provinceId === ""}
+                  value={districtId}
                 />
               </Col>
               <Col xs={8}>
@@ -200,8 +232,12 @@ const HomeContent = () => {
                   placeholder="Huyện"
                   size="large"
                   className="w-100"
-                  disabled={disabledWard}
+                  disabled={disabledWard || districtId === ""}
+                  value={wardId}
                 />
+              </Col>
+              <Col xs={8}>
+                <Button onClick={handleClearFilter}>Clear Filter</Button>
               </Col>
             </Row>
           </div>

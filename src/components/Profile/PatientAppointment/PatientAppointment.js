@@ -61,7 +61,7 @@ const PatientAppointment = () => {
   };
   const handleShowModalPres = async (record) => {
     try {
-      const getPresByApptIdRes = await getPresByApptId(4);
+      const getPresByApptIdRes = await getPresByApptId(record.id);
       const getPresDetailRes = await getPresDetail(
         getPresByApptIdRes[0][0]?.pres_id
       );
@@ -140,9 +140,7 @@ const PatientAppointment = () => {
         <Modal
           title="Toa thuốc"
           open={isModalPresOpen}
-          onOk={() => {
-            setIsModalPresOpen(false);
-          }}
+          okButtonProps={{ style: { display: "none" } }}
           onCancel={() => {
             setIsModalPresOpen(false);
           }}
@@ -163,7 +161,7 @@ const PatientAppointment = () => {
               return (
                 <div key={index} style={{ borderBottom: "1px solid black" }}>
                   <p>Tên thuốc: {item?.title}</p>
-                  <p>Dạng: {item?.med_type}</p>
+                  <p>Số lương: {item?.quantity}</p>
                   <p>Note: {item?.note}</p>
                   {/* <p>Nhà cung cấp: {item?.supplier}</p>
                   <p>Thành phần: {item?.ingredients}</p> */}

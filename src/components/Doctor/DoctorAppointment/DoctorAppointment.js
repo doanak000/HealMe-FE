@@ -81,7 +81,7 @@ import { NOTIFICATION_TYPE } from "../../../constants/common";
 //   },
 // ];
 
-const DoctorAppointment = () => {
+const DoctorAppointment = ({ businessId }) => {
   const [selectedScheduleId, setSelectedScheduleId] = useState(null);
   const [dataWorkSchedule, setDataWorkSchedule] = useState(null);
   const [dataAppointmentByScheduleId, setDataAppointmentByScheduleId] =
@@ -94,7 +94,7 @@ const DoctorAppointment = () => {
   // };
   const getWorkScheduleData = async () => {
     // const data = await getWorkSchedule(Bacsi?.user_role_id);
-    const data = await getWorkSchedule(26);
+    const data = await getWorkSchedule(businessId);
     setDataWorkSchedule(data[0]);
   };
   const showModalTableDataAppointmentByScheduleId = async (record) => {

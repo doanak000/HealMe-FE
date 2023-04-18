@@ -23,6 +23,7 @@ import {
   getPresByApptId,
   getWorkSchedule,
   registerWorkSchedule,
+  updatePresDiagnois,
   updateWorkSchedule,
 } from "../../../api/api";
 
@@ -53,14 +54,9 @@ const WorkSchedularManage = () => {
   const dispatch = useDispatch();
   const [timeId, setTimeId] = useState(1);
   const [dataWorkSchedule, setDataWorkSchedule] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalDetailOpen, setIsModalDetailOpen] = useState();
-  const [schedularId, setSchedularId] = useState(null);
-  const [selectedTimeIdEdit, setSelectedTimeIdEdit] = useState(null);
-  const [dataApptByScheduleId, setDataApptByScheduleId] = useState(null);
   const [dataApptByScheduleIdTotal, setDataApptByScheduleIdTotal] =
     useState(null);
-  const [diagnosisState, setDiagonosisState] = useState(null);
+  const [diagnosisState, setDiagonosisState] = useState("");
   const [createPresState, setCreatePresState] = useState(null);
   const [isCreatePresModalOpen, setIsCreatePresModalOpen] = useState(false);
   const [presId, setPresId] = useState(null);
@@ -70,7 +66,6 @@ const WorkSchedularManage = () => {
     const data = await getWorkSchedule(userInfo?.user_role_id);
     setDataWorkSchedule(data[0]);
     const arr = data[0].map((obj) => obj.id);
-    console.log("arr", arr);
     const getApptByScheduleIdTotal = [];
 
     for (const item of arr) {
@@ -81,13 +76,14 @@ const WorkSchedularManage = () => {
     }
 
     await Promise.all(getApptByScheduleIdTotal);
-    console.log("getApptByScheduleIdTotal", getApptByScheduleIdTotal);
     setDataApptByScheduleIdTotal(
       getApptByScheduleIdTotal.filter((item) => item.appt_id !== null)
     );
   };
   const showCreatePresModal = async (record) => {
     setCreatePresState(record);
+    const res = await getPresByApptId(record?.appt_id);
+    setDiagonosisState(res?.[0]?.[0]?.diagnosis);
     setIsCreatePresModalOpen(true);
   };
   const onChangeDiagonosis = (event) => {
@@ -105,7 +101,9 @@ const WorkSchedularManage = () => {
         });
         setPresId(resCreatePres[0][0].pres_id);
       } else {
-        const resUpdatePres = await updatePres(res?.[0]?.[0]?.pres_id);
+        const resUpdatePres = await updatePresDiagnois(res?.[0]?.[0]?.pres_id, {
+          diagnosis: diagnosisState,
+        });
         setPresId(res?.[0]?.[0]?.pres_id);
       }
       setStep(2);
@@ -294,14 +292,48 @@ const WorkSchedularManage = () => {
         <Modal
           title="Kê thuốc"
           open={isCreatePresModalOpen}
-          // onOk={handleModalDetailOk}
+          okButtonProps={{ style: { display: "none" } }}
           onCancel={() => {
             setIsCreatePresModalOpen(false);
           }}
+          footer={[
+            step == 2 && (
+              <Button
+                onClick={() => {
+                  setStep(1);
+                }}
+              >
+                Quay lại
+              </Button>
+            ),
+            <Button
+              key="cancel"
+              onClick={() => {
+                setIsCreatePresModalOpen(false);
+              }}
+            >
+              Cancel
+            </Button>,
+          ]}
         >
-          <p>Chuẩn đoán :</p>
-          <Input name="diagonosis" onChange={onChangeDiagonosis}></Input>
-          <Button onClick={handleCreatePres}>Submit bệnh</Button>
+          {step == 1 && (
+            <>
+              {" "}
+              <p>Chuẩn đoán :</p>
+              <Input
+                name="diagonosis"
+                onChange={onChangeDiagonosis}
+                value={diagnosisState}
+              ></Input>
+              <Button
+                onClick={handleCreatePres}
+                style={{ marginTop: "20px", marginBottom: "20px" }}
+              >
+                Submit bệnh
+              </Button>
+            </>
+          )}
+
           {step == 2 && (
             <>
               <PrescriptionNewForm

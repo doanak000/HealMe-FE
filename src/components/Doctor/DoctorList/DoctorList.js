@@ -1,25 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DoctorItem from "../DoctorItem/DoctorItem";
-import { Pagination } from "antd";
+import { Input, Pagination } from "antd";
 
 const DoctorList = (props) => {
   const { clinics, pharmacy, filterValue } = props;
-  let listBusiness = [];
+  const [searchText, setSearchText] = useState("");
+  const [listBusiness, setListBusiness] = useState([]);
+  const [listBusinessTemp, setListBusinessTemp] = useState([]);
   const ITEMS_PER_PAGE = 4;
   const [state, setState] = useState({ minValue: 0, maxValue: 4 });
-
-  if (filterValue === 1) {
-    listBusiness = clinics;
-  } else {
-    listBusiness = pharmacy;
-  }
-
+  console.log(filterValue);
+  useEffect(() => {
+    if (filterValue === 1) {
+      setListBusiness(clinics);
+      setListBusinessTemp(clinics);
+    } else {
+      setListBusiness(pharmacy);
+      setListBusinessTemp(pharmacy);
+    }
+  }, [clinics, pharmacy, filterValue]);
   const handleChange = (value) => {
     setState({
       ...state,
       minValue: (value - 1) * ITEMS_PER_PAGE,
       maxValue: value * ITEMS_PER_PAGE,
     });
+  };
+  const handleSearch = (event) => {
+    const { value } = event.target;
+    setSearchText(value);
+    const listBusinessCookedData = listBusiness.filter((item) =>
+      item?.business_name.toLowerCase().includes(value.toLowerCase())
+    );
+    setListBusinessTemp(listBusinessCookedData);
   };
 
   return (
@@ -29,7 +42,8 @@ const DoctorList = (props) => {
           <DoctorItem item={item} key={item?.id} />
         </div>
       ))} */}
-      {listBusiness.slice(state.minValue, state.maxValue).map((item) => (
+      <Input placeholder="search ở đây" onChange={handleSearch} />
+      {listBusinessTemp.slice(state.minValue, state.maxValue).map((item) => (
         <div className="col-12 col-md-12 col-lg-6">
           <DoctorItem item={item} key={item?.id} />
         </div>

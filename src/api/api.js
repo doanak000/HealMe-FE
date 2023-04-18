@@ -153,6 +153,13 @@ export const getFilterPharmacy = async (data) => {
   const response = await authAxios.post(`/pharmacy/search`, data);
   return response.data;
 };
+export const updatePresDiagnois = async (id, data) => {
+  const response = await authAxios.post(
+    `/prescription/${id}/api/update/diagnosis`,
+    data
+  );
+  return response.data;
+};
 // Export all API call functions
 export default {
   login,
@@ -180,4 +187,5 @@ export default {
   getSearchMedicine,
   updateArrPres,
   getFilterPharmacy,
+  updatePresDiagnois,
 };

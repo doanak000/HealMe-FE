@@ -209,17 +209,21 @@ const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
               </Space>
             ))}
             <Form.Item>
-              <Button
-                type="dashed"
-                onClick={() => add()}
-                block
-                icon={<PlusOutlined />}
-                className="w-25 me-4"
-              >
-                Thêm thuốc
+              <Button type="dashed" onClick={() => add()} className="w-25 me-4">
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "baseline",
+                    flexDirection: "row",
+                  }}
+                >
+                  <PlusOutlined />
+                  <p style={{ marginLeft: "5px" }}>Thêm</p>
+                </div>
               </Button>
               <Button type="primary" htmlType="submit">
-                Tạo toa thuốc
+                Xác nhận toa thuốc
               </Button>
             </Form.Item>
           </>
