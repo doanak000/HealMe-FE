@@ -1,4 +1,4 @@
-import { Select, Input, Button, Row, Col } from "antd";
+import { Select, Input, Button, Row, Col, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import DoctorList from "../Doctor/DoctorList/DoctorList";
 import {
@@ -14,6 +14,7 @@ import {
 import { NOTIFICATION_TYPE } from "../../constants/common";
 import { Notification } from "../Notification/Notification";
 import "./HomeContent.scss";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 const HomeContent = () => {
@@ -38,6 +39,8 @@ const HomeContent = () => {
   const [disabledDepartment, setDisabledDepartment] = useState(false);
   const [wardsOptions, setWardsOptions] = useState([]);
 
+  const [isLoading,setIsLoading] = useState(false);
+
   useEffect(async () => {
     await getAllClinic().then((res) => setClinics(res));
     await getAllProvince().then((res) =>
@@ -52,8 +55,10 @@ const HomeContent = () => {
 
   const sendQuestion = async () => {
     try {
+      setIsLoading(true)
       const chatRes = await getChatbotResponse(question);
       setRes(chatRes?.content);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       Notification({
@@ -163,15 +168,17 @@ const HomeContent = () => {
             placeholder="Mô tả triệu chứng bệnh"
           ></Input>
           <Button onClick={sendQuestion} disabled={!question}>
-            Send
+            Gửi
           </Button>
         </div>
-        <TextArea
+        {isLoading?(<><Spin indicator={<LoadingOutlined spin/>}/>
+        <span>Bạn chờ HealMe một tí nhé!!!</span></>):<TextArea
           rows={4}
           value={res}
           disabled
           placeholder="AI sẽ tư vấn cho bạn sơ lược về sức khỏe cũng như đưa ra lời khuyên"
-        />
+        />}
+        
       </div>
       <div className="find-business-area">
         <h5>Tìm kiếm bác sĩ/dược sĩ</h5>

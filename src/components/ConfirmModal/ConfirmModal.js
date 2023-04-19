@@ -4,7 +4,7 @@ import { Modal } from 'antd'
 
 export const confirm = (props) => {
   Modal.confirm({
-    title: 'Confirm',
+    title: 'Xác nhận',
     icon: <ExclamationCircleOutlined />,
     ...props
   })
