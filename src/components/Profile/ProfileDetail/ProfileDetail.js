@@ -17,12 +17,18 @@ import {
   getDistrictInProvince,
   getFullAddressByWardIdApi,
   getPatientProfileApi,
+  getUserInfo,
   getWardInDistrict,
+  updateAddress,
+  updateArrPres,
+  updatePatientProfile,
+  updateUser,
 } from "../../../api/api";
+import { NOTIFICATION_TYPE } from "../../../constants/common";
+import { Notification } from "../../Notification/Notification";
 
 const ProfileDetail = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const { patientProfile } = {};
   const [userProfile, setUserProfile] = useState();
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -31,13 +37,11 @@ const ProfileDetail = () => {
   const [optionsWard, setOptionsWard] = useState(null);
   const [disabledDistrict, setDisabledDistrict] = useState(true);
   const [disabledWard, setDisabledWard] = useState(true);
-  const [selectedWard, setSelectedWard] = useState(null);
   const [fullAddressByWardId, setFullAddressByWardId] = useState(null);
   const [provinceState, setProvinceState] = useState(null);
   const [districtState, setDistrictState] = useState(null);
   const [wardState, setWardState] = useState(null);
 
-  const dispatch = useDispatch();
   const getPatientProfile = async () => {
     const res = await getPatientProfileApi(userInfo.user_role_id);
     setUserProfile(res?.[0]?.[0]);
@@ -59,7 +63,6 @@ const ProfileDetail = () => {
       label,
       ...rest,
     }));
-    console.log("district", cookedData);
     setOptionsDistrict(cookedData);
   };
   const getWardInDistrictApi = async (districtId) => {
@@ -100,40 +103,69 @@ const ProfileDetail = () => {
     getAllProvinceApi();
   }, []);
 
-  console.log(userInfo?.id);
-
-  const handleChangeProfile = () => {
-    const { id, email, phone, username, role_id, user_role_id } =
-      userProfileForm;
-    const updatedUserProfile = {
-      email,
-      phone,
-      username,
-      role_id,
-    };
-    console.log(form.values);
-    dispatch(
-      updateUserProfileApi(id, updatedUserProfile, () => {
-        dispatch(getPatientProfileApi(user_role_id));
-      })
-    );
-    dispatch(
-      updatePatientProfileApi(user_role_id, patientProfileForm, () => {
-        dispatch(getPatientProfileApi(user_role_id));
-      })
-    );
-  };
-
   const disabledDate = (current) => {
     return current && current > dayjs().endOf("day");
   };
-  const onFinish = (values) => {
-    console.log({
+  const regetUserInfo = async () => {
+    const res = await getUserInfo(userInfo?.id);
+    localStorage.setItem("userInfo", JSON.stringify(res?.[0]?.[0]));
+    // localStorage.setItem("userInfo", JSON.stringify(res?.[0]?.[0]));
+  };
+  const onFinish = async (values) => {
+    const data = {
       ...values,
       district: districtState ?? values.district,
       province: provinceState ?? values.province,
       ward: wardState ?? values.ward,
+    };
+
+    // Update patient profile, user, and address information
+    const updatePatientProfilePromise = updatePatientProfile(
+      userInfo?.user_role_id,
+      {
+        fullname: data?.fullname,
+        dob: moment(data?.dob).format("YYYY-MM-DD"),
+        gender: data?.gender,
+      }
+    );
+    const updateUserPromise = updateUser(userInfo?.id, {
+      phone: data?.phone,
+      email: data?.email,
     });
+    const updateAddressPromise = updateAddress(userInfo?.id, {
+      address: data.fulladdress,
+      ward: data.ward,
+    });
+    await Promise.all([
+      updatePatientProfilePromise,
+      updateUserPromise,
+      updateAddressPromise,
+    ])
+      .then(() => {})
+      .catch(() => {
+        Notification({
+          type: NOTIFICATION_TYPE.ERROR,
+          message: "Có lỗi xảy ra !!!",
+          description: null,
+        });
+      });
+
+    try {
+      regetUserInfo();
+      Notification({
+        type: NOTIFICATION_TYPE.SUCCESS,
+        message: "Chỉnh sửa thành công !!!",
+        description: null,
+      });
+      setIsDisabled(true);
+    } catch (error) {
+      Notification({
+        type: NOTIFICATION_TYPE.ERROR,
+        message: "Có lỗi xảy ra !!!",
+        description: null,
+      });
+    }
+    // Get user info after all three updates are completed
   };
   return (
     <div>
@@ -205,8 +237,9 @@ const ProfileDetail = () => {
                 <Input
                   defaultValue={userInfo?.email}
                   name="email"
+                  disabled={isDisabled}
                   prefix={<MailOutlined />}
-                  disabled
+                  type="email"
                   // onChange={handleChangeUserProfile}
                 />
               </Form.Item>
@@ -354,7 +387,8 @@ const ProfileDetail = () => {
                 <Select
                   defaultValue={fullAddressByWardId?.district_id}
                   name="district"
-                  disabled={disabledDistrict}
+                  // disabled={disabledDistrict}
+                  disabled={isDisabled}
                   options={optionsDistrict}
                   style={{
                     width: "95%",
@@ -394,7 +428,8 @@ const ProfileDetail = () => {
                 {" "}
                 <Select
                   defaultValue={fullAddressByWardId?.ward_id}
-                  disabled={disabledWard}
+                  // disabled={disabledWard}
+                  disabled={isDisabled}
                   options={optionsWard}
                   style={{
                     width: "100%",
@@ -412,6 +447,7 @@ const ProfileDetail = () => {
               size="large"
               className="me-3"
               onClick={() => setIsDisabled(false)}
+              disabled={!isDisabled}
             >
               Chỉnh sửa
             </Button>
@@ -420,6 +456,7 @@ const ProfileDetail = () => {
               size="large"
               htmlType="submit"
               // onClick={handleChangeProfile}
+              disabled={isDisabled}
             >
               Lưu
             </Button>

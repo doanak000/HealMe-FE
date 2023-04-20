@@ -168,6 +168,18 @@ export const getFullAddressByWardIdApi = async (id) => {
   const response = await authAxios.get(`/area/ward/${id}`);
   return response.data;
 };
+export const updatePatientProfile = async (id, data) => {
+  const response = await authAxios.post(`/patient/${id}/api/update`, data);
+  return response.data;
+};
+export const updateAddress = async (id, data) => {
+  const response = await authAxios.post(`/users/${id}/api/add-address`, data);
+  return response.data;
+};
+export const getUserInfo = async (id) => {
+  const response = await authAxios.get(`/users/api/get/${id}`);
+  return response.data;
+};
 // Export all API call functions
 export default {
   login,
@@ -198,4 +210,7 @@ export default {
   updatePresDiagnois,
   getPatientProfileApi,
   getFullAddressByWardIdApi,
+  updatePatientProfile,
+  updateAddress,
+  getUserInfo,
 };
