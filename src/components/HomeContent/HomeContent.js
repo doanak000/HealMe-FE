@@ -39,7 +39,7 @@ const HomeContent = () => {
   const [disabledDepartment, setDisabledDepartment] = useState(false);
   const [wardsOptions, setWardsOptions] = useState([]);
 
-  const [isLoading,setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(async () => {
     await getAllClinic().then((res) => setClinics(res));
@@ -161,26 +161,30 @@ const HomeContent = () => {
   return (
     <div className="my-3 content-area">
       <div className="chatbox-area">
-        <h5>AI tư vấn sức khỏe </h5>
-        <div className="chatbox-area-input">
-          <Input
-            onChange={handleQuestion}
-            placeholder="Mô tả triệu chứng bệnh"
-          ></Input>
-          <Button onClick={sendQuestion} disabled={!question}>
-            Gửi
-          </Button>
-        </div>
-        {isLoading?(<><Spin indicator={<LoadingOutlined spin/>}/>
-        <span>Bạn chờ HealMe một tí nhé!!!</span></>):<TextArea
-          rows={4}
-          value={res}
-          disabled
-          placeholder="AI sẽ tư vấn cho bạn sơ lược về sức khỏe cũng như đưa ra lời khuyên"
-        />}
-        
+        <Row>
+          <Col xs={20}>
+            <h5>AI tư vấn sức khỏe </h5>
+            <div className="chatbox-area-input">
+              <Input
+                onChange={handleQuestion}
+                placeholder="Mô tả triệu chứng bệnh"
+              ></Input>
+              <Button onClick={sendQuestion} disabled={!question}>
+                Gửi
+              </Button>
+            </div>
+            {isLoading ? (<><Spin indicator={<LoadingOutlined spin />} />
+              <span>Bạn chờ HealMe một tí nhé!!!</span></>) : <TextArea
+              rows={4}
+              value={res}
+              disabled
+              placeholder="AI sẽ tư vấn cho bạn sơ lược về sức khỏe cũng như đưa ra lời khuyên"
+            />}
+          </Col>
+          <Col xs={4}>AHIHI</Col>
+        </Row>
       </div>
-      <div className="find-business-area">
+      <div className="find-business-area" id="dat-lich">
         <h5>Tìm kiếm bác sĩ/dược sĩ</h5>
         <div className="row">
           <div className="col-12 col-md-12 col-lg-12">
@@ -232,7 +236,7 @@ const HomeContent = () => {
                   value={districtId}
                 />
               </Col>
-              <Col xs={8}>
+              <Col xs={4}>
                 <Select
                   onChange={(value) => setWardId(value)}
                   options={wardsOptions}
@@ -243,8 +247,8 @@ const HomeContent = () => {
                   value={wardId}
                 />
               </Col>
-              <Col xs={8}>
-                <Button onClick={handleClearFilter}>Clear Filter</Button>
+              <Col xs={4}>
+                <Button onClick={handleClearFilter} size="large">Xóa bộ lọc</Button>
               </Col>
             </Row>
           </div>
