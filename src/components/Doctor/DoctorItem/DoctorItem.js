@@ -37,6 +37,9 @@ const DoctorItem = (props) => {
         <p className="text-justify">
           <b>Địa chỉ:</b> {clinicInfo?.fulladdress}
         </p>
+        <p className="text-justify">
+          <b>Mô tả:</b> {clinicInfo?.descr}
+        </p>
       </div>
     </div>
   );

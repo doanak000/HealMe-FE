@@ -80,7 +80,7 @@ const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
   const initialState = [
     {
       med_id: "",
-      quantity: "",
+      dosage: "",
       note: "",
     },
   ];
@@ -183,7 +183,7 @@ const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
                 </Form.Item>
                 <Form.Item
                   {...restField}
-                  name={[name, "quantity"]}
+                  name={[name, "dosage"]}
                   rules={[
                     {
                       required: true,

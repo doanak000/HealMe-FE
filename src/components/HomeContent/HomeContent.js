@@ -188,11 +188,11 @@ const HomeContent = () => {
                 options={[
                   {
                     value: 1,
-                    label: "Bác Sĩ",
+                    label: "Phòng khám",
                   },
                   {
                     value: 2,
-                    label: "Dược Sĩ",
+                    label: "Nhà thuốc",
                   },
                 ]}
                 size="large"

@@ -159,9 +159,9 @@ const PatientAppointment = () => {
             <p>Thuốc được kê:</p>
             {pres?.presDetail.map((item, index) => {
               return (
-                <div key={index} style={{ borderBottom: "1px solid black" }}>
+                <div key={index} style={{ border: "1px solid black" }}>
                   <p>Tên thuốc: {item?.title}</p>
-                  <p>Số lương: {item?.quantity}</p>
+                  <p>Số lương: {item?.dosage}</p>
                   <p>Note: {item?.note}</p>
                   {/* <p>Nhà cung cấp: {item?.supplier}</p>
                   <p>Thành phần: {item?.ingredients}</p> */}
