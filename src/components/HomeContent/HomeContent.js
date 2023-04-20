@@ -161,28 +161,25 @@ const HomeContent = () => {
   return (
     <div className="my-3 content-area">
       <div className="chatbox-area">
-        <Row>
-          <Col xs={20}>
-            <h5>AI tư vấn sức khỏe </h5>
-            <div className="chatbox-area-input">
-              <Input
-                onChange={handleQuestion}
-                placeholder="Mô tả triệu chứng bệnh"
-              ></Input>
-              <Button onClick={sendQuestion} disabled={!question}>
-                Gửi
-              </Button>
-            </div>
-            {isLoading ? (<><Spin indicator={<LoadingOutlined spin />} />
-              <span>Bạn chờ HealMe một tí nhé!!!</span></>) : <TextArea
-              rows={4}
-              value={res}
-              disabled
-              placeholder="AI sẽ tư vấn cho bạn sơ lược về sức khỏe cũng như đưa ra lời khuyên"
-            />}
-          </Col>
-          <Col xs={4}>AHIHI</Col>
-        </Row>
+
+        <h5>AI tư vấn sức khỏe </h5>
+        <div className="chatbox-area-input">
+          <Input
+            onChange={handleQuestion}
+            placeholder="Mô tả triệu chứng bệnh"
+          ></Input>
+          <Button onClick={sendQuestion} disabled={!question}>
+            Gửi
+          </Button>
+        </div>
+        {isLoading ? (<><Spin indicator={<LoadingOutlined spin />} />
+          <span>Bạn chờ HealMe một tí nhé!!!</span></>) : <TextArea
+          rows={4}
+          value={res}
+          disabled
+          placeholder="AI sẽ tư vấn cho bạn sơ lược về sức khỏe cũng như đưa ra lời khuyên"
+        />}
+
       </div>
       <div className="find-business-area" id="dat-lich">
         <h5>Tìm kiếm bác sĩ/dược sĩ</h5>
