@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DoctorItem from "../DoctorItem/DoctorItem";
 import { Input, Pagination } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 
 const DoctorList = (props) => {
   const { clinics, pharmacy, filterValue } = props;
@@ -37,12 +38,7 @@ const DoctorList = (props) => {
 
   return (
     <div className="row">
-      {/* {clinics?.map((item) => (
-        <div className="col-12 col-md-12 col-lg-6">
-          <DoctorItem item={item} key={item?.id} />
-        </div>
-      ))} */}
-      <Input placeholder="search ở đây" onChange={handleSearch} />
+      <Input placeholder="Nhập tên bác sĩ/dược sĩ/phòng khám để tìm" onChange={handleSearch} size="large" className="ms-2 mb-2 w-100" prefix={<SearchOutlined />} />
       {listBusinessTemp.slice(state.minValue, state.maxValue).map((item) => (
         <div className="col-12 col-md-12 col-lg-6">
           <DoctorItem item={item} key={item?.id} />
@@ -50,7 +46,7 @@ const DoctorList = (props) => {
       ))}
       <Pagination
         defaultCurrent={1}
-        defaultPageSize={ITEMS_PER_PAGE} //default size of page
+        defaultPageSize={ITEMS_PER_PAGE}
         onChange={handleChange}
         total={listBusiness.length}
       />

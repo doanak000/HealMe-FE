@@ -54,7 +54,7 @@ const Header = () => {
     {
       key: 3,
       label: (
-        <a className="mb-0" onClick={logoutHandle}>
+        <a className="mb-0 text-danger" onClick={logoutHandle}>
           Đăng xuất
         </a>
       ),
@@ -63,12 +63,13 @@ const Header = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-primary">
         <div className="container">
           <a className="navbar-brand" href="/">
-            <div className="header__logo overflow-hidden">
-              <img src={logo} className="w-50 healme-logo" />
+            <div className="header__logo overflow-hidden p-2 rounded bg-white">
+              <img src={logo} className="healme-logo" width={26} height={40} />
             </div>
+
           </a>
           <button
             className="navbar-toggler"
@@ -85,7 +86,7 @@ const Header = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               {navbarList.map((item) => (
                 <li className="header__navbar-item" key={item.key}>
-                  <a className="nav-link" href="/">
+                  <a className="nav-link text-white" href="/">
                     {item.value}
                   </a>
                 </li>
@@ -112,7 +113,7 @@ const Header = () => {
               </li>
             </ul>
             <form
-              className="d-flex"
+              className="d-flex text-white"
               style={{ justifyContent: "center", alignItems: "center" }}
             >
               {isLoggedIn || localStorage.getItem("token") ? (

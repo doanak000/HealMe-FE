@@ -3,7 +3,6 @@ import { Button, Col, DatePicker, Form, Input, Row, Radio } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserInfo } from "../../../features/login/loginSlice";
 import { useFormik } from "formik";
-import { profileValidationSchema } from "../../../validations/profileValidationSchema";
 import {
   getPatientProfileApi,
   getUserProfileApi,
