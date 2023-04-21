@@ -420,11 +420,7 @@ const Register = () => {
                 },
               ]}
             >
-              <Input
-                placeholde="Số nhà, tên đường"
-                onChange={handleChange}
-                name="address"
-              />
+              <Input placeholde="Số nhà, tên đường" name="address" />
             </Form.Item>
 
             <Form.Item {...tailLayout}>

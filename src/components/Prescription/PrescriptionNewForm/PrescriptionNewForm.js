@@ -65,6 +65,7 @@ import { Button, Form, Input, Space, Select } from "antd";
 import debounce from "lodash/debounce";
 import { drugs } from "../../../static/drug";
 import {
+  getPharmacyMedicine,
   getPresDetail,
   getSearchMedicine,
   updateArrPres,
@@ -73,6 +74,7 @@ import { Notification } from "../../Notification/Notification";
 import { NOTIFICATION_TYPE } from "../../../constants/common";
 
 const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [form] = Form.useForm();
   const [presDetailRes, setPresDetailRes] = useState(null);
   const [optionsMedicine, setOptionsMedicine] = useState([]);
@@ -110,15 +112,27 @@ const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
     });
   };
   const getOptionsMedicine = async () => {
-    const res = await getSearchMedicine({ search_text: "" });
-    const newArrayOfObj = res?.[0].map(
-      ({ id: value, title: label, ...rest }) => ({
-        value,
-        label,
-        ...rest,
-      })
-    );
-    setOptionsMedicine(newArrayOfObj);
+    if (userInfo?.business_type == 1) {
+      const res = await getSearchMedicine({ search_text: "" });
+      const newArrayOfObj = res?.[0].map(
+        ({ id: value, title: label, ...rest }) => ({
+          value,
+          label,
+          ...rest,
+        })
+      );
+    } else if (userInfo?.business_type == 2) {
+      setOptionsMedicine(newArrayOfObj);
+      const res = await getPharmacyMedicine(userInfo?.user_role_id);
+      const newArrayOfObj = res?.[0].map(
+        ({ id: value, title: label, ...rest }) => ({
+          value,
+          label,
+          ...rest,
+        })
+      );
+      setOptionsMedicine(newArrayOfObj);
+    }
   };
 
   useEffect(() => {
