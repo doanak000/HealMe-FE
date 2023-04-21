@@ -55,7 +55,7 @@ const HomeContent = () => {
 
   const sendQuestion = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const chatRes = await getChatbotResponse(question);
       setRes(chatRes?.content);
       setIsLoading(false);
@@ -161,7 +161,6 @@ const HomeContent = () => {
   return (
     <div className="my-3 content-area">
       <div className="chatbox-area">
-
         <h5>AI tư vấn sức khỏe </h5>
         <div className="chatbox-area-input">
           <Input
@@ -172,24 +171,29 @@ const HomeContent = () => {
             Gửi
           </Button>
         </div>
-        {isLoading ? (<><Spin indicator={<LoadingOutlined spin />} />
-          <span>Bạn chờ HealMe một tí nhé!!!</span></>) : <TextArea
-          rows={4}
-          value={res}
-          disabled
-          placeholder="AI sẽ tư vấn cho bạn sơ lược về sức khỏe cũng như đưa ra lời khuyên"
-        />}
-
+        {isLoading ? (
+          <>
+            <Spin indicator={<LoadingOutlined spin />} />
+            <span>Bạn chờ HealMe một tí nhé!!!</span>
+          </>
+        ) : (
+          <TextArea
+            rows={4}
+            value={res}
+            disabled
+            placeholder="AI sẽ tư vấn cho bạn sơ lược về sức khỏe cũng như đưa ra lời khuyên"
+          />
+        )}
       </div>
       <div className="find-business-area" id="dat-lich">
-        <h5>Tìm kiếm bác sĩ/dược sĩ</h5>
+        <h5>Tìm kiếm phòng khám/ nhà thuốc</h5>
         <div className="row">
           <div className="col-12 col-md-12 col-lg-12">
             <div className="my-1">
               <Select
-                defaultValue="Bác Sĩ"
+                defaultValue={1}
                 style={{
-                  width: 100,
+                  width: 150,
                   color: "#2d4964",
                 }}
                 onChange={(value) => setFilterValue(value)}
@@ -245,7 +249,9 @@ const HomeContent = () => {
                 />
               </Col>
               <Col xs={4}>
-                <Button onClick={handleClearFilter} size="large">Xóa bộ lọc</Button>
+                <Button onClick={handleClearFilter} size="large">
+                  Xóa bộ lọc
+                </Button>
               </Col>
             </Row>
           </div>
