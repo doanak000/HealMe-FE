@@ -14,13 +14,16 @@ import dayjs from "dayjs";
 import moment from "moment";
 import {
   getAllProvince,
+  getClinicProfileApi,
   getDistrictInProvince,
   getFullAddressByWardIdApi,
   getPatientProfileApi,
+  getPharmacyProfileApi,
   getUserInfo,
   getWardInDistrict,
   updateAddress,
   updateArrPres,
+  updateBusinessProfile,
   updatePatientProfile,
   updateUser,
 } from "../../../api/api";
@@ -47,6 +50,17 @@ const ProfileDetail = () => {
     setUserProfile(res?.[0]?.[0]);
     getFullAddressByWardId(res?.[0]?.[0]?.ward_id);
   };
+  const getBusinessProfile = async () => {
+    if (userInfo?.business_type == 1) {
+      const res = await getClinicProfileApi(userInfo.user_role_id);
+      setUserProfile(res?.[0]?.[0]);
+      getFullAddressByWardId(res?.[0]?.[0]?.ward_id);
+    } else if (userInfo?.business_type == 2) {
+      const res = await getPharmacyProfileApi(userInfo.user_role_id);
+      setUserProfile(res?.[0]?.[0]);
+      getFullAddressByWardId(res?.[0]?.[0]?.ward_id);
+    }
+  };
   const getAllProvinceApi = async () => {
     const data = await getAllProvince();
     const cookedData = data.map(({ id: value, name: label, ...rest }) => ({
@@ -58,20 +72,24 @@ const ProfileDetail = () => {
   };
   const getDistrictInProvinceApi = async (provinceId) => {
     const data = await getDistrictInProvince(provinceId);
-    const cookedData = data[0].map(({ id: value, title: label, ...rest }) => ({
-      value,
-      label,
-      ...rest,
-    }));
+    const cookedData = data?.[0]?.map(
+      ({ id: value, title: label, ...rest }) => ({
+        value,
+        label,
+        ...rest,
+      })
+    );
     setOptionsDistrict(cookedData);
   };
   const getWardInDistrictApi = async (districtId) => {
     const data = await getWardInDistrict(districtId);
-    const cookedData = data[0].map(({ id: value, title: label, ...rest }) => ({
-      value,
-      label,
-      ...rest,
-    }));
+    const cookedData = data?.[0]?.map(
+      ({ id: value, title: label, ...rest }) => ({
+        value,
+        label,
+        ...rest,
+      })
+    );
     setOptionsWard(cookedData);
   };
 
@@ -99,7 +117,11 @@ const ProfileDetail = () => {
     setWardState(value);
   };
   useEffect(() => {
-    getPatientProfile();
+    if (userInfo?.role_id == 2) {
+      getPatientProfile();
+    } else if (userInfo?.role_id == 3) {
+      getBusinessProfile();
+    }
     getAllProvinceApi();
   }, []);
 
@@ -128,6 +150,13 @@ const ProfileDetail = () => {
         gender: data?.gender,
       }
     );
+    const updateBusinessProfilePromise = updateBusinessProfile(
+      userInfo?.user_role_id,
+      {
+        business_name: data?.business_name,
+        descr: data?.descr,
+      }
+    );
     const updateUserPromise = updateUser(userInfo?.id, {
       phone: data?.phone,
       email: data?.email,
@@ -137,7 +166,8 @@ const ProfileDetail = () => {
       ward: data.ward,
     });
     await Promise.all([
-      updatePatientProfilePromise,
+      userInfo?.role_id == 2 && updatePatientProfilePromise,
+      userInfo?.role_id == 3 && updateBusinessProfilePromise,
       updateUserPromise,
       updateAddressPromise,
     ])
@@ -189,6 +219,8 @@ const ProfileDetail = () => {
             province: fullAddressByWardId?.province_id,
             district: fullAddressByWardId?.district_id,
             ward: fullAddressByWardId?.ward_id,
+            business_name: userProfile?.business_name,
+            descr: userProfile?.descr,
           }}
         >
           <Row gutter={18}>
@@ -246,9 +278,9 @@ const ProfileDetail = () => {
             </Col>
             <Col lg={12} md={12}>
               <Form.Item
-                label="Họ và tên"
-                id="fullname"
-                name="fullname"
+                label="Tên"
+                id={userInfo?.role_id == 2 ? "fullname" : "business_name"}
+                name={userInfo?.role_id == 2 ? "fullname" : "business_name"}
                 rules={[
                   {
                     required: true,
@@ -257,11 +289,19 @@ const ProfileDetail = () => {
                 ]}
               >
                 <Input
-                  name="fullname"
+                  name={userInfo?.role_id == 2 ? "fullname" : "business_name"}
                   prefix={<UserOutlined />}
                   disabled={isDisabled}
-                  defaultValue={userProfile?.fullname}
-                  key={userProfile?.fullname + "fullname"}
+                  defaultValue={
+                    userProfile?.[
+                      userInfo?.role_id == 2 ? "fullname" : "business_name"
+                    ]
+                  }
+                  key={
+                    userProfile?.[
+                      userInfo?.role_id == 2 ? "fullname" : "business_name"
+                    ] + (userInfo?.role_id == 2 ? "fullname" : "business_name")
+                  }
                 />
               </Form.Item>
             </Col>
@@ -277,50 +317,56 @@ const ProfileDetail = () => {
                 />
               </Form.Item>
             </Col>
-            <Col lg={12} md={12}>
-              <Form.Item label="Ngày tháng năm sinh" id="dob" name="dob">
-                <DatePicker
-                  className="w-100"
-                  format="YYYY-MM-DD"
-                  prefix={<CalendarOutlined />}
-                  disabled={isDisabled}
-                  name="date_of_birth"
-                  disabledDate={disabledDate}
-                  defaultValue={moment(
-                    userProfile?.date_of_birth,
-                    "YYYY-MM-DD"
-                  )}
-                  key={userProfile?.date_of_birth + "dob"}
-                  // onChange={handleChangePatientProfile}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={12} md={12}>
-              <Form.Item label="Giới tính" name="gender" id="gender">
-                <Radio.Group
-                  defaultValue={userProfile?.gender}
-                  disabled={isDisabled}
-                  key={userProfile?.gender + "gender"}
-                  // onChange={handleChangePatientProfile}
-                >
-                  <Radio value="Male">Male</Radio>
-                  <Radio value="Female">Female</Radio>
-                </Radio.Group>
-              </Form.Item>
-            </Col>
-            <Col lg={12} md={12}>
-              <Form.Item label="Địa chỉ" id="fulladdress" name="fulladdress">
-                <Input
-                  defaultValue={userProfile?.fulladdress}
-                  name="fulladdress"
-                  prefix={<HomeOutlined />}
-                  disabled={isDisabled}
-                  key={userProfile?.fulladdress + "fulladdress"}
-                  // onChange={handleChangePatientProfile}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={24} xs={24}>
+            {userInfo?.role_id == 2 && (
+              <>
+                <Col lg={12} md={12}>
+                  <Form.Item label="Ngày tháng năm sinh" id="dob" name="dob">
+                    <DatePicker
+                      className="w-100"
+                      format="YYYY-MM-DD"
+                      prefix={<CalendarOutlined />}
+                      disabled={isDisabled}
+                      name="date_of_birth"
+                      disabledDate={disabledDate}
+                      defaultValue={moment(
+                        userProfile?.date_of_birth,
+                        "YYYY-MM-DD"
+                      )}
+                      key={userProfile?.date_of_birth + "dob"}
+                      // onChange={handleChangePatientProfile}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col lg={12} md={12}>
+                  <Form.Item label="Giới tính" name="gender" id="gender">
+                    <Radio.Group
+                      defaultValue={userProfile?.gender}
+                      disabled={isDisabled}
+                      key={userProfile?.gender + "gender"}
+                      // onChange={handleChangePatientProfile}
+                    >
+                      <Radio value="Male">Male</Radio>
+                      <Radio value="Female">Female</Radio>
+                    </Radio.Group>
+                  </Form.Item>
+                </Col>
+              </>
+            )}
+            {userInfo?.role_id == 3 && (
+              <Col lg={12} md={12}>
+                <Form.Item label="Mô tả" id="descr" name="descr">
+                  <Input
+                    defaultValue={userProfile?.descr}
+                    name="descr"
+                    prefix={<HomeOutlined />}
+                    disabled={isDisabled}
+                    key={userProfile?.descr + "descr"}
+                    // onChange={handleChangePatientProfile}
+                  />
+                </Form.Item>
+              </Col>
+            )}
+            <Col lg={12} xs={12}>
               {" "}
               <Form.Item
                 id="province"
@@ -436,6 +482,19 @@ const ProfileDetail = () => {
                   }}
                   placeholder="Select your ward"
                   onChange={handleChangeWard}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={24} md={24}>
+              <Form.Item label="Địa chỉ" id="fulladdress" name="fulladdress">
+                <Input
+                  defaultValue={userProfile?.fulladdress}
+                  name="fulladdress"
+                  prefix={<HomeOutlined />}
+                  disabled={isDisabled}
+                  key={userProfile?.fulladdress + "fulladdress"}
+                  // onChange={handleChangePatientProfile}
                 />
               </Form.Item>
             </Col>

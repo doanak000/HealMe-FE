@@ -180,6 +180,20 @@ export const getUserInfo = async (id) => {
   const response = await authAxios.get(`/users/api/get/${id}`);
   return response.data;
 };
+export const getClinicProfileApi = async (id) => {
+  const response = await authAxios.get(`/clinic/${id}`);
+  return response.data;
+};
+export const getPharmacyProfileApi = async (id) => {
+  const response = await authAxios.get(`/pharmacy/${id}`);
+  return response.data;
+};
+export const updateBusinessProfile = async (id, data) => {
+  const response = await authAxios.post(`/business/${id}/api/update`, data);
+  return response.data;
+};
+getClinicProfileApi;
+getPharmacyProfileApi;
 // Export all API call functions
 export default {
   login,
@@ -213,4 +227,7 @@ export default {
   updatePatientProfile,
   updateAddress,
   getUserInfo,
+  getPharmacyProfileApi,
+  getClinicProfileApi,
+  updateBusinessProfile,
 };
