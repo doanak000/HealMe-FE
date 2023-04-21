@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table, Space, Modal } from "antd";
-import { useDispatch } from "react-redux";
+import { Button, Table, Space, Modal, Tag } from "antd";
 import moment from "moment";
 import { NOTIFICATION_TYPE } from "../../../constants/common";
 import { Notification } from "../../Notification/Notification";
@@ -26,8 +25,6 @@ const tailLayout = {
   },
 };
 const PatientAppointment = () => {
-  const dispatch = useDispatch();
-
   const [apptData, setApptData] = useState(null);
   const [isModalPresOpen, setIsModalPresOpen] = useState(false);
   const [pres, setPres] = useState(null);
@@ -88,7 +85,7 @@ const PatientAppointment = () => {
       title: "Work Day",
       dataIndex: "workday",
       key: "workday",
-      render: (text) => <a>{moment(text).format("YYYY-MM-DD")}</a>,
+      render: (text, today) => <a>{moment(text).format("YYYY-MM-DD")}</a>,
     },
     {
       width: "100",
@@ -121,7 +118,9 @@ const PatientAppointment = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => handleCancelAppt(record)}>Hủy lịch</Button>
+          <Button onClick={() => handleCancelAppt(record)} type="danger">
+            Hủy Lịch
+          </Button>
           <Button onClick={() => handleShowModalPres(record)}>
             Xem toa thuốc được kê
           </Button>

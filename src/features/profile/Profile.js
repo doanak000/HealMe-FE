@@ -1,15 +1,11 @@
 import React from "react";
-import ProfileCard from "../../components/Profile/ProfileCard/ProfileCard";
 import ProfileContent from "../../components/Profile/ProfileContent/ProfileContent";
 
 const Profile = () => {
   return (
-    <div className="container">
+    <div className="container px-5">
       <div className="row my-3">
-        <div className="col-lg-2 col-md-12 col-12">
-          <ProfileCard />
-        </div>
-        <div className="col-lg-10 col-md-12 col-12">
+        <div className="col-lg-12 col-md-12 col-12 mx-auto border rounded p-3">
           <ProfileContent />
         </div>
       </div>

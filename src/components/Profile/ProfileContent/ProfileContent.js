@@ -5,6 +5,8 @@ import WorkSchedular from "../WorkSchedular/WorkSchedular";
 import { memo } from "react";
 import PatientAppointment from "../PatientAppointment/PatientAppointment";
 import WorkSchedularManage from "../WorkSchedularManage/WorkSchedularManage";
+import { CgProfile } from "react-icons/cg"
+import { BsCalendarCheck } from "react-icons/bs"
 
 const ProfileContent = () => {
   const [activeTab, setActiveTab] = useState("1");
@@ -34,11 +36,19 @@ const ProfileContent = () => {
   const items = [
     {
       key: "1",
-      label: `Thông tin cá nhân`,
+      label: <>
+        <CgProfile className="fs-5 me-2" />
+        <span>Thông tin cá nhân</span>
+      </>,
+      children: <ProfileDetail />,
     },
     {
       key: "2",
-      label: `Lich sử đơn hàng`,
+      label: <>
+        <BsCalendarCheck className="fs-5 me-2 mb-lg-1" />
+        <span>Lịch khám</span>
+      </>,
+      children: <PatientAppointment />,
     },
   ];
 
@@ -60,7 +70,7 @@ const ProfileContent = () => {
   const tabItems = userInfo.role_id === 2 ? items : itemsOfDoctor;
 
   return (
-    <Tabs activeKey={activeTab} onChange={handleChangeTab} size="large">
+    <Tabs activeKey={activeTab} onChange={handleChangeTab} size="large" tabPosition="left">
       {tabItems.map(({ key, label }) => (
         <Tabs.TabPane key={key} tab={label}>
           {renderContent()}

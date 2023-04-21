@@ -6,11 +6,11 @@ import { PATH } from "../../../constants/common";
 import { getClinicInfoApi } from "../../../api/api";
 
 const DoctorItem = (props) => {
-  const { item } = props;
+  const { item, businessId } = props;
   const [clinicInfo, setClinicInfo] = useState(null);
 
   useEffect(async () => {
-    const result = await getClinicInfoApi(item?.id);
+    const result = await getClinicInfoApi(businessId || item?.id);
     setClinicInfo(result[0][0]);
   }, []);
 
@@ -25,7 +25,7 @@ const DoctorItem = (props) => {
       <div className="col-12 text-justify">
         <h4 className="text-justify doctor-name">
           <Link to={`/doctor/${item?.id}`} style={{ textDecoration: "none" }}>
-            {item?.business_name}
+            {clinicInfo?.business_name}
           </Link>
         </h4>
         <p className="text-justify">
