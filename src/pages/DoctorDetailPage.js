@@ -12,7 +12,7 @@ const DoctorDetailPage = () => {
     <LayoutUser>
       <Row gutter={20}>
         <Col lg={10} md={24}>
-          {/* <DoctorItem /> */}
+          <DoctorItem businessId={id} />
         </Col>
         <Col lg={14} md={24}>
           <DoctorAppointment businessId={id} />
