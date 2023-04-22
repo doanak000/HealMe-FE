@@ -1,5 +1,16 @@
 import React, { memo, useEffect, useState } from "react";
-import { Button, Col, DatePicker, Form, Input, Row, Radio, Select, Layout, Menu } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Row,
+  Radio,
+  Select,
+  Layout,
+  Menu,
+} from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserInfo } from "../../../features/login/loginSlice";
 import { useFormik } from "formik";
@@ -17,6 +28,7 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
+import { TitleRegister } from "./ProfileDetail.style";
 import dayjs from "dayjs";
 import moment from "moment";
 import {
@@ -180,7 +192,7 @@ const ProfileDetail = () => {
       updateUserPromise,
       updateAddressPromise,
     ])
-      .then(() => { })
+      .then(() => {})
       .catch(() => {
         Notification({
           type: NOTIFICATION_TYPE.ERROR,
@@ -209,6 +221,7 @@ const ProfileDetail = () => {
 
   return (
     <div>
+      <TitleRegister>Hồ sơ cá nhân</TitleRegister>
       {userProfile && fullAddressByWardId && (
         <Form
           layout="vertical"
@@ -250,7 +263,7 @@ const ProfileDetail = () => {
                   name="username"
                   prefix={<UserOutlined />}
                   disabled
-                // onChange={handleChangeUserProfile}
+                  // onChange={handleChangeUserProfile}
                 />
               </Form.Item>
             </Col>
@@ -261,7 +274,7 @@ const ProfileDetail = () => {
                   name="role"
                   prefix={<UserOutlined />}
                   disabled
-                // onChange={handleChangeUserProfile}
+                  // onChange={handleChangeUserProfile}
                 />
               </Form.Item>
             </Col>
@@ -282,7 +295,7 @@ const ProfileDetail = () => {
                   disabled={isDisabled}
                   prefix={<MailOutlined />}
                   type="email"
-                // onChange={handleChangeUserProfile}
+                  // onChange={handleChangeUserProfile}
                 />
               </Form.Item>
             </Col>
@@ -304,12 +317,12 @@ const ProfileDetail = () => {
                   disabled={isDisabled}
                   defaultValue={
                     userProfile?.[
-                    userInfo?.role_id == 2 ? "fullname" : "business_name"
+                      userInfo?.role_id == 2 ? "fullname" : "business_name"
                     ]
                   }
                   key={
                     userProfile?.[
-                    userInfo?.role_id == 2 ? "fullname" : "business_name"
+                      userInfo?.role_id == 2 ? "fullname" : "business_name"
                     ] + (userInfo?.role_id == 2 ? "fullname" : "business_name")
                   }
                 />
@@ -323,7 +336,7 @@ const ProfileDetail = () => {
                   prefix={<PhoneOutlined />}
                   disabled={isDisabled}
                   key={userInfo?.phone + "phone"}
-                // onChange={handleChangeUserProfile}
+                  // onChange={handleChangeUserProfile}
                 />
               </Form.Item>
             </Col>
@@ -343,7 +356,7 @@ const ProfileDetail = () => {
                         "YYYY-MM-DD"
                       )}
                       key={userProfile?.date_of_birth + "dob"}
-                    // onChange={handleChangePatientProfile}
+                      // onChange={handleChangePatientProfile}
                     />
                   </Form.Item>
                 </Col>
@@ -353,7 +366,7 @@ const ProfileDetail = () => {
                       defaultValue={userProfile?.gender}
                       disabled={isDisabled}
                       key={userProfile?.gender + "gender"}
-                    // onChange={handleChangePatientProfile}
+                      // onChange={handleChangePatientProfile}
                     >
                       <Radio value="Male">Male</Radio>
                       <Radio value="Female">Female</Radio>
@@ -371,7 +384,7 @@ const ProfileDetail = () => {
                     prefix={<HomeOutlined />}
                     disabled={isDisabled}
                     key={userProfile?.descr + "descr"}
-                  // onChange={handleChangePatientProfile}
+                    // onChange={handleChangePatientProfile}
                   />
                 </Form.Item>
               </Col>
@@ -504,7 +517,7 @@ const ProfileDetail = () => {
                   prefix={<HomeOutlined />}
                   disabled={isDisabled}
                   key={userProfile?.fulladdress + "fulladdress"}
-                // onChange={handleChangePatientProfile}
+                  // onChange={handleChangePatientProfile}
                 />
               </Form.Item>
             </Col>

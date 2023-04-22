@@ -1,4 +1,4 @@
-import { Select, Input, Button, Row, Col, Spin } from "antd";
+import { Select, Input, Button, Row, Col, Spin, List, Empty } from "antd";
 import React, { useEffect, useState } from "react";
 import DoctorList from "../Doctor/DoctorList/DoctorList";
 import {
@@ -14,7 +14,11 @@ import {
 import { NOTIFICATION_TYPE } from "../../constants/common";
 import { Notification } from "../Notification/Notification";
 import "./HomeContent.scss";
-import { LoadingOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  RobotOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
 const { TextArea } = Input;
 const HomeContent = () => {
@@ -40,7 +44,43 @@ const HomeContent = () => {
   const [wardsOptions, setWardsOptions] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+  const [showChatbot, setShowChatbot] = useState(true);
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
 
+  const handleSendMessage = async () => {
+    if (inputValue.trim() === "") {
+      return;
+    }
+    try {
+      setIsLoading(true);
+      const response = await getChatbotResponse(inputValue);
+
+      const newMessage = {
+        text: inputValue,
+        author: "user",
+      };
+      const resMessage = {
+        text: response?.content,
+        author: "chatbot",
+      };
+
+      setChatHistory([...chatHistory, newMessage, resMessage]);
+
+      setInputValue("");
+      setIsLoading(false);
+    } catch (err) {
+      Notification({
+        type: NOTIFICATION_TYPE.ERROR,
+        message: "Chatbot got some mistakes",
+        description: null,
+      });
+      setLoadingState(false);
+    }
+  };
   useEffect(async () => {
     await getAllClinic().then((res) => setClinics(res));
     await getAllProvince().then((res) =>
@@ -157,33 +197,67 @@ const HomeContent = () => {
       console.log(error);
     }
   };
+  const NoData = () => (
+    <Empty
+      image={<RobotOutlined style={{ fontSize: 48 }} />}
+      description={
+        <span>
+          "Bạn có cần thông tin gì về các căn bệnh không? Hãy thử hỏi chatbot
+          nào !"
+        </span>
+      }
+    />
+  );
 
   return (
     <div className="my-3 content-area">
       <div className="chatbox-area">
         <h5>AI tư vấn sức khỏe </h5>
-        <div className="chatbox-area-input">
-          <Input
-            onChange={handleQuestion}
-            placeholder="Mô tả triệu chứng bệnh"
-          ></Input>
-          <Button onClick={sendQuestion} disabled={!question}>
-            Gửi
-          </Button>
-        </div>
-        {isLoading ? (
-          <>
-            <Spin indicator={<LoadingOutlined spin />} />
-            <span>Bạn chờ HealMe một tí nhé!!!</span>
-          </>
-        ) : (
-          <TextArea
-            rows={4}
-            value={res}
-            disabled
-            placeholder="AI sẽ tư vấn cho bạn sơ lược về sức khỏe cũng như đưa ra lời khuyên"
+        <div style={{ width: "500px" }}>
+          {showChatbot && (
+            <List
+              locale={{ emptyText: <NoData /> }}
+              style={{ minHeight: "300px" }}
+              dataSource={chatHistory.slice(-6)}
+              renderItem={(item) => (
+                <List.Item>
+                  {item.author === "chatbot" ? (
+                    <div>
+                      <RobotOutlined style={{ marginRight: "10px" }} />
+                      {item.text}
+                    </div>
+                  ) : (
+                    <div style={{ textAlign: "right", width: "100%" }}>
+                      {item.text}{" "}
+                      <UserOutlined style={{ marginLeft: "10px" }} />
+                    </div>
+                  )}
+                </List.Item>
+              )}
+            />
+          )}
+          <Input.Search
+            value={inputValue}
+            onChange={handleInputChange}
+            onSearch={handleSendMessage}
+            enterButton={
+              <Button
+                disabled={isLoading}
+                type="primary"
+                style={{ backgroundColor: "#1890FF", width: "80px" }}
+              >
+                {isLoading ? (
+                  <Spin
+                    indicator={<LoadingOutlined spin />}
+                    style={{ color: "white" }}
+                  />
+                ) : (
+                  "Send"
+                )}
+              </Button>
+            }
           />
-        )}
+        </div>
       </div>
       <div className="find-business-area" id="dat-lich">
         <h5>Tìm kiếm phòng khám/ nhà thuốc</h5>
