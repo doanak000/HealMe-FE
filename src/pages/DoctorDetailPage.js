@@ -10,12 +10,12 @@ const DoctorDetailPage = () => {
   console.log("id", id);
   return (
     <LayoutUser>
-      <Row gutter={20}>
-        <Col lg={10} md={24}>
+      <Row gutter={24}>
+        <Col lg={24} md={24} className="my-2">
           <DoctorItem businessId={id} />
         </Col>
-        <Col lg={14} md={24}>
-          <DoctorAppointment businessId={id} />
+        <Col lg={24} md={24}>
+          <DoctorAppointment businessId={id} className="my-2" />
         </Col>
       </Row>
     </LayoutUser>
