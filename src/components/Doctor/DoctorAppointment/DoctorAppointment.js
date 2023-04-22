@@ -201,7 +201,7 @@ const DoctorAppointment = ({ businessId }) => {
   // return <Table columns={columns} dataSource={data} className="mt-3" />;
   return (
     <>
-      <Title>Lịch làm việc</Title>
+      <Title className="fs-3">Lịch làm việc</Title>
 
       <Table columns={columnsStep1} dataSource={dataWorkSchedule} />
 
