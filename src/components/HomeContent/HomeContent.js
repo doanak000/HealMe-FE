@@ -197,39 +197,48 @@ const HomeContent = () => {
       console.log(error);
     }
   };
-  const NoData = () => (
-    <Empty
-      image={<RobotOutlined style={{ fontSize: 48 }} />}
-      description={
-        <span>
-          "Bạn có cần thông tin gì về các căn bệnh không? Hãy thử hỏi chatbot
-          nào !"
-        </span>
-      }
-    />
-  );
+  // const NoData = () => (
+  //   <Empty
+  //     image={<RobotOutlined style={{ fontSize: 48 }} />}
+  //     description={
+  //       <span>
+  //         "Bạn có cần thông tin gì về các căn bệnh không? Hãy thử hỏi chatbot
+  //         nào !"
+  //       </span>
+  //     }
+  //   />
+  // );
 
   return (
     <div className="my-3 content-area">
-      <div className="chatbox-area">
+      <div className="chatbox-area" style={{ background: "#deeaf4" }}>
         <h5>AI tư vấn sức khỏe </h5>
         <div style={{ width: "500px" }}>
           {showChatbot && (
             <List
-              locale={{ emptyText: <NoData /> }}
-              style={{ minHeight: "300px" }}
-              dataSource={chatHistory.slice(-6)}
+              // locale={{ emptyText: <NoData /> }}
+              style={{ height: "250px", overflowY: "scroll" }}
+              dataSource={chatHistory}
               renderItem={(item) => (
                 <List.Item>
                   {item.author === "chatbot" ? (
-                    <div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
                       <RobotOutlined style={{ marginRight: "10px" }} />
                       {item.text}
                     </div>
                   ) : (
-                    <div style={{ textAlign: "right", width: "100%" }}>
+                    <div
+                      style={{
+                        alignItems: "center",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "end",
+                      }}
+                    >
                       {item.text}{" "}
-                      <UserOutlined style={{ marginLeft: "10px" }} />
+                      <UserOutlined
+                        style={{ marginLeft: "10px", marginRight: "10px" }}
+                      />
                     </div>
                   )}
                 </List.Item>
@@ -237,6 +246,7 @@ const HomeContent = () => {
             />
           )}
           <Input.Search
+            style={{ marginTop: "15px" }}
             value={inputValue}
             onChange={handleInputChange}
             onSearch={handleSendMessage}
@@ -244,7 +254,10 @@ const HomeContent = () => {
               <Button
                 disabled={isLoading}
                 type="primary"
-                style={{ backgroundColor: "#1890FF", width: "80px" }}
+                style={{
+                  backgroundColor: "#1890FF",
+                  width: "80px",
+                }}
               >
                 {isLoading ? (
                   <Spin

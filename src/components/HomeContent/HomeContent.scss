@@ -26,7 +26,9 @@
     border-radius: 10px;
     box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
     margin: 40px 80px;
-  
+    @media only screen and (max-width: 768px) {
+      margin: 40px 0px 40px 0px
+    }
     h5 {
       text-align: center;
     }
