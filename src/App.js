@@ -1,11 +1,12 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
 import Spinner from "./components/spinner/Spinner";
-import LayoutAdmin from "./containers/layout/Layout";
 import { PublicRoutes, PrivateRoutes } from "./configs/Router";
 import { PATH } from "./constants/common";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
+import "./responsive.css";
+import LayoutUser from "./containers/layout/LayoutUser";
 
 const App = () => {
   return (
@@ -18,11 +19,13 @@ const App = () => {
         }
       >
         <div className="user-container">
-          <Switch>
-            {PublicRoutes}
-            {PrivateRoutes}
-            <Redirect to={PATH.HOME} />
-          </Switch>
+          <LayoutUser>
+            <Switch>
+              {PublicRoutes}
+              {PrivateRoutes}
+              <Redirect to={PATH.HOME} />
+            </Switch>
+          </LayoutUser>
         </div>
       </Suspense>
     </Router>

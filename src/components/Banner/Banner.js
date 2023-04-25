@@ -21,7 +21,7 @@ const Banner = () => {
             type="primary"
             className="text-uppercase fw-bold"
           >
-            Đặt lịch khám
+            Khám ngay
           </Button>
         </div>
       </div>
