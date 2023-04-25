@@ -2,14 +2,12 @@ import { Col, Row } from "antd";
 import React from "react";
 import DoctorAppointment from "../components/Doctor/DoctorAppointment/DoctorAppointment";
 import DoctorItem from "../components/Doctor/DoctorItem/DoctorItem";
-import LayoutUser from "../containers/layout/LayoutUser";
 import { useParams } from "react-router-dom";
 
 const DoctorDetailPage = () => {
   const { id } = useParams();
-  console.log("id", id);
   return (
-    <LayoutUser>
+    <div>
       <Row gutter={24}>
         <Col lg={24} md={24} className="my-2">
           <DoctorItem businessId={id} />
@@ -18,7 +16,7 @@ const DoctorDetailPage = () => {
           <DoctorAppointment businessId={id} className="my-2" />
         </Col>
       </Row>
-    </LayoutUser>
+    </div>
   );
 };
 

@@ -3,7 +3,6 @@ import { UserOutlined } from "@ant-design/icons";
 import React from "react";
 import logo from "../../assets/img/HealMe-logo.svg";
 import "../../assets/styles/component/Header/Header.css";
-import { navbarList } from "../../static/navbar";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {
@@ -84,13 +83,21 @@ const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              {navbarList.map((item) => (
-                <li className="header__navbar-item" key={item.key}>
-                  <a className="nav-link text-white" href="/">
-                    {item.value}
-                  </a>
-                </li>
-              ))}
+              <li className="header__navbar-item" >
+                <a className="nav-link text-white" href="/">
+                  Trang chủ
+                </a>
+              </li>
+              <li className="header__navbar-item" >
+                <a className="nav-link text-white" href="/profile">
+                  Đặt lịch
+                </a>
+              </li>
+              <li className="header__navbar-item" >
+                <a className="nav-link text-white" href="/">
+                  Bác sĩ/Dược sĩ/Nhà thuốc
+                </a>
+              </li>
               <li className="nav-item dropdown">
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li>

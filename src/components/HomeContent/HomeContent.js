@@ -217,7 +217,7 @@ const HomeContent = () => {
           {showChatbot && (
             <List
               // locale={{ emptyText: <NoData /> }}
-              style={{ height: "250px", overflowY: "scroll" }}
+              style={{ height: "250px", overflowY: "scroll", padding: '0 20px', textAlign: 'justify', scrollbarWidth: 'thin' }}
               dataSource={chatHistory}
               renderItem={(item) => (
                 <List.Item>
@@ -265,7 +265,7 @@ const HomeContent = () => {
                     style={{ color: "white" }}
                   />
                 ) : (
-                  "Send"
+                  "Gửi"
                 )}
               </Button>
             }
