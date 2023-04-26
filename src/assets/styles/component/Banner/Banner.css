@@ -1,5 +1,5 @@
 .banner {
-  max-height: 400px;
+  height: 400px;
   background: url("../../../img/hero-bg.webp") top center;
   background-size: cover;
   padding-left: 16px;
@@ -12,11 +12,8 @@
 
 .banner h1 {
   margin: 0;
-  /* font-size: 48px; */
   font-weight: 700;
-  line-height: 64px;
   color: #2c4964;
-
   font-size: 20px;
   line-height: 26px;
   text-align: center;
@@ -24,10 +21,8 @@
 
 .banner h2 {
   color: #2c4964;
-  line-height: 32px;
   margin: 10px 0 24px 0;
   font-weight: 300;
-  font-size: 20px;
   font-family: Roboto, sans-serif;
   font-size: 16px;
   line-height: 22px;
@@ -53,48 +48,59 @@
   }
 } */
 
-/* Small Tablet  */
+/* Small Tablets  */
 @media only screen and (min-width: 576px) {
   body {
-    background-color: brown;
+    background-color: blue;
+  }
+  .banner {
+    height: 600px;
   }
   .banner h1 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 64px;
-    color: #2c4964;
+    font-size: 44px;
+    line-height: 48px;
   }
-
-  .chatbot-container {
-    width: 90px !important;
+  .banner h2 {
+    font-size: 22px;
+    line-height: 30px;
   }
 }
-/* Tablet  */
+
+/* iPad  */
 @media only screen and (min-width: 768px) {
   body {
     background-color: purple;
   }
-  .banner h1 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 64px;
-    color: #2c4964;
+  .banner {
+    height: 800px;
   }
-
-  .chatbot-container {
-    width: 90px !important;
+  .banner h1 {
+    font-size: 50px;
+    line-height: 64px;
+  }
+  .banner h2 {
+    font-size: 28px;
+    line-height: 36px;
   }
 }
 
+/* Laptop  */
 @media only screen and (min-width: 992px) {
   body {
     background-color: aliceblue;
   }
+  .banner h1 {
+    font-size: 48px;
+    line-height: 64px;
+    text-align: left;
+  }
+  .banner h2 {
+    font-size: 20px;
+    line-height: 32px;
+  }
 }
 
-@media only screen and (min-width: 1200px) {
+/* @media only screen and (min-width: 1200px) {
   body {
     background-color: red;
   }
@@ -104,4 +110,4 @@
   body {
     background-color: yellow;
   }
-}
+} */
