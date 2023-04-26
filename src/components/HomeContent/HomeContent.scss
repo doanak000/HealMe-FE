@@ -27,23 +27,23 @@
     box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
     margin: 40px 80px;
     @media only screen and (max-width: 768px) {
-      margin: 40px 0px 40px 0px
+      margin: 40px 0px 40px 0px;
     }
     h5 {
       text-align: center;
     }
-  
+
     .chatbox-area-input {
       display: flex;
       align-items: center;
       margin-bottom: 10px;
       width: 400px;
-  
+
       input {
         flex: 1;
         margin-right: 20px;
       }
-  
+
       button {
         background-color: #007bff;
         border: none;
@@ -51,14 +51,14 @@
         // padding: 10px 20px;
         border-radius: 5px;
         cursor: pointer;
-  
+
         &:disabled {
           background-color: #cccccc;
           cursor: not-allowed;
         }
       }
     }
-  
+
     textarea {
       width: 100%;
       resize: none;
@@ -76,13 +76,13 @@
       }
     }
   }
-  
+
   @media only screen and (max-width: 480px) {
     .chatbox-area {
-        margin: 40px 5px;
-        .chatbox-area-input {
-            width: auto;
-        }
+      margin: 40px 5px;
+      .chatbox-area-input {
+        width: auto;
+      }
     }
   }
 }

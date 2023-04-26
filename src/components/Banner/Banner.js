@@ -4,9 +4,9 @@ import "../../assets/styles/component/Banner/Banner.css";
 
 const Banner = () => {
   return (
-    <div className="banner row my-3 align-items-center">
+    <div className="banner row my-3 align-items-center overflow-hidden">
       <div className="col-lg-6 col-md-12 col-12">
-        <div className="banner__info">
+        <div className="banner__info mb-4">
           <h1 className="banner__heading fw-bold">
             HealMe - Khám chữa bệnh toàn diện
           </h1>
@@ -19,7 +19,7 @@ const Banner = () => {
           <Button
             size="large"
             type="primary"
-            className="text-uppercase fw-bold"
+            className="text-uppercase fw-bold banner__button"
           >
             Khám ngay
           </Button>
