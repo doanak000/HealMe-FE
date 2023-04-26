@@ -63,7 +63,6 @@ import React, { useEffect, useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Space, Select } from "antd";
 import debounce from "lodash/debounce";
-import { drugs } from "../../../static/drug";
 import {
   getPharmacyMedicine,
   getPresDetail,
