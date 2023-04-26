@@ -212,8 +212,8 @@ const HomeContent = () => {
   return (
     <div className="my-3 content-area">
       <div className="chatbox-area" style={{ background: "#deeaf4" }}>
-        <h5>AI tư vấn sức khỏe </h5>
-        <div style={{ width: "500px" }}>
+        <h5 className="text-center">AI tư vấn sức khỏe </h5>
+        <div className="chatbot-container">
           {showChatbot && (
             <List
               // locale={{ emptyText: <NoData /> }}

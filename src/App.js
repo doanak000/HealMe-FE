@@ -5,7 +5,6 @@ import { PublicRoutes, PrivateRoutes } from "./configs/Router";
 import { PATH } from "./constants/common";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
-import "./responsive.css";
 import LayoutUser from "./containers/layout/LayoutUser";
 
 const App = () => {
