@@ -86,3 +86,31 @@
     }
   }
 }
+
+/* Small Tablets  */
+@media only screen and (min-width: 576px) {
+  body {
+    background-color: blue;
+  }
+  .chatbox-area {
+    margin: 0 -10px !important;
+    margin-bottom: 20px !important;
+  }
+}
+
+/* iPad  */
+@media only screen and (min-width: 768px) {
+  body {
+    background-color: purple;
+  }
+}
+
+/* Laptop  */
+@media only screen and (min-width: 992px) {
+  body {
+    background-color: cyan;
+  }
+  .chatbot-container {
+    width: 80% !important;
+  }
+}
