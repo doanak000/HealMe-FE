@@ -135,7 +135,7 @@ const PatientAppointment = () => {
   return (
     <div>
       <div className="register-work-schedular">
-        <Table columns={columns} dataSource={apptData} />
+        <Table columns={columns} dataSource={apptData} loading={apptData && false} scroll={'x'} />
         <Modal
           title="Toa thuốc"
           open={isModalPresOpen}

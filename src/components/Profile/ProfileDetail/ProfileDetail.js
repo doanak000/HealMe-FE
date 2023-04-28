@@ -13,7 +13,6 @@ import {
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserInfo } from "../../../features/login/loginSlice";
-import { useFormik } from "formik";
 import {
   CalendarOutlined,
   ContainerOutlined,
@@ -247,7 +246,7 @@ const ProfileDetail = () => {
           }}
         >
           <Row gutter={18}>
-            <Col lg={12} md={12} sm={24}>
+            <Col xs={24} sm={12} md={12} lg={12}>
               <Form.Item
                 id="username"
                 name="username"
@@ -267,7 +266,7 @@ const ProfileDetail = () => {
                 />
               </Form.Item>
             </Col>
-            <Col lg={12} md={12} sm={24}>
+            <Col xs={24} sm={12} md={12} lg={12}>
               <Form.Item label="Loại tài khoản" id="role" name="role">
                 <Input
                   defaultValue={userInfo?.role}
@@ -278,7 +277,7 @@ const ProfileDetail = () => {
                 />
               </Form.Item>
             </Col>
-            <Col lg={12} md={12} sm={24}>
+            <Col xs={24} sm={12} md={12} lg={12}>
               <Form.Item
                 label={
                   <>
@@ -299,7 +298,7 @@ const ProfileDetail = () => {
                 />
               </Form.Item>
             </Col>
-            <Col lg={12} md={12} sm={24}>
+            <Col xs={24} sm={12} md={12} lg={12}>
               <Form.Item
                 label="Tên"
                 id={userInfo?.role_id == 2 ? "fullname" : "business_name"}
@@ -328,7 +327,7 @@ const ProfileDetail = () => {
                 />
               </Form.Item>
             </Col>
-            <Col lg={12} md={12} sm={24}>
+            <Col xs={24} sm={12} md={12} lg={12}>
               <Form.Item label="Số điện thoại" id="phone" name="phone">
                 <Input
                   defaultValue={userInfo?.phone}
@@ -342,7 +341,7 @@ const ProfileDetail = () => {
             </Col>
             {userInfo?.role_id == 2 && (
               <>
-                <Col lg={12} md={12} sm={24}>
+                <Col xs={24} sm={12} md={12} lg={12}>
                   <Form.Item label="Ngày tháng năm sinh" id="dob" name="dob">
                     <DatePicker
                       className="w-100"
@@ -360,7 +359,7 @@ const ProfileDetail = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col lg={12} md={12} sm={24}>
+                <Col xs={24} sm={12} md={12} lg={12}>
                   <Form.Item label="Giới tính" name="gender" id="gender">
                     <Radio.Group
                       defaultValue={userProfile?.gender}
@@ -376,7 +375,7 @@ const ProfileDetail = () => {
               </>
             )}
             {userInfo?.role_id == 3 && (
-              <Col lg={12} md={12} sm={24}>
+              <Col xs={24} sm={12} md={12} lg={12}>
                 <Form.Item label="Mô tả" id="descr" name="descr">
                   <Input
                     defaultValue={userProfile?.descr}
@@ -389,7 +388,7 @@ const ProfileDetail = () => {
                 </Form.Item>
               </Col>
             )}
-            <Col lg={12} md={12} sm={24}>
+            <Col xs={24} sm={12} md={12} lg={12}>
               {" "}
               <Form.Item
                 id="province"
@@ -421,7 +420,7 @@ const ProfileDetail = () => {
                 />
               </Form.Item>
             </Col>
-            <Col lg={12} md={12} sm={24}>
+            <Col xs={24} sm={12} md={12} lg={12}>
               {" "}
               <Form.Item
                 id="district"
@@ -467,7 +466,7 @@ const ProfileDetail = () => {
                 />
               </Form.Item>
             </Col>
-            <Col lg={12} md={12} sm={24}>
+            <Col xs={24} sm={12} md={12} lg={12}>
               {" "}
               <Form.Item
                 id="ward"
@@ -509,7 +508,7 @@ const ProfileDetail = () => {
               </Form.Item>
             </Col>
 
-            <Col lg={12} md={12} sm={24}>
+            <Col xs={24} sm={24} md={24} lg={24}>
               <Form.Item label="Địa chỉ" id="fulladdress" name="fulladdress">
                 <Input
                   defaultValue={userProfile?.fulladdress}
