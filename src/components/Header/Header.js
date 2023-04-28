@@ -95,7 +95,7 @@ const Header = () => {
               </li>
               <li className="header__navbar-item" >
                 <a className="nav-link text-white" href="/">
-                  Bác sĩ/Dược sĩ/Nhà thuốc
+                  Phòng khám/Nhà thuốc
                 </a>
               </li>
               <li className="nav-item dropdown">

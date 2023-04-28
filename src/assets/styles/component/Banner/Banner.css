@@ -50,9 +50,6 @@
 
 /* Small Tablets  */
 @media only screen and (min-width: 576px) {
-  body {
-    background-color: blue;
-  }
   .banner {
     height: 600px;
   }
@@ -68,9 +65,6 @@
 
 /* iPad  */
 @media only screen and (min-width: 768px) {
-  body {
-    background-color: purple;
-  }
   .banner {
     height: 800px;
   }
@@ -86,9 +80,6 @@
 
 /* Laptop  */
 @media only screen and (min-width: 992px) {
-  body {
-    background-color: aliceblue;
-  }
   .banner h1 {
     font-size: 48px;
     line-height: 64px;
@@ -99,15 +90,3 @@
     line-height: 32px;
   }
 }
-
-/* @media only screen and (min-width: 1200px) {
-  body {
-    background-color: red;
-  }
-}
-
-@media only screen and (min-width: 1400px) {
-  body {
-    background-color: yellow;
-  }
-} */

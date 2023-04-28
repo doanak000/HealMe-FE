@@ -125,7 +125,7 @@ const HomeContent = () => {
     if (result?.[0].length < 1) return;
     setDisableDistrict(false);
     setDistrictsOptions([
-      { label: "All", value: "" },
+      { label: "Quận", value: "" },
       ...result[0].map(({ id: value, title: label, ...rest }) => ({
         value,
         label,
@@ -139,7 +139,7 @@ const HomeContent = () => {
     const result = await getWardInDistrict(value);
     setDisableWard(false);
     setWardsOptions([
-      { label: "All", value: "" },
+      { label: "Huyện", value: "" },
       ...result[0].map(({ id: value, title: label, ...rest }) => ({
         value,
         label,
@@ -211,9 +211,9 @@ const HomeContent = () => {
 
   return (
     <div className="my-3 content-area">
-      <div className="chatbox-area" style={{ background: "#deeaf4" }}>
+      <div className="chatbox-area mx-3 mx-lg-0" style={{ background: "#deeaf4" }}>
         <h5 className="text-center">AI tư vấn sức khỏe </h5>
-        <div className="chatbot-container">
+        <div className="chatbot-container w-100 px-2">
           {showChatbot && (
             <List
               // locale={{ emptyText: <NoData /> }}
@@ -269,80 +269,67 @@ const HomeContent = () => {
                 )}
               </Button>
             }
+            size="large"
           />
         </div>
       </div>
-      <div className="find-business-area" id="dat-lich">
+      <div className="find-business-area px-2" id="dat-lich">
         <h5>Tìm kiếm phòng khám/ nhà thuốc</h5>
-        <div className="row">
-          <div className="col-12 col-md-12 col-lg-12">
-            <div className="my-1">
-              <Select
-                defaultValue={1}
-                style={{
-                  width: 150,
-                  color: "#2d4964",
-                }}
-                onChange={(value) => setFilterValue(value)}
-                options={[
-                  {
-                    value: 1,
-                    label: "Phòng khám",
-                  },
-                  {
-                    value: 2,
-                    label: "Nhà thuốc",
-                  },
-                ]}
-                size="large"
-                onBlur={handleFilterBusiness}
-              />
-            </div>
-          </div>
+        <div className="my-1">
+          <Select
+            defaultValue={1}
+            style={{
+              color: "#2d4964",
+            }}
+            onChange={(value) => setFilterValue(value)}
+            options={[
+              {
+                value: 1,
+                label: "Phòng khám",
+              },
+              {
+                value: 2,
+                label: "Nhà thuốc",
+              },
+            ]}
+            size="large"
+            onBlur={handleFilterBusiness}
+          />
         </div>
-        <div className="row w-100 mt-2">
-          <div className="col-lg-6 col-md-12 col-12 my-1">
-            <Row gutter={8}>
-              <Col xs={8}>
-                <Select
-                  onChange={handleChangeProvince}
-                  options={provincesOptions}
-                  placeholder="Tỉnh/Thành phố"
-                  size="large"
-                  className="w-100"
-                  value={provinceId}
-                />
-              </Col>
-              <Col xs={8}>
-                <Select
-                  onChange={handleChangeDistrict}
-                  options={districtsOptions}
-                  placeholder="Quận"
-                  size="large"
-                  className="w-100"
-                  disabled={disabledDistrict || provinceId === ""}
-                  value={districtId}
-                />
-              </Col>
-              <Col xs={4}>
-                <Select
-                  onChange={(value) => setWardId(value)}
-                  options={wardsOptions}
-                  placeholder="Huyện"
-                  size="large"
-                  className="w-100"
-                  disabled={disabledWard || districtId === ""}
-                  value={wardId}
-                />
-              </Col>
-              <Col xs={4}>
-                <Button onClick={handleClearFilter} size="large">
-                  Xóa bộ lọc
-                </Button>
-              </Col>
-            </Row>
-          </div>
-          <div className="col-lg-4 col-md-12 col-12 my-1">
+        <Row gutter={8}>
+          <Col xs={24} sm={24} md={8} lg={4} className="my-1">
+            <Select
+              onChange={handleChangeProvince}
+              options={provincesOptions}
+              placeholder="Tỉnh/Thành phố"
+              size="large"
+              className="w-100"
+              value={provinceId}
+            />
+          </Col>
+          <Col xs={24} sm={24} md={8} lg={4} className="my-1">
+            <Select
+              onChange={handleChangeDistrict}
+              options={districtsOptions}
+              placeholder="Quận"
+              size="large"
+              className="w-100"
+              disabled={disabledDistrict || provinceId === ""}
+              value={districtId}
+            />
+          </Col>
+          <Col xs={24} sm={24} md={8} lg={4} className="my-1">
+            <Select
+              onChange={(value) => setWardId(value)}
+              options={wardsOptions}
+              placeholder="Huyện"
+              size="large"
+              className="w-100"
+              disabled={disabledWard || districtId === ""}
+              value={wardId}
+            />
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={4} className="my-1">
             <Select
               placeholder="Chuyên Môn"
               onChange={(value) => setDepartmentId(value)}
@@ -436,8 +423,13 @@ const HomeContent = () => {
               className="w-100"
               disabled={disabledDepartment}
             />
-          </div>
-          <div className="col-lg-2 col-md-12 col-12 my-1">
+          </Col>
+          <Col xs={12} lg={4} className="my-1">
+            <Button onClick={handleClearFilter} size="large" className="w-100">
+              Xóa bộ lọc
+            </Button>
+          </Col>
+          <Col xs={12} lg={4} className="my-1">
             <Button
               type="primary"
               size="large"
@@ -446,8 +438,8 @@ const HomeContent = () => {
             >
               Tìm kiếm
             </Button>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
 
       <div className="row">
