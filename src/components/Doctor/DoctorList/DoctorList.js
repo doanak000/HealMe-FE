@@ -44,12 +44,15 @@ const DoctorList = (props) => {
           <DoctorItem item={item} key={item?.id} />
         </div>
       ))}
-      <Pagination
-        defaultCurrent={1}
-        defaultPageSize={ITEMS_PER_PAGE}
-        onChange={handleChange}
-        total={listBusiness.length}
-      />
+      <div className="col-12 col-md-12 col-lg-6">
+        <Pagination
+          defaultCurrent={1}
+          defaultPageSize={ITEMS_PER_PAGE}
+          onChange={handleChange}
+          total={listBusiness.length}
+          className="mx-auto d-block"
+        />
+      </div>
     </div>
   );
 };

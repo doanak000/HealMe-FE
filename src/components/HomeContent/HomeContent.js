@@ -442,7 +442,7 @@ const HomeContent = () => {
         </Row>
       </div>
 
-      <div className="row">
+      <div className="row px-3 px-lg-0">
         <div className="list-doctor my-3">
           <DoctorList
             clinics={clinics}
