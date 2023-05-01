@@ -7,6 +7,8 @@ import PatientAppointment from "../PatientAppointment/PatientAppointment";
 import WorkSchedularManage from "../WorkSchedularManage/WorkSchedularManage";
 import { CgProfile } from "react-icons/cg"
 import { BsCalendarCheck } from "react-icons/bs"
+import { RiLockPasswordFill } from "react-icons/ri"
+import ChangePassword from "../ChangePassword/ChangePassword";
 
 const ProfileContent = () => {
   const [activeTab, setActiveTab] = useState("1");
@@ -27,7 +29,9 @@ const ProfileContent = () => {
           <WorkSchedular />
         );
       case "3":
-        return <WorkSchedularManage />;
+        return userInfo.role_id === 2 ? (
+          <ChangePassword />
+        ) : (<WorkSchedularManage />)
       default:
         return null;
     }
@@ -50,6 +54,14 @@ const ProfileContent = () => {
       </>,
       children: <PatientAppointment />,
     },
+    {
+      key: '3',
+      label: <>
+        <RiLockPasswordFill className="fs-5 me-1 mb-lg-1" />
+        <span>Đổi mật khẩu</span>
+      </>,
+      children: <ChangePassword />
+    }
   ];
 
   const itemsOfDoctor = [
