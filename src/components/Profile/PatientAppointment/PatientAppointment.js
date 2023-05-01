@@ -225,7 +225,6 @@ const PatientAppointment = () => {
     getApptData();
   }, []);
 
-  console.log(apptData);
   return (
     <div>
       <div className="register-work-schedular">

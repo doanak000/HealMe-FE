@@ -11,6 +11,7 @@ export const PATH = Object.freeze({
   PRESCRIPTION: "/prescription",
   PRESCRIPTION_NEW: "/prescription-new",
   PRESCRIPTION_DETAIL: "/prescription/:idPrescription",
+  PRICING: '/pricing'
 });
 
 export const SIDEBAR = Object.freeze({
@@ -38,6 +39,7 @@ export const ROUTES = Object.freeze({
     { path: PATH.PRESCRIPTION, component: "PrescriptionPage", exact: true },
     { path: PATH.PRESCRIPTION_NEW, component: "PrescriptionNewPage" },
     { path: PATH.PRESCRIPTION_DETAIL, component: "PrescriptionDetailPage" },
+    { path: PATH.PRICING, component: 'PricingPage' }
   ],
 
   PUBLIC: [
