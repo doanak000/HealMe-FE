@@ -192,11 +192,14 @@ export const updateBusinessProfile = async (id, data) => {
   const response = await authAxios.post(`/business/${id}/api/update`, data);
   return response.data;
 };
-
 export const getPharmacyMedicine = async (id) => {
   const response = await authAxios.get(`/pharmacy/${id}/medicine`);
   return response.data;
 };
+export const changePassword = async (userId, value) => {
+  const response = await authAxios.post(`/users/${userId}/api/change-password`, value);
+  return response.data;
+}
 // Export all API call functions
 export default {
   login,
@@ -234,4 +237,5 @@ export default {
   getClinicProfileApi,
   updateBusinessProfile,
   getPharmacyMedicine,
+  changePassword
 };
