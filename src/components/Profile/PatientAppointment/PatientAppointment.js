@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table, Space, Modal, Tag } from "antd";
+import { Button, Table, Space, Modal, Tag, Typography, Input } from "antd";
 import moment from "moment";
 import { NOTIFICATION_TYPE } from "../../../constants/common";
 import { Notification } from "../../Notification/Notification";
@@ -10,6 +10,7 @@ import {
   getPresDetail,
 } from "../../../api/api";
 import { confirm } from "../../ConfirmModal/ConfirmModal";
+import { SearchOutlined } from "@ant-design/icons";
 const layout = {
   labelCol: {
     span: 24,
@@ -86,6 +87,52 @@ const PatientAppointment = () => {
       dataIndex: "workday",
       key: "workday",
       render: (text, today) => <a>{moment(text).format("YYYY-MM-DD")}</a>,
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }) => (
+        <div style={{ padding: 8 }}>
+          <Input
+            placeholder="Search work day"
+            value={selectedKeys[0]}
+            onChange={(e) =>
+              setSelectedKeys(e.target.value ? [e.target.value] : [])
+            }
+            onPressEnter={() => confirm()}
+            style={{ width: 188, marginBottom: 8, display: "block" }}
+          />
+          <Button
+            type="primary"
+            onClick={() => confirm()}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90, marginRight: 8 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => {
+              clearFilters();
+              confirm();
+            }}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </div>
+      ),
+      filterIcon: (filtered) => (
+        <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+      ),
+      onFilter: (value, record) =>
+        moment(record.workday)
+          .format("YYYY-MM-DD")
+          .toLowerCase()
+          .includes(value.toLowerCase()),
+      render: (text) => <a>{moment(text).format("YYYY-MM-DD")}</a>,
     },
     {
       width: "100",
@@ -93,6 +140,51 @@ const PatientAppointment = () => {
       dataIndex: "business_name",
       key: "business_name",
       render: (text) => <a>{text}</a>,
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }) => (
+        <div style={{ padding: 8 }}>
+          <Input
+            placeholder="Search tên bệnh nhân"
+            value={selectedKeys[0]}
+            onChange={(e) =>
+              setSelectedKeys(e.target.value ? [e.target.value] : [])
+            }
+            onPressEnter={() => confirm()}
+            style={{ width: 188, marginBottom: 8, display: "block" }}
+          />
+          <Button
+            type="primary"
+            onClick={() => confirm()}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90, marginRight: 8 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => {
+              clearFilters();
+              confirm();
+            }}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </div>
+      ),
+      filterIcon: (filtered) => (
+        <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+      ),
+      onFilter: (value, record) =>
+        record?.business_name
+          ?.toString()
+          ?.toLowerCase()
+          ?.includes(value.toLowerCase()),
     },
     {
       width: "100",
@@ -107,9 +199,9 @@ const PatientAppointment = () => {
       dataIndex: "meeting_url",
       key: "meeting_url",
       render: (meeting_url) => (
-        <a href={meeting_url} target="_blank">
+        meeting_url ? <a href={meeting_url} target="_blank">
           Ấn vào đây
-        </a>
+        </a> : <Typography.Text disabled>Không có lịch khám</Typography.Text>
       ),
     },
     {
@@ -132,6 +224,8 @@ const PatientAppointment = () => {
   useEffect(() => {
     getApptData();
   }, []);
+
+  console.log(apptData);
   return (
     <div>
       <div className="register-work-schedular">
