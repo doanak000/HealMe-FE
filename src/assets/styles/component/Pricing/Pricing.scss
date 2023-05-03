@@ -6,6 +6,7 @@ $bgfontcolor: #717787;
 
 .pricingTable {
   margin: 40px auto;
+
   cursor: pointer;
 
   & > &-title {
@@ -35,6 +36,10 @@ $bgfontcolor: #717787;
     padding-right: 2em;
     text-align: center;
 
+    .pricingTable-firstTable_table__options{
+      text-align: left;
+    }
+
     &_table {
       vertical-align: middle;
       width: $widthoftable;
@@ -45,6 +50,7 @@ $bgfontcolor: #717787;
       max-width: 320px;
       transition: all 0.3s ease;
       border-radius: 5px;
+      box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
 
       @media screen and (max-width: 767px) {
         display: block;
@@ -100,11 +106,11 @@ $bgfontcolor: #717787;
         }
 
         &:before {
-          content: "Most Popular";
+          content: "Phổ biến nhất";
           position: absolute;
           color: white;
           display: block;
-          background-color: #3bbdee;
+          background-color: #0059a7;
           text-align: center;
           right: 15px;
           top: -25px;
@@ -262,9 +268,9 @@ $bgfontcolor: #717787;
           &:before {
             content: "✓";
             display: inline-flex;
-            margin-right: 15px;
+            margin-right: 8px;
             color: white;
-            background-color: #74ce6a;
+            background-color: #1990ff;
             border-radius: 50%;
             width: 15px;
             height: 15px;
@@ -290,12 +296,12 @@ $bgfontcolor: #717787;
       &__getstart {
         color: white;
         border: 0;
-        background-color: #71ce73;
+        background-color: #1990ff;
         margin-top: 30px;
         border-radius: 5px;
         cursor: pointer;
         padding: 15px;
-        box-shadow: 0px 3px 0px 0px rgba(102, 172, 100, 1);
+        // box-shadow: 0px 3px 0px 0px rgb(42, 45, 101);
         letter-spacing: 0.07em;
         transition: all 0.4s ease;
 
@@ -320,7 +326,7 @@ $bgfontcolor: #717787;
 
         &:hover {
           transform: translateY(-10px);
-          box-shadow: 0px 40px 29px -19px rgba(102, 172, 100, 0.9);
+          box-shadow: 0px 40px 29px -19px rgba(100, 114, 172, 0.9);
           @media screen and (max-width: 767px) {
             transform: none;
             box-shadow: none;
@@ -344,8 +350,8 @@ $bgfontcolor: #717787;
 body {
   font-family: "Montserrat", sans-serif;
   font-size: 100%;
-  background-color: #f0f4f7;
-  color: $bgfontcolor;
+  // background-color: #f0f4f7;
+  // color: $bgfontcolor;
 
   @media screen and (max-width: 960px) {
     font-size: 80%;
