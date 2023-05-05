@@ -200,6 +200,14 @@ export const changePassword = async (userId, value) => {
   const response = await authAxios.post(`/users/${userId}/api/change-password`, value);
   return response.data;
 }
+export const forgotPassword = async (email) => {
+  const response = await authAxios.post(`/users/api/forgot-password`, email);
+  return response.data;
+}
+export const resetPassword = async (newPassword) => {
+  const response = await authAxios.post(`/users/api/reset-password/:userId/token`, newPassword);
+  return response.data;
+}
 // Export all API call functions
 export default {
   login,
@@ -237,5 +245,7 @@ export default {
   getClinicProfileApi,
   updateBusinessProfile,
   getPharmacyMedicine,
-  changePassword
+  changePassword,
+  forgotPassword,
+  resetPassword,
 };

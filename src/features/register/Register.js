@@ -199,11 +199,11 @@ const Register = () => {
             onFinish={RegisterHandler}
             onFinishFailed={onFinishFailed}
           >
-            <TitleRegister>Register</TitleRegister>
+            <TitleRegister>Đăng ký</TitleRegister>
             <Form.Item
               size="large"
               id="username"
-              label={<RegisterLable>User name</RegisterLable>}
+              label={<RegisterLable>Username</RegisterLable>}
               name="username"
               rules={[
                 {
@@ -272,11 +272,11 @@ const Register = () => {
               <Input placeholder="email" onChange={handleChange} name="email" />
             </Form.Item>
 
-            <Link to={PATH.LOGIN}>Login</Link>
+            <Link to={PATH.LOGIN}>Đăng nhập</Link>
 
             <Form.Item {...tailLayout}>
               <RegisterButton type="primary" htmlType="submit">
-                Submit
+                Đăng ký
               </RegisterButton>
             </Form.Item>
           </Form>
