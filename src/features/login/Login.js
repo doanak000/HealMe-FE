@@ -109,11 +109,11 @@ const Login = () => {
           onFinish={loginHandler}
           onFinishFailed={onFinishFailed}
         >
-          <TitleLogin>Login</TitleLogin>
+          <TitleLogin>Đăng nhập</TitleLogin>
           <Form.Item
             size="large"
             id="username"
-            label={<LoginLable>User name</LoginLable>}
+            label={<LoginLable>Username</LoginLable>}
             name="username"
             rules={[
               {
@@ -146,10 +146,12 @@ const Login = () => {
               type="password"
             />
           </Form.Item>
-          No account? <Link to={PATH.REGISTER}>Register</Link>
+          Chưa có tài khoản? <Link to={PATH.REGISTER}>Đăng ký</Link>
+          <br />
+          <Link to={PATH.FORGOT_PASSWORD}>Quên mật khẩu</Link>
           <Form.Item {...tailLayout}>
             <LoginButton type="primary" htmlType="submit" className="mt-3">
-              Submit
+              Đăng nhập
             </LoginButton>
           </Form.Item>
         </Form>

@@ -11,7 +11,9 @@ export const PATH = Object.freeze({
   PRESCRIPTION: "/prescription",
   PRESCRIPTION_NEW: "/prescription-new",
   PRESCRIPTION_DETAIL: "/prescription/:idPrescription",
-  PRICING: '/pricing'
+  PRICING: '/pricing',
+  FORGOT_PASSWORD: '/forgot-password',
+  RESET_PASSWORD: '/reset-password/:userId/:token',
 });
 
 export const SIDEBAR = Object.freeze({
@@ -47,6 +49,8 @@ export const ROUTES = Object.freeze({
     { path: PATH.REGISTER, component: "RegisterPage" },
     { path: PATH.HOME, component: "HomePage", exact: true },
     { path: PATH.DOCTOR, component: "DoctorDetailPage" },
+    { path: PATH.FORGOT_PASSWORD, component: 'ForgotPasswordPage' },
+    { path: PATH.RESET_PASSWORD, component: 'ResetPasswordPage' },
   ],
 });
 
