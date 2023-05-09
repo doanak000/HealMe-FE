@@ -1,4 +1,4 @@
-import { Dropdown, Avatar, Button } from 'antd';
+import { Dropdown, Avatar, Button, Anchor } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import React from 'react';
 import logo from '../../assets/img/HealMe-logo.svg';
@@ -118,13 +118,15 @@ const Header = () => {
                             <li className="header__navbar-item">
                                 <a
                                     className="nav-link"
-                                    href="/"
+                                    href="#business"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#navbarSupportedContent"
                                 >
                                     Phòng khám/Nhà thuốc
                                 </a>
                             </li>
+
+
 
                             {/* <li className="nav-item dropdown">
                                 <a
