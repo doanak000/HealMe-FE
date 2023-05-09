@@ -273,7 +273,7 @@ const HomeContent = () => {
           />
         </div>
       </div>
-      <div className="find-business-area px-2" id="dat-lich">
+      <div className="find-business-area px-2 business" id="business" name="business">
         <h5>Tìm kiếm phòng khám/ nhà thuốc</h5>
         <div className="my-1">
           <Select

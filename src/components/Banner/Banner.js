@@ -21,7 +21,7 @@ const Banner = () => {
             type="primary"
             className="text-uppercase fw-bold banner__button"
           >
-            Khám ngay
+            <a href="#business" className="text-decoration-none">Khám ngay</a>
           </Button>
         </div>
       </div>
