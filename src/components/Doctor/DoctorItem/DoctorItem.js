@@ -1,9 +1,11 @@
-import { Image } from "antd";
+import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../../assets/styles/component/DoctorItem/DoctorItem.css";
 import { PATH } from "../../../constants/common";
 import { getClinicInfoApi } from "../../../api/api";
+import { FiPhoneCall } from "react-icons/fi"
+import { AiFillMail } from "react-icons/ai"
 
 const DoctorItem = (props) => {
   const { item, businessId } = props;
@@ -29,17 +31,28 @@ const DoctorItem = (props) => {
           </Link>
         </h4>
         <p className="text-justify">
-          <b>Email:</b> {clinicInfo?.email}
-        </p>
-        <p className="text-justify">
-          <b>Phone:</b> {clinicInfo?.phone}
-        </p>
-        <p className="text-justify">
-          <b>Địa chỉ:</b> {clinicInfo?.fulladdress}
+          <b>Địa chỉ:</b> <a href={`http://maps.google.com/?q=${clinicInfo?.fulladdress}`}>{clinicInfo?.fulladdress}</a>
         </p>
         <p className="text-justify">
           <b>Mô tả:</b> {clinicInfo?.descr}
         </p>
+        <p className="text-justify">
+          <b>Khoảng cách:</b> 100km
+        </p>
+        <div className="row">
+          <div className="col-12 col-md-6 col-lg-6">
+            <Button className="w-100 bg-success text-white fw-bold">
+              <AiFillMail className="fs-5 me-2" />
+              <a className="text-decoration-none text-white" href={`mailto:${clinicInfo?.email}`}>{clinicInfo?.email || "No Email"}</a>
+            </Button>
+          </div>
+          <div className="col-12 col-md-6 col-lg-6">
+            <Button className="w-100 bg-primary text-white fw-bold">
+              <FiPhoneCall className="fs-5 me-2" />
+              <a className="text-decoration-none text-white" href={`tel:${clinicInfo?.phone}`}>{clinicInfo?.phone || "No Phone"}</a>
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );
