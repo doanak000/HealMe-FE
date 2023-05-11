@@ -40,7 +40,7 @@ const DoctorList = (props) => {
     <div className="row">
       <Input placeholder="Nhập tên bác sĩ/dược sĩ/phòng khám để tìm" onChange={handleSearch} size="large" className="ms-2 mb-2 w-100" prefix={<SearchOutlined />} />
       {listBusinessTemp.slice(state.minValue, state.maxValue).map((item) => (
-        <div className="col-12 col-md-12 col-lg-6">
+        <div className="col-12 col-md-12 col-lg-6" key={item?.id}>
           <DoctorItem item={item} key={item?.id} />
         </div>
       ))}
