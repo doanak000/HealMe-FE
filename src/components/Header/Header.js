@@ -13,6 +13,7 @@ import {
 import { PATH } from '../../constants/common';
 import { Link } from 'react-router-dom';
 import { confirm } from '../ConfirmModal/ConfirmModal';
+import { memo } from 'react';
 
 const Header = () => {
     const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -217,4 +218,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default memo(Header);

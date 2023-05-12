@@ -1,6 +1,7 @@
 import { Button } from "antd";
 import React from "react";
 import "../../assets/styles/component/Banner/Banner.css";
+import { memo } from "react";
 
 const Banner = () => {
   return (
@@ -29,4 +30,4 @@ const Banner = () => {
   );
 };
 
-export default Banner;
+export default memo(Banner);

@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Notification } from "../../components/Notification/Notification";
 // import { NOTIFICATION_TYPE } from '../../constants/common'
 // import { selectTranslation } from '../language/languageSlice'
-import { Form, Input, Checkbox } from "antd";
+import { Form, Input, Checkbox, Row, Col } from "antd";
 import {
   LoginButton,
   LoginLable,
@@ -20,6 +20,8 @@ import { NOTIFICATION_TYPE, PATH } from "../../constants/common";
 import { translation } from "../../configs/translation";
 import { login } from "../../api/api.js";
 import { useEffect } from "react";
+import loginBanner from "../../assets/img/login-banner.png";
+import { memo } from "react";
 
 const layout = {
   labelCol: {
@@ -97,67 +99,74 @@ const Login = () => {
     console.log("Failed:", errorInfo);
   };
   return (
-    <WrapperLogin>
-      <WrapperLoginForm>
-        <Form
-          size="large"
-          {...layout}
-          name="basic"
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={loginHandler}
-          onFinishFailed={onFinishFailed}
-        >
-          <TitleLogin>Đăng nhập</TitleLogin>
-          <Form.Item
-            size="large"
-            id="username"
-            label={<LoginLable>Username</LoginLable>}
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
-          >
-            <Input
-              placeholder="username"
-              onChange={handleChange}
-              name="username"
-            />
-          </Form.Item>
-          <Form.Item
-            id="password"
-            label={<LoginLable>Password</LoginLable>}
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input
-              placeholder="password"
-              onChange={handleChange}
-              name="password"
-              type="password"
-            />
-          </Form.Item>
-          Chưa có tài khoản? <Link to={PATH.REGISTER}>Đăng ký</Link>
-          <br />
-          <Link to={PATH.FORGOT_PASSWORD}>Quên mật khẩu</Link>
-          <Form.Item {...tailLayout}>
-            <LoginButton type="primary" htmlType="submit" className="mt-3">
-              Đăng nhập
-            </LoginButton>
-          </Form.Item>
-        </Form>
-      </WrapperLoginForm>
-    </WrapperLogin>
+    <Row>
+      <Col xs={10}>
+        <img src={loginBanner} className="w-75" />
+      </Col>
+      <Col xs={14}>
+        <WrapperLogin>
+          <WrapperLoginForm>
+            <Form
+              size="large"
+              {...layout}
+              name="basic"
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={loginHandler}
+              onFinishFailed={onFinishFailed}
+            >
+              <TitleLogin>Đăng nhập</TitleLogin>
+              <Form.Item
+                size="large"
+                id="username"
+                label={<LoginLable>Username</LoginLable>}
+                name="username"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your username!",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="username"
+                  onChange={handleChange}
+                  name="username"
+                />
+              </Form.Item>
+              <Form.Item
+                id="password"
+                label={<LoginLable>Password</LoginLable>}
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="password"
+                  onChange={handleChange}
+                  name="password"
+                  type="password"
+                />
+              </Form.Item>
+              Chưa có tài khoản? <Link to={PATH.REGISTER}>Đăng ký</Link>
+              <br />
+              <Link to={PATH.FORGOT_PASSWORD}>Quên mật khẩu</Link>
+              <Form.Item {...tailLayout}>
+                <LoginButton type="primary" htmlType="submit" className="mt-3">
+                  Đăng nhập
+                </LoginButton>
+              </Form.Item>
+            </Form>
+          </WrapperLoginForm>
+        </WrapperLogin>
+      </Col>
+    </Row>
   );
 };
 
-export default Login;
+export default memo(Login);

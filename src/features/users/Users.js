@@ -4,6 +4,7 @@ import { deleteUserById, getAllUsers, updateUser } from "../../api/api.js";
 import { NOTIFICATION_TYPE, PATH } from "../../constants/common";
 import { Notification } from "../../components/Notification/Notification";
 import { confirm } from "../../components/ConfirmModal/ConfirmModal.js";
+import { memo } from "react";
 
 const { Option } = Select;
 const Users = () => {
@@ -254,4 +255,4 @@ const Users = () => {
     </>
   );
 };
-export default Users;
+export default memo(Users);

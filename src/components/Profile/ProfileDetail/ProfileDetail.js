@@ -68,7 +68,7 @@ const ProfileDetail = () => {
   const getPatientProfile = async () => {
     const res = await getPatientProfileApi(userInfo.user_role_id);
     setUserProfile(res?.[0]?.[0]);
-    getFullAddressByWardId(res?.[0]?.[0]?.ward_id);
+    getFullAddressByWardId(userInfo?.ward_id);
   };
   const getBusinessProfile = async () => {
     if (userInfo?.business_type == 1) {

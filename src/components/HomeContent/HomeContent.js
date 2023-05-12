@@ -15,11 +15,12 @@ import { NOTIFICATION_TYPE } from '../../constants/common'
 import { Notification } from '../Notification/Notification'
 import './HomeContent.scss'
 import { LoadingOutlined, RobotOutlined, UserOutlined } from '@ant-design/icons'
+import { memo } from 'react'
 
 const { TextArea } = Input
 const HomeContent = () => {
-  const [question, setQuestion] = useState(null)
-  const [res, setRes] = useState(null)
+  // const [question, setQuestion] = useState(null)
+  // const [res, setRes] = useState(null)
 
   const [filterValue, setFilterValue] = useState(1)
   const [departmentId, setDepartmentId] = useState('')
@@ -85,27 +86,27 @@ const HomeContent = () => {
     await getAllPharmacy().then((res) => setPharmacy(res))
   }, [])
 
-  const handleQuestion = (event) => {
-    setQuestion(event?.target?.value)
-  }
+  // const handleQuestion = (event) => {
+  //   setQuestion(event?.target?.value)
+  // }
 
-  const sendQuestion = async () => {
-    try {
-      setIsLoading(true)
-      const chatRes = await getChatbotResponse(question)
-      setRes(chatRes?.content)
-      setIsLoading(false)
-    } catch (error) {
-      console.log(error)
-      Notification({
-        type: NOTIFICATION_TYPE.ERROR,
-        message: 'Chatbot got some mistakes',
-        description: null,
-      })
-      console.error(error)
-      setLoadingState(false)
-    }
-  }
+  // const sendQuestion = async () => {
+  //   try {
+  //     setIsLoading(true)
+  //     const chatRes = await getChatbotResponse(question)
+  //     setRes(chatRes?.content)
+  //     setIsLoading(false)
+  //   } catch (error) {
+  //     console.log(error)
+  //     Notification({
+  //       type: NOTIFICATION_TYPE.ERROR,
+  //       message: 'Chatbot got some mistakes',
+  //       description: null,
+  //     })
+  //     console.error(error)
+  //     setLoadingState(false)
+  //   }
+  // }
 
   const provincesOptions = provinces.map(
     ({ id: value, name: label, ...rest }) => ({
@@ -167,6 +168,7 @@ const HomeContent = () => {
       console.log(error)
     }
   }
+
   const handleClearFilter = async () => {
     setProvinceId('')
     setDistrictId('')
@@ -204,6 +206,8 @@ const HomeContent = () => {
   //     }
   //   />
   // );
+
+  console.log('Home Content reload')
 
   return (
     <div className="my-3 content-area">
@@ -471,4 +475,4 @@ const HomeContent = () => {
   )
 }
 
-export default HomeContent
+export default memo(HomeContent)

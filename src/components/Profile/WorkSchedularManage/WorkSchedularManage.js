@@ -36,6 +36,7 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import PrescriptionNewForm from "../../Prescription/PrescriptionNewForm/PrescriptionNewForm";
+import { memo } from "react";
 const layout = {
   labelCol: {
     span: 24,
@@ -348,4 +349,4 @@ const WorkSchedularManage = () => {
   );
 };
 
-export default WorkSchedularManage;
+export default memo(WorkSchedularManage);

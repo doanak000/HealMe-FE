@@ -8,6 +8,7 @@ export const WrapperLogin = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50px;
+  border:none;
 `;
 export const WrapperLoginForm = styled.div`
   padding: calc(3 * ${themeGet("spaces.container")}px);

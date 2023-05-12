@@ -1,6 +1,7 @@
 import React from 'react'
 import { theme } from '../../theme/theme'
 import { CustomSpinner, SpinnerWrapper } from './Spinner.style'
+import { memo } from 'react'
 
 const Spinner = (props) => {
   return (
@@ -15,4 +16,4 @@ const Spinner = (props) => {
   )
 }
 
-export default Spinner
+export default memo(Spinner)

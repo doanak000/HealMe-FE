@@ -14,6 +14,7 @@ import { Notification } from "../../Notification/Notification";
 import { NOTIFICATION_TYPE } from "../../../constants/common";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Link, useHistory } from "react-router-dom";
+import { memo } from "react";
 // const columns = [
 //   {
 //     title: "Ngày",
@@ -236,4 +237,4 @@ const DoctorAppointment = ({ businessId }) => {
   );
 };
 
-export default DoctorAppointment;
+export default memo(DoctorAppointment);
