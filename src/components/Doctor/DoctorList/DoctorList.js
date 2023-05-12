@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import DoctorItem from "../DoctorItem/DoctorItem";
 import { Input, Pagination } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { getMap } from "../../../api/api";
 
 const DoctorList = (props) => {
   const { clinics, pharmacy, filterValue } = props;
@@ -36,6 +37,19 @@ const DoctorList = (props) => {
     setListBusinessTemp(listBusinessCookedData);
   };
 
+  // if (localStorage.getItem('token')) {
+  //   getMap({
+  //     "destinations": [
+  //       '99 Pham Viet Chanh, Ward 19, Binh Thanh District, Ho Chi Minh City'
+  //     ]
+  //   })
+  //     .then(result => {
+  //       if (!result) console.log('nothing')
+  //     })
+  //     .catch(err => console.log(err))
+  // }
+
+  console.log('Doctor List re-load')
   return (
     <div className="row">
       <Input placeholder="Nhập tên bác sĩ/dược sĩ/phòng khám để tìm" onChange={handleSearch} size="large" className="ms-2 mb-2 w-100" prefix={<SearchOutlined />} />
@@ -57,4 +71,4 @@ const DoctorList = (props) => {
   );
 };
 
-export default DoctorList;
+export default memo(DoctorList);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 // import { useDispatch, useSelector } from 'react-redux'
 // import { registerFail, registerSuccess } from './registerSlice'
 // import {  useLocation } from 'react-router-dom'
@@ -435,4 +435,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default memo(Register);

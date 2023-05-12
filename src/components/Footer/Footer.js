@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/img/HealMe-logo.svg";
 import "./Footer.scss";
+import { memo } from "react";
 
 const FooterContact = () => {
   return (
@@ -100,4 +101,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

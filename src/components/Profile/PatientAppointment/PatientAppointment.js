@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table, Space, Modal, Tag, Typography, Input } from "antd";
+import { Button, Table, Space, Modal, Tag, Typography, Input, Card } from "antd";
 import moment from "moment";
 import { NOTIFICATION_TYPE } from "../../../constants/common";
 import { Notification } from "../../Notification/Notification";
@@ -63,6 +63,8 @@ const PatientAppointment = () => {
       const getPresDetailRes = await getPresDetail(
         getPresByApptIdRes[0][0]?.pres_id
       );
+      console.log(getPresByApptIdRes[0][0]);
+      console.log(getPresDetailRes[0]);
       const presTemp = {
         ...getPresByApptIdRes[0][0],
         presDetail: getPresDetailRes[0],
@@ -225,6 +227,8 @@ const PatientAppointment = () => {
     getApptData();
   }, []);
 
+  console.log(pres)
+
   return (
     <div>
       <div className="register-work-schedular">
@@ -251,19 +255,21 @@ const PatientAppointment = () => {
             <p>Thuốc được kê:</p>
             {pres?.presDetail.map((item, index) => {
               return (
-                <div key={index} style={{ border: "1px solid black" }}>
-                  <p>Tên thuốc: {item?.title}</p>
-                  <p>Số lương: {item?.dosage}</p>
-                  <p>Note: {item?.note}</p>
+                <Card key={index} className="my-2 text-white" bordered={false} style={{
+                  background: "radial-gradient(circle at top, #007bff , #527cc6)"
+                }}>
+                  <p className="mb-1 fs-5 fw-bold">{item?.title}</p>
+                  <p className="mb-0">Số lương: {item?.dosage}</p>
+                  <p className="mb-0">Cách dùng: {item?.note}</p>
                   {/* <p>Nhà cung cấp: {item?.supplier}</p>
                   <p>Thành phần: {item?.ingredients}</p> */}
-                </div>
+                </Card>
               );
             })}
           </div>
         </Modal>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 

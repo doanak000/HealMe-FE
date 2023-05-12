@@ -1,5 +1,6 @@
 import React from "react";
 import ProfileContent from "../../components/Profile/ProfileContent/ProfileContent";
+import { memo } from "react";
 
 const Profile = () => {
   return (
@@ -13,4 +14,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default memo(Profile);
