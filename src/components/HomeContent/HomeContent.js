@@ -475,4 +475,4 @@ const HomeContent = () => {
   )
 }
 
-export default memo(HomeContent)
+export default HomeContent

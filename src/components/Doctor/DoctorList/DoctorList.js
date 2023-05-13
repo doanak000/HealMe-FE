@@ -11,11 +11,21 @@ const DoctorList = (props) => {
   const [listBusinessTemp, setListBusinessTemp] = useState([]);
   const ITEMS_PER_PAGE = 4;
   const [state, setState] = useState({ minValue: 0, maxValue: 4 });
-  console.log(filterValue);
-  useEffect(() => {
+  const listBusinessTempLocal = JSON.parse(localStorage.getItem('listBusinessTemp'));
+  useEffect(async () => {
     if (filterValue === 1) {
       setListBusiness(clinics);
       setListBusinessTemp(clinics);
+      console.log(clinics);
+      // const tempPlaceArray = [];
+      // for (let i = 0; i < clinics.length; i++) {
+      //   tempPlaceArray.push(clinics[i]?.fulladdress);
+      // }
+      // console.log(tempPlaceArray);
+      // await getMap({
+      //   destinations:[]
+      // })
+      localStorage.setItem('listBusinessTemp', JSON.stringify(clinics));
     } else {
       setListBusiness(pharmacy);
       setListBusinessTemp(pharmacy);
@@ -50,10 +60,11 @@ const DoctorList = (props) => {
   // }
 
   console.log('Doctor List re-load')
+
   return (
     <div className="row">
       <Input placeholder="Nhập tên bác sĩ/dược sĩ/phòng khám để tìm" onChange={handleSearch} size="large" className="ms-2 mb-2 w-100" prefix={<SearchOutlined />} />
-      {listBusinessTemp.slice(state.minValue, state.maxValue).map((item) => (
+      {listBusinessTempLocal?.slice(state.minValue, state.maxValue).map((item) => (
         <div className="col-12 col-md-12 col-lg-6" key={item?.id}>
           <DoctorItem item={item} key={item?.id} />
         </div>
@@ -71,4 +82,4 @@ const DoctorList = (props) => {
   );
 };
 
-export default memo(DoctorList);
+export default DoctorList;

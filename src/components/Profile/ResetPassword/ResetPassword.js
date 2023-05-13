@@ -1,7 +1,7 @@
 import { Button, Form, Input } from 'antd';
 import React from 'react'
 import { resetPassword } from '../../../api/api';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { Notification } from '../../Notification/Notification';
 import { NOTIFICATION_TYPE } from '../../../constants/common';
 

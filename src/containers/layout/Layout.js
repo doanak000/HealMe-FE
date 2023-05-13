@@ -139,4 +139,4 @@ const LayoutAdmin = (props) => {
   );
 };
 
-export default memo(LayoutAdmin);
+export default LayoutAdmin;
