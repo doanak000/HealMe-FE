@@ -2,7 +2,6 @@ import { Tabs } from "antd";
 import React, { useState } from "react";
 import ProfileDetail from "../ProfileDetail/ProfileDetail";
 import WorkSchedular from "../WorkSchedular/WorkSchedular";
-import { memo } from "react";
 import PatientAppointment from "../PatientAppointment/PatientAppointment";
 import WorkSchedularManage from "../WorkSchedularManage/WorkSchedularManage";
 import { CgProfile } from "react-icons/cg"
@@ -92,4 +91,4 @@ const ProfileContent = () => {
   );
 };
 
-export default memo(ProfileContent);
+export default ProfileContent;

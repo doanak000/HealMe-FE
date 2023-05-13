@@ -14,4 +14,4 @@ const Profile = () => {
   );
 };
 
-export default memo(Profile);
+export default Profile;

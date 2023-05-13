@@ -16,4 +16,4 @@ const Spinner = (props) => {
   )
 }
 
-export default memo(Spinner)
+export default Spinner
