@@ -470,4 +470,4 @@ const Register = () => {
     )
 }
 
-export default memo(Register)
+export default Register

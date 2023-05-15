@@ -30,4 +30,4 @@ const Banner = () => {
   );
 };
 
-export default memo(Banner);
+export default Banner;

@@ -12,9 +12,6 @@ import { useEffect } from 'react'
 import moment from 'moment'
 import { Notification } from '../../Notification/Notification'
 import { NOTIFICATION_TYPE } from '../../../constants/common'
-import { ExclamationCircleFilled } from '@ant-design/icons'
-import { Link, useHistory } from 'react-router-dom'
-import { memo } from 'react'
 // const columns = [
 //   {
 //     title: "Ngày",
@@ -92,18 +89,47 @@ const DoctorAppointment = ({ businessId }) => {
         setDataAppointmentByScheduleId,
     ] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isModalLoginOpen, setIsModalLoginOpen] = useState(false)
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo'))
     // const handleSelectTimeIdEdit = (value) => {
     //   setSelectedTimeIdEdit(value);
     // };
 
-    const history = useHistory()
     const getWorkScheduleData = async () => {
         // const data = await getWorkSchedule(Bacsi?.user_role_id);
         const data = await getWorkSchedule(businessId)
         setDataWorkSchedule(data[0])
+    }
+    const showModalTableDataAppointmentByScheduleId = async (record) => {
+        const data = await getApptByScheduleId(record.id)
+        setSelectedScheduleId(record.id)
+        console.log(data)
+        setDataAppointmentByScheduleId(data[0])
+        setIsModalOpen(true)
+    }
+    const createAppointment = async (record) => {
+        try {
+            const data = {
+                pt_id: userInfo.user_role_id,
+                sched_id: selectedScheduleId,
+                hour_id: record.hour_id,
+            }
+            await createAppt(data)
+            await getApptByScheduleId(selectedScheduleId)
+            Notification({
+                type: NOTIFICATION_TYPE.SUCCESS,
+                message: 'Đặt lịch thành công',
+                description: null,
+            })
+            setIsModalOpen(false)
+        } catch (error) {
+            console.log(error)
+            Notification({
+                type: NOTIFICATION_TYPE.ERROR,
+                message: 'Đặt lịch thất bại',
+                description: error?.response?.data?.msg,
+            })
+        }
     }
     const showModalTableDataAppointmentByScheduleId = async (record) => {
         const data = await getApptByScheduleId(record.id)
@@ -239,24 +265,8 @@ const DoctorAppointment = ({ businessId }) => {
                     dataSource={dataAppointmentByScheduleId}
                 />
             </Modal>
-            <Modal
-                title={
-                    <>
-                        <ExclamationCircleFilled className="me-2 mb-2 text-warning" />
-                        <span>Bạn chưa đăng nhập</span>
-                    </>
-                }
-                open={isModalLoginOpen}
-                onCancel={() => setIsModalLoginOpen(false)}
-                onOk={() => history.push('/login')}
-                closable={false}
-            >
-                <p>
-                    Xin mời bạn <Link to="/login">đăng nhập</Link> để tiếp tục
-                </p>
-            </Modal>
         </>
     )
 }
 
-export default memo(DoctorAppointment)
+export default DoctorAppointment

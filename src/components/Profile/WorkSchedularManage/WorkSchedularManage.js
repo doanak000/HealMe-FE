@@ -349,4 +349,4 @@ const WorkSchedularManage = () => {
   );
 };
 
-export default memo(WorkSchedularManage);
+export default WorkSchedularManage;

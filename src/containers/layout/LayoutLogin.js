@@ -14,4 +14,4 @@ const LayoutLogin = ({ children }) => {
     )
 }
 
-export default memo(LayoutLogin)
+export default LayoutLogin

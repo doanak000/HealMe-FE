@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Button,
     Col,
@@ -612,4 +612,4 @@ const ProfileDetail = () => {
     )
 }
 
-export default memo(ProfileDetail)
+export default ProfileDetail

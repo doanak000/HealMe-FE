@@ -29,11 +29,7 @@ const DoctorItem = (props) => {
   //     .catch(err => console.log(err))
   // }
 
-
-
-  useEffect(() => {
-    console.log('doctor item reload')
-  }, [])
+  console.log('doctor item reload')
 
   return (
     <div className="row my-2 doctor-item-container p-2 mb-2 bg-body rounded bg-body rounded g-2">
@@ -77,4 +73,4 @@ const DoctorItem = (props) => {
   );
 };
 
-export default memo(DoctorItem);
+export default DoctorItem;
