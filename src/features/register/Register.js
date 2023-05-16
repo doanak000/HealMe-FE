@@ -5,7 +5,7 @@ import React, { memo, useState } from 'react'
 import { Notification } from '../../components/Notification/Notification'
 // import { NOTIFICATION_TYPE } from '../../constants/common'
 // import { selectTranslation } from '../language/languageSlice'
-import { Form, Input, Checkbox, DatePicker, Select } from 'antd'
+import { Form, Input, Checkbox, DatePicker } from 'antd'
 import {
     RegisterButton,
     RegisterLable,
@@ -27,6 +27,8 @@ import {
     register,
 } from '../../api/api.js'
 import { useEffect } from 'react'
+import Select from 'react-select'
+
 const layout = {
     labelCol: {
         span: 24,
@@ -93,20 +95,18 @@ const Register = () => {
         )
         setOptionsWard(cookedData)
     }
-    const handleChangeProvince = async (value) => {
-        console.log(value)
+    const handleChangeProvince = async (selectedOption) => {
         await setDisabledDistrict(true)
-        await getDistrictInProvinceApi(value)
+        await getDistrictInProvinceApi(selectedOption.value)
         await setDisabledDistrict(false)
-        console.log(disabledDistrict)
     }
-    const handleChangeDistrict = async (value) => {
+    const handleChangeDistrict = async (selectedOption) => {
         await setDisabledWard(true)
-        await getWardInDistrictApi(value)
+        await getWardInDistrictApi(selectedOption.value)
         await setDisabledWard(false)
     }
-    const handleChangeWard = async (value) => {
-        setSelectedWard(value)
+    const handleChangeWard = async (selectedOption) => {
+        setSelectedWard(selectedOption)
     }
 
     const handleChange = (event) => {
@@ -409,7 +409,7 @@ const Register = () => {
                                         overflowY: 'scroll',
                                     }}
                                     name="district"
-                                    disabled={disabledDistrict}
+                                    isDisabled={disabledDistrict}
                                     options={optionsDistrict}
                                     style={{
                                         width: '95%',
@@ -430,7 +430,7 @@ const Register = () => {
                                         maxHeight: '200px',
                                         overflowY: 'scroll',
                                     }}
-                                    disabled={disabledWard}
+                                    isDisabled={disabledWard}
                                     options={optionsWard}
                                     style={{
                                         width: '100%',

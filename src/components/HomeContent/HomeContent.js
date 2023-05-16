@@ -1,4 +1,4 @@
-import { Select, Input, Button, Row, Col, Spin, List, Empty } from 'antd'
+import { Input, Button, Row, Col, Spin, List, Empty } from 'antd'
 import React, { useEffect, useState } from 'react'
 import DoctorList from '../Doctor/DoctorList/DoctorList'
 import {
@@ -15,6 +15,7 @@ import { NOTIFICATION_TYPE } from '../../constants/common'
 import { Notification } from '../Notification/Notification'
 import './HomeContent.scss'
 import { LoadingOutlined, RobotOutlined, UserOutlined } from '@ant-design/icons'
+import Select from 'react-select'
 
 const { TextArea } = Input
 const HomeContent = () => {
@@ -115,10 +116,10 @@ const HomeContent = () => {
         })
     )
 
-    const handleChangeProvince = async (value) => {
-        setProvinceId(value)
-        const result = await getDistrictInProvince(value)
-        if (result?.[0].length < 1) return
+    const handleChangeProvince = async (selectedOption) => {
+        setProvinceId(selectedOption.value)
+        const result = await getDistrictInProvince(selectedOption.value)
+        if (result?.[0]?.length < 1) return
         setDisableDistrict(false)
         setDistrictsOptions([
             { label: 'Quận', value: '' },
@@ -130,9 +131,9 @@ const HomeContent = () => {
         ])
     }
 
-    const handleChangeDistrict = async (value) => {
-        setDistrictId(value)
-        const result = await getWardInDistrict(value)
+    const handleChangeDistrict = async (selectedOption) => {
+        setDistrictId(selectedOption.value)
+        const result = await getWardInDistrict(selectedOption.value)
         setDisableWard(false)
         setWardsOptions([
             { label: 'Huyện', value: '' },
@@ -205,8 +206,6 @@ const HomeContent = () => {
     //     }
     //   />
     // );
-
-    console.log('Home Content reload')
 
     return (
         <div className="my-3 content-area">
@@ -294,13 +293,12 @@ const HomeContent = () => {
                 name="business"
             >
                 <h5>Tìm kiếm phòng khám/ nhà thuốc</h5>
-                <div className="my-1">
+                <div className="my-1" style={{ width: '200px' }}>
                     <Select
                         defaultValue={1}
-                        style={{
-                            color: '#2d4964',
+                        onChange={(selectedOption) => {
+                            setFilterValue(selectedOption.value)
                         }}
-                        onChange={(value) => setFilterValue(value)}
                         options={[
                             {
                                 value: 1,
@@ -341,7 +339,7 @@ const HomeContent = () => {
                             placeholder="Quận"
                             size="large"
                             className="w-100"
-                            disabled={disabledDistrict || provinceId === ''}
+                            isDisabled={disabledDistrict || provinceId === ''}
                             value={districtId}
                         />
                     </Col>
@@ -351,23 +349,27 @@ const HomeContent = () => {
                                 maxHeight: '200px',
                                 overflowY: 'scroll',
                             }}
-                            onChange={(value) => setWardId(value)}
+                            onChange={(selectedOption) =>
+                                setWardId(selectedOption.value)
+                            }
                             options={wardsOptions}
                             placeholder="Huyện"
                             size="large"
                             className="w-100"
-                            disabled={disabledWard || districtId === ''}
+                            isDisabled={disabledWard || districtId === ''}
                             value={wardId}
                         />
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={4} className="my-1">
                         <Select
-                            dropdownStyle={{
-                                maxHeight: '200px',
-                                overflowY: 'scroll',
-                            }}
+                            // dropdownStyle={{
+                            //     maxHeight: '200px',
+                            //     overflowY: 'scroll',
+                            // }}
                             placeholder="Chuyên Môn"
-                            onChange={(value) => setDepartmentId(value)}
+                            onChange={(selectedOption) =>
+                                setDepartmentId(selectedOption.value)
+                            }
                             options={[
                                 {
                                     value: 1,
@@ -457,7 +459,7 @@ const HomeContent = () => {
                             ]}
                             size="large"
                             className="w-100"
-                            disabled={disabledDepartment}
+                            isDisabled={disabledDepartment}
                         />
                     </Col>
                     <Col xs={12} lg={4} className="my-1">

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Modal, Select, Space, Table } from 'antd'
+import { Button, Modal, Space, Table } from 'antd'
 import '../../../assets/styles/component/DoctorAppointment/DoctorAppointment.css'
 import Title from 'antd/lib/typography/Title'
 import {
@@ -12,74 +12,6 @@ import { useEffect } from 'react'
 import moment from 'moment'
 import { Notification } from '../../Notification/Notification'
 import { NOTIFICATION_TYPE } from '../../../constants/common'
-// const columns = [
-//   {
-//     title: "Ngày",
-//     dataIndex: "day",
-//     key: "day",
-//     render: (text) => <a>{text}</a>,
-//   },
-//   {
-//     title: "Thời gian",
-//     dataIndex: "time",
-//     key: "time",
-//   },
-//   {
-//     title: "Địa điểm",
-//     dataIndex: "place",
-//     key: "place",
-//   },
-
-//   {
-//     title: "Đặt lịch",
-//     key: "Đặt lịch",
-//     render: (_, record) => (
-//       <Space size="middle">
-//         {/* <a>Invite {record.name}</a> */}
-//         <Button>Đặt lịch</Button>
-//       </Space>
-//     ),
-//   },
-// ];
-
-// const data = [
-//   {
-//     key: "1",
-//     day: "Thứ Hai",
-//     time: "08:00 – 12:00",
-//     place: "Bệnh viện FV - Tầng 1, tòa nhà F",
-//   },
-//   {
-//     key: "2",
-//     day: "Thứ Ba",
-//     time: "08:00 – 12:00",
-//     place: "Bệnh viện FV - Tầng 1, tòa nhà F",
-//   },
-//   {
-//     key: "3",
-//     day: "Thứ Tư",
-//     time: "08:00 – 12:00",
-//     place: "Bệnh viện FV - Tầng 1, tòa nhà F",
-//   },
-//   {
-//     key: "4",
-//     day: "Thứ Năm",
-//     time: "08:00 – 12:00",
-//     place: "Bệnh viện FV - Tầng 1, tòa nhà F",
-//   },
-//   {
-//     key: "5",
-//     day: "Thứ Sáu",
-//     time: "08:00 – 12:00",
-//     place: "Bệnh viện FV - Tầng 1, tòa nhà F",
-//   },
-//   {
-//     key: "6",
-//     day: "Thứ Bảy",
-//     time: "08:00 – 12:00",
-//     place: "Bệnh viện FV - Tầng 1, tòa nhà F",
-//   },
-// ];
 
 const DoctorAppointment = ({ businessId }) => {
     const [selectedScheduleId, setSelectedScheduleId] = useState(null)
@@ -99,37 +31,6 @@ const DoctorAppointment = ({ businessId }) => {
         // const data = await getWorkSchedule(Bacsi?.user_role_id);
         const data = await getWorkSchedule(businessId)
         setDataWorkSchedule(data[0])
-    }
-    const showModalTableDataAppointmentByScheduleId = async (record) => {
-        const data = await getApptByScheduleId(record.id)
-        setSelectedScheduleId(record.id)
-        console.log(data)
-        setDataAppointmentByScheduleId(data[0])
-        setIsModalOpen(true)
-    }
-    const createAppointment = async (record) => {
-        try {
-            const data = {
-                pt_id: userInfo.user_role_id,
-                sched_id: selectedScheduleId,
-                hour_id: record.hour_id,
-            }
-            await createAppt(data)
-            await getApptByScheduleId(selectedScheduleId)
-            Notification({
-                type: NOTIFICATION_TYPE.SUCCESS,
-                message: 'Đặt lịch thành công',
-                description: null,
-            })
-            setIsModalOpen(false)
-        } catch (error) {
-            console.log(error)
-            Notification({
-                type: NOTIFICATION_TYPE.ERROR,
-                message: 'Đặt lịch thất bại',
-                description: error?.response?.data?.msg,
-            })
-        }
     }
     const showModalTableDataAppointmentByScheduleId = async (record) => {
         const data = await getApptByScheduleId(record.id)

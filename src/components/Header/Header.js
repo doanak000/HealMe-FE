@@ -15,6 +15,48 @@ import { Link } from 'react-router-dom'
 import { confirm } from '../ConfirmModal/ConfirmModal'
 import { memo } from 'react'
 
+const itemsMenu = [
+    {
+        key: '1',
+        label: (
+            <a
+                className="nav-link"
+                href="/"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+            >
+                Trang chủ
+            </a>
+        ),
+    },
+    {
+        key: '2',
+        label: (
+            <a
+                className="nav-link"
+                href="/profile"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+            >
+                Đặt lịch
+            </a>
+        ),
+    },
+    {
+        key: '3',
+        label: (
+            <a
+                className="nav-link"
+                href="#business"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+            >
+                Phòng khám/Nhà thuốc
+            </a>
+        ),
+    },
+]
+
 const Header = () => {
     const isLoggedIn = useSelector(selectIsLoggedIn)
     const userInfo =
@@ -80,17 +122,25 @@ const Header = () => {
                             />
                         </div>
                     </a>
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
+                    <Dropdown
+                        menu={{
+                            items: itemsMenu,
+                        }}
                     >
-                        <span className="navbar-toggler-icon" />
-                    </button>
+                        <button
+                            className="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                            onClick={(e) => e.preventDefault()}
+                        >
+                            <span className="navbar-toggler-icon" />
+                        </button>
+                    </Dropdown>
+
                     <div
                         className="collapse navbar-collapse"
                         id="navbarSupportedContent"

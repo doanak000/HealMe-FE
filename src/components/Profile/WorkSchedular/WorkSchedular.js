@@ -7,7 +7,6 @@ import {
     Input,
     Row,
     Radio,
-    Select,
     Table,
     Space,
     Modal,
@@ -29,6 +28,8 @@ import {
 import { NOTIFICATION_TYPE } from '../../../constants/common'
 import { Notification } from '../../Notification/Notification'
 import { confirm } from '../../ConfirmModal/ConfirmModal'
+import Select from 'react-select'
+
 const layout = {
     labelCol: {
         span: 24,

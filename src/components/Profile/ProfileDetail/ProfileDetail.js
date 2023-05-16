@@ -7,7 +7,6 @@ import {
     Input,
     Row,
     Radio,
-    Select,
     Layout,
     Menu,
 } from 'antd'
@@ -49,6 +48,7 @@ import { NOTIFICATION_TYPE } from '../../../constants/common'
 import { Notification } from '../../Notification/Notification'
 import { Content, Footer, Header } from 'antd/lib/layout/layout'
 import Sider from 'antd/lib/layout/Sider'
+import Select from 'react-select'
 
 const ProfileDetail = () => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'))
@@ -119,22 +119,21 @@ const ProfileDetail = () => {
         getDistrictInProvinceApi(res?.[0]?.[0]?.province_id)
         getWardInDistrictApi(res?.[0]?.[0]?.district_id)
     }
-    const handleChangeProvince = async (value) => {
-        console.log(value)
+    const handleChangeProvince = async (selectedOption) => {
         await setDisabledDistrict(true)
-        await getDistrictInProvinceApi(value)
+        await getDistrictInProvinceApi(selectedOption.value)
         await setDisabledDistrict(false)
-        setProvinceState(value)
+        setProvinceState(selectedOption.value)
         console.log(disabledDistrict)
     }
-    const handleChangeDistrict = async (value) => {
+    const handleChangeDistrict = async (selectedOption) => {
         await setDisabledWard(true)
-        await getWardInDistrictApi(value)
+        await getWardInDistrictApi(selectedOption.value)
         await setDisabledWard(false)
-        setDistrictState(value)
+        setDistrictState(selectedOption.value)
     }
-    const handleChangeWard = async (value) => {
-        setWardState(value)
+    const handleChangeWard = async (selectedOption) => {
+        setWardState(selectedOption.value)
     }
     useEffect(() => {
         if (userInfo?.role_id == 2) {
@@ -423,7 +422,7 @@ const ProfileDetail = () => {
                                         defaultValue={userProfile?.descr}
                                         name="descr"
                                         prefix={<HomeOutlined />}
-                                        disabled={isDisabled}
+                                        isDisabled={isDisabled}
                                         key={userProfile?.descr + 'descr'}
                                         // onChange={handleChangePatientProfile}
                                     />
@@ -455,7 +454,7 @@ const ProfileDetail = () => {
                                         maxHeight: '200px',
                                         overflowY: 'scroll',
                                     }}
-                                    disabled={isDisabled}
+                                    isDisabled={isDisabled}
                                     defaultValue={
                                         fullAddressByWardId?.province_id
                                     }
@@ -510,7 +509,7 @@ const ProfileDetail = () => {
                                     }
                                     name="district"
                                     // disabled={disabledDistrict}
-                                    disabled={isDisabled}
+                                    isDisabled={isDisabled}
                                     options={optionsDistrict}
                                     style={{
                                         width: '100%',
@@ -555,7 +554,7 @@ const ProfileDetail = () => {
                                     }}
                                     defaultValue={fullAddressByWardId?.ward_id}
                                     // disabled={disabledWard}
-                                    disabled={isDisabled}
+                                    isDisabled={isDisabled}
                                     options={optionsWard}
                                     style={{
                                         width: '100%',
