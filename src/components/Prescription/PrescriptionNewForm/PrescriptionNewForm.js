@@ -120,8 +120,8 @@ const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
                     ...rest,
                 })
             )
-        } else if (userInfo?.business_type == 2) {
             setOptionsMedicine(newArrayOfObj)
+        } else if (userInfo?.business_type == 2) {
             const res = await getPharmacyMedicine(userInfo?.user_role_id)
             const newArrayOfObj = res?.[0].map(
                 ({ id: value, title: label, ...rest }) => ({
@@ -159,54 +159,56 @@ const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
                                 }}
                                 align="baseline"
                             >
-                                <Form.Item
-                                    {...restField}
-                                    name={[name, 'med_id']}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Thiếu tên thuốc',
-                                        },
-                                    ]}
-                                >
-                                    <Select
-                                        dropdownStyle={{
-                                            maxHeight: '200px',
-                                            overflowY: 'scroll',
-                                        }}
-                                        showSearch
-                                        loading={loading}
-                                        style={{
-                                            width: 200,
-                                        }}
-                                        placeholder="Nhập tên thuốc"
-                                        optionFilterProp="children"
-                                        filterOption={(input, option) =>
-                                            (option?.label ?? '')?.includes(
-                                                input
-                                            )
-                                        }
-                                        filterSort={(optionA, optionB) =>
-                                            (optionA?.label ?? '')
-                                                ?.toLowerCase()
-                                                ?.localeCompare(
-                                                    (
-                                                        optionB?.label ?? ''
-                                                    )?.toLowerCase()
-                                                )
-                                        }
-                                        options={optionsMedicine}
+                                {optionsMedicine?.length > 0 && (
+                                    <Form.Item
+                                        {...restField}
+                                        name={[name, 'med_id']}
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Thiếu tên thuốc',
+                                            },
+                                        ]}
                                     >
-                                        {optionsMedicine?.map((option) => (
-                                            <Select.Option
-                                                key={option.id}
-                                                value={option.id}
-                                            >
-                                                {option.title}
-                                            </Select.Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>
+                                        <Select
+                                            dropdownStyle={{
+                                                maxHeight: '200px',
+                                                overflowY: 'scroll',
+                                            }}
+                                            showSearch
+                                            loading={loading}
+                                            style={{
+                                                width: 200,
+                                            }}
+                                            placeholder="Nhập tên thuốc"
+                                            optionFilterProp="children"
+                                            filterOption={(input, option) =>
+                                                (option?.label ?? '')?.includes(
+                                                    input
+                                                )
+                                            }
+                                            filterSort={(optionA, optionB) =>
+                                                (optionA?.label ?? '')
+                                                    ?.toLowerCase()
+                                                    ?.localeCompare(
+                                                        (
+                                                            optionB?.label ?? ''
+                                                        )?.toLowerCase()
+                                                    )
+                                            }
+                                            options={optionsMedicine}
+                                        >
+                                            {optionsMedicine?.map((option) => (
+                                                <Select.Option
+                                                    key={option.id}
+                                                    value={option.id}
+                                                >
+                                                    {option.title}
+                                                </Select.Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                )}
                                 <Form.Item
                                     {...restField}
                                     name={[name, 'dosage']}
