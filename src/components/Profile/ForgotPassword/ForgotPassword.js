@@ -1,9 +1,10 @@
 import { LoadingOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Spin } from 'antd'
+import { Form, Input, Button, Spin, Row, Col } from 'antd'
 import React, { useState } from 'react'
 import { forgotPassword } from '../../../api/api';
 import { Notification } from '../../Notification/Notification';
 import { NOTIFICATION_TYPE } from '../../../constants/common';
+import { Link } from 'react-router-dom';
 
 const ForgotPassword = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -65,6 +66,23 @@ const ForgotPassword = () => {
                                 >
                                     <Input placeholder='Nhập email của bạn' allowClear />
                                 </Form.Item>
+                                <Row gutter={8}>
+                                    <Col xs={12}>
+                                        <Form.Item>
+                                            <Button className='w-100'>
+                                                <Link className='text-decoration-none' to="/login">Đăng nhập</Link>
+                                            </Button>
+                                        </Form.Item>
+
+                                    </Col>
+                                    <Col xs={12}>
+                                        <Form.Item>
+                                            <Button className='w-100'>
+                                                <Link className='text-decoration-none' to="/register">Đăng ký</Link>
+                                            </Button>
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
                                 <Form.Item className='mx-auto'>
                                     <Button type="primary" htmlType="submit" className='w-100' size='large'>
                                         {isLoading ? <Spin indicator={<LoadingOutlined

@@ -1,5 +1,6 @@
 import React from "react";
 import ProfileContent from "../../components/Profile/ProfileContent/ProfileContent";
+import { memo } from "react";
 
 const Profile = () => {
   return (

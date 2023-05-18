@@ -208,6 +208,10 @@ export const resetPassword = async (newPassword) => {
   const response = await authAxios.post(`/users/api/reset-password/:userId/token`, newPassword);
   return response.data;
 }
+export const getMap = async (data) => {
+  const response = await authAxios.post(`/map`, data);
+  return response.data;
+}
 // Export all API call functions
 export default {
   login,
@@ -248,4 +252,5 @@ export default {
   changePassword,
   forgotPassword,
   resetPassword,
+  getMap
 };

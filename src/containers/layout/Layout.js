@@ -26,6 +26,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUserInfo } from "../../features/login/loginSlice";
 import { selectTranslation } from "../../features/language/languageSlice";
+import { memo } from "react";
 
 const LayoutAdmin = (props) => {
   const { children } = props;

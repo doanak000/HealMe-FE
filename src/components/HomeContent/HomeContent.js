@@ -1,4 +1,4 @@
-import { Select, Input, Button, Row, Col, Spin, List, Empty } from 'antd'
+import { Input, Button, Row, Col, Spin, List, Empty } from 'antd'
 import React, { useEffect, useState } from 'react'
 import DoctorList from '../Doctor/DoctorList/DoctorList'
 import {
@@ -15,11 +15,12 @@ import { NOTIFICATION_TYPE } from '../../constants/common'
 import { Notification } from '../Notification/Notification'
 import './HomeContent.scss'
 import { LoadingOutlined, RobotOutlined, UserOutlined } from '@ant-design/icons'
+import Select from 'react-select'
 
 const { TextArea } = Input
 const HomeContent = () => {
-    const [question, setQuestion] = useState(null)
-    const [res, setRes] = useState(null)
+    // const [question, setQuestion] = useState(null)
+    // const [res, setRes] = useState(null)
 
     const [filterValue, setFilterValue] = useState(1)
     const [departmentId, setDepartmentId] = useState('')
@@ -85,27 +86,27 @@ const HomeContent = () => {
         await getAllPharmacy().then((res) => setPharmacy(res))
     }, [])
 
-    const handleQuestion = (event) => {
-        setQuestion(event?.target?.value)
-    }
+    // const handleQuestion = (event) => {
+    //   setQuestion(event?.target?.value)
+    // }
 
-    const sendQuestion = async () => {
-        try {
-            setIsLoading(true)
-            const chatRes = await getChatbotResponse(question)
-            setRes(chatRes?.content)
-            setIsLoading(false)
-        } catch (error) {
-            console.log(error)
-            Notification({
-                type: NOTIFICATION_TYPE.ERROR,
-                message: 'Chatbot got some mistakes',
-                description: null,
-            })
-            console.error(error)
-            setLoadingState(false)
-        }
-    }
+    // const sendQuestion = async () => {
+    //   try {
+    //     setIsLoading(true)
+    //     const chatRes = await getChatbotResponse(question)
+    //     setRes(chatRes?.content)
+    //     setIsLoading(false)
+    //   } catch (error) {
+    //     console.log(error)
+    //     Notification({
+    //       type: NOTIFICATION_TYPE.ERROR,
+    //       message: 'Chatbot got some mistakes',
+    //       description: null,
+    //     })
+    //     console.error(error)
+    //     setLoadingState(false)
+    //   }
+    // }
 
     const provincesOptions = provinces.map(
         ({ id: value, name: label, ...rest }) => ({
@@ -115,10 +116,10 @@ const HomeContent = () => {
         })
     )
 
-    const handleChangeProvince = async (value) => {
-        setProvinceId(value)
-        const result = await getDistrictInProvince(value)
-        if (result?.[0].length < 1) return
+    const handleChangeProvince = async (selectedOption) => {
+        setProvinceId(selectedOption.value)
+        const result = await getDistrictInProvince(selectedOption.value)
+        if (result?.[0]?.length < 1) return
         setDisableDistrict(false)
         setDistrictsOptions([
             { label: 'Quận', value: '' },
@@ -130,9 +131,9 @@ const HomeContent = () => {
         ])
     }
 
-    const handleChangeDistrict = async (value) => {
-        setDistrictId(value)
-        const result = await getWardInDistrict(value)
+    const handleChangeDistrict = async (selectedOption) => {
+        setDistrictId(selectedOption.value)
+        const result = await getWardInDistrict(selectedOption.value)
         setDisableWard(false)
         setWardsOptions([
             { label: 'Huyện', value: '' },
@@ -167,6 +168,7 @@ const HomeContent = () => {
             console.log(error)
         }
     }
+
     const handleClearFilter = async () => {
         setProvinceId('')
         setDistrictId('')
@@ -285,15 +287,18 @@ const HomeContent = () => {
                     />
                 </div>
             </div>
-            <div className="find-business-area px-2" id="dat-lich">
+            <div
+                className="find-business-area px-2 business"
+                id="business"
+                name="business"
+            >
                 <h5>Tìm kiếm phòng khám/ nhà thuốc</h5>
-                <div className="my-1">
+                <div className="my-1" style={{ width: '200px' }}>
                     <Select
                         defaultValue={1}
-                        style={{
-                            color: '#2d4964',
+                        onChange={(selectedOption) => {
+                            setFilterValue(selectedOption.value)
                         }}
-                        onChange={(value) => setFilterValue(value)}
                         options={[
                             {
                                 value: 1,
@@ -311,6 +316,10 @@ const HomeContent = () => {
                 <Row gutter={8}>
                     <Col xs={24} sm={24} md={8} lg={4} className="my-1">
                         <Select
+                            dropdownStyle={{
+                                maxHeight: '200px',
+                                overflowY: 'scroll',
+                            }}
                             onChange={handleChangeProvince}
                             options={provincesOptions}
                             placeholder="Tỉnh/Thành phố"
@@ -321,30 +330,46 @@ const HomeContent = () => {
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={4} className="my-1">
                         <Select
+                            dropdownStyle={{
+                                maxHeight: '200px',
+                                overflowY: 'scroll',
+                            }}
                             onChange={handleChangeDistrict}
                             options={districtsOptions}
                             placeholder="Quận"
                             size="large"
                             className="w-100"
-                            disabled={disabledDistrict || provinceId === ''}
+                            isDisabled={disabledDistrict || provinceId === ''}
                             value={districtId}
                         />
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={4} className="my-1">
                         <Select
-                            onChange={(value) => setWardId(value)}
+                            dropdownStyle={{
+                                maxHeight: '200px',
+                                overflowY: 'scroll',
+                            }}
+                            onChange={(selectedOption) =>
+                                setWardId(selectedOption.value)
+                            }
                             options={wardsOptions}
                             placeholder="Huyện"
                             size="large"
                             className="w-100"
-                            disabled={disabledWard || districtId === ''}
+                            isDisabled={disabledWard || districtId === ''}
                             value={wardId}
                         />
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={4} className="my-1">
                         <Select
+                            // dropdownStyle={{
+                            //     maxHeight: '200px',
+                            //     overflowY: 'scroll',
+                            // }}
                             placeholder="Chuyên Môn"
-                            onChange={(value) => setDepartmentId(value)}
+                            onChange={(selectedOption) =>
+                                setDepartmentId(selectedOption.value)
+                            }
                             options={[
                                 {
                                     value: 1,
@@ -364,7 +389,8 @@ const HomeContent = () => {
                                 },
                                 {
                                     value: 5,
-                                    label: 'Vật lý trị liệu - Phục hồi chức năng',
+                                    label:
+                                        'Vật lý trị liệu - Phục hồi chức năng',
                                 },
                                 {
                                     value: 6,
@@ -433,7 +459,7 @@ const HomeContent = () => {
                             ]}
                             size="large"
                             className="w-100"
-                            disabled={disabledDepartment}
+                            isDisabled={disabledDepartment}
                         />
                     </Col>
                     <Col xs={12} lg={4} className="my-1">
