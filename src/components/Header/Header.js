@@ -1,34 +1,33 @@
-import { Dropdown, Avatar, Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import React from 'react';
-import logo from '../../assets/img/HealMe-logo.svg';
-import '../../assets/styles/component/Header/Header.css';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { Dropdown, Avatar, Button } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
+import React from 'react'
+import logo from '../../assets/img/HealMe-logo.svg'
+import '../../assets/styles/component/Header/Header.css'
+import { useSelector, useDispatch } from 'react-redux'
 import {
     logout,
     selectIsLoggedIn,
     selectUserInfo,
-} from '../../features/login/loginSlice';
-import { PATH } from '../../constants/common';
-import { Link } from 'react-router-dom';
-import { confirm } from '../ConfirmModal/ConfirmModal';
+} from '../../features/login/loginSlice'
+import { PATH } from '../../constants/common'
+import { Link } from 'react-router-dom'
+import { confirm } from '../ConfirmModal/ConfirmModal'
 
 const Header = () => {
-    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const isLoggedIn = useSelector(selectIsLoggedIn)
     const userInfo =
         useSelector(selectUserInfo) ||
-        JSON.parse(localStorage.getItem('userInfo'));
+        JSON.parse(localStorage.getItem('userInfo'))
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const logoutHandle = () => {
         confirm({
             content: 'Bạn muốn đăng xuất?',
             onOk: () => {
-                dispatch(logout());
+                dispatch(logout())
             },
-        });
-    };
+        })
+    }
     ///login Data lấy data từ cái login slice về
     const items = [
         {
@@ -63,7 +62,7 @@ const Header = () => {
                 </a>
             ),
         },
-    ];
+    ]
 
     return (
         <div>
@@ -212,7 +211,7 @@ const Header = () => {
                 </div>
             </nav>
         </div>
-    );
-};
+    )
+}
 
-export default Header;
+export default Header
