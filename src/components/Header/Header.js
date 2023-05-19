@@ -16,11 +16,9 @@ import {
 import { PATH } from '../../constants/common';
 import { Link } from 'react-router-dom';
 import { confirm } from '../ConfirmModal/ConfirmModal';
-import { memo } from 'react';
-import { isLoginLayout } from '../../constants/utils';
+
 
 const Header = () => {
-    const isLoginPage = isLoginLayout(window.location.href)
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const userInfo =
         useSelector(selectUserInfo) ||
@@ -72,7 +70,7 @@ const Header = () => {
     ]
 
     return (
-        <div className={isLoginPage && "d-none"}>
+        <div>
             <nav className="navbar navbar-expand-lg navbar-light">
                 <div className="container">
                     <a className="navbar-brand" href="/">
