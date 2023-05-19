@@ -2,9 +2,12 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/img/HealMe-logo.svg";
 import "./Footer.scss";
-import { memo } from "react";
+import { isLoginLayout } from "../../constants/utils";
 
 const FooterContact = () => {
+  // const LoginLayout = window.location.href.includes('login') || window.location.href.includes('register');
+  // console.log(LoginLayout)
+
   return (
     <div className="col-lg-4 col-md-6 footer-contact">
       <img src={logo} className="w-50 healme-logo" />
@@ -20,6 +23,8 @@ const FooterContact = () => {
     </div>
   );
 };
+
+
 
 const FooterLinks = () => {
   return (
@@ -73,8 +78,9 @@ const FooterMission = () => {
 };
 
 const Footer = () => {
+  const isLoginPage = isLoginLayout(window.location.href)
   return (
-    <footer id="footer">
+    <footer id="footer" className={isLoginPage && "d-none"}>
       <div className="footer-top">
         <div className="container">
           <div className="row">

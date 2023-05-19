@@ -47,6 +47,7 @@ export const LoginButton = styled(Button)`
   padding-right: 31px;
   background: ${themeGet("colors.primary")};
   border: none;
+  width:100%;
 
   &:hover {
     background: ${themeGet("colors.primaryHover")};

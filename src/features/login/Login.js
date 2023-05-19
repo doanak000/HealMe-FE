@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Notification } from "../../components/Notification/Notification";
 // import { NOTIFICATION_TYPE } from '../../constants/common'
 // import { selectTranslation } from '../language/languageSlice'
-import { Form, Input, Checkbox, Row, Col } from "antd";
+import { Form, Input, Checkbox, Row, Col, Button } from "antd";
 import {
   LoginButton,
   LoginLable,
@@ -21,7 +21,8 @@ import { translation } from "../../configs/translation";
 import { login } from "../../api/api.js";
 import { useEffect } from "react";
 import loginBanner from "../../assets/img/login-banner.png";
-import { memo } from "react";
+import { FaUserAlt } from "react-icons/fa"
+import { RiLockPasswordFill } from "react-icons/ri"
 
 const layout = {
   labelCol: {
@@ -100,10 +101,10 @@ const Login = () => {
   };
   return (
     <Row>
-      <Col xs={10}>
-        <img src={loginBanner} className="w-75" />
+      <Col xs={9}>
+        <img src={loginBanner} className="w-100" />
       </Col>
-      <Col xs={14}>
+      <Col xs={15}>
         <WrapperLogin>
           <WrapperLoginForm>
             <Form
@@ -120,7 +121,7 @@ const Login = () => {
               <Form.Item
                 size="large"
                 id="username"
-                label={<LoginLable>Username</LoginLable>}
+                // label={<LoginLable>Username</LoginLable>}
                 name="username"
                 rules={[
                   {
@@ -130,14 +131,16 @@ const Login = () => {
                 ]}
               >
                 <Input
+                  prefix={<FaUserAlt className="me-1" />}
                   placeholder="username"
                   onChange={handleChange}
                   name="username"
                 />
               </Form.Item>
+
               <Form.Item
                 id="password"
-                label={<LoginLable>Password</LoginLable>}
+                // label={<LoginLable>Password</LoginLable>}
                 name="password"
                 rules={[
                   {
@@ -146,20 +149,25 @@ const Login = () => {
                   },
                 ]}
               >
-                <Input
+                <Input.Password
+                  prefix={<RiLockPasswordFill className="me-1" />}
                   placeholder="password"
                   onChange={handleChange}
                   name="password"
-                  type="password"
+                // type="password"
                 />
               </Form.Item>
-              Chưa có tài khoản? <Link to={PATH.REGISTER}>Đăng ký</Link>
-              <br />
-              <Link to={PATH.FORGOT_PASSWORD}>Quên mật khẩu</Link>
-              <Form.Item {...tailLayout}>
-                <LoginButton type="primary" htmlType="submit" className="mt-3">
+              <Form.Item className="w-100">
+                {/* <LoginButton type="primary" htmlType="submit" className="mt-3">
                   Đăng nhập
-                </LoginButton>
+                </LoginButton> */}
+                <Button type="primary" htmlType="submit" className="w-100 mb-2">
+                  Đăng nhập
+                </Button>
+                <Link to={PATH.FORGOT_PASSWORD} className="text-decoration-none text-secondary">Quên mật khẩu</Link>
+              </Form.Item>
+              <Form.Item>
+                Chưa có tài khoản? <Link to={PATH.REGISTER}>Đăng ký tại đây</Link>
               </Form.Item>
             </Form>
           </WrapperLoginForm>

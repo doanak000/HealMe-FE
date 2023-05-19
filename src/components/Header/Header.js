@@ -12,57 +12,16 @@ import {
     logout,
     selectIsLoggedIn,
     selectUserInfo,
-} from '../../features/login/loginSlice'
-import { PATH } from '../../constants/common'
-import { Link } from 'react-router-dom'
-import { confirm } from '../ConfirmModal/ConfirmModal'
-
-import { memo } from 'react'
-
-const itemsMenu = [
-    {
-        key: '1',
-        label: (
-            <a
-                className="nav-link"
-                href="/"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-            >
-                Trang chủ
-            </a>
-        ),
-    },
-    {
-        key: '2',
-        label: (
-            <a
-                className="nav-link"
-                href="/profile"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-            >
-                Đặt lịch
-            </a>
-        ),
-    },
-    {
-        key: '3',
-        label: (
-            <a
-                className="nav-link"
-                href="#business"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-            >
-                Phòng khám/Nhà thuốc
-            </a>
-        ),
-    },
-]
+} from '../../features/login/loginSlice';
+import { PATH } from '../../constants/common';
+import { Link } from 'react-router-dom';
+import { confirm } from '../ConfirmModal/ConfirmModal';
+import { memo } from 'react';
+import { isLoginLayout } from '../../constants/utils';
 
 const Header = () => {
-    const isLoggedIn = useSelector(selectIsLoggedIn)
+    const isLoginPage = isLoginLayout(window.location.href)
+    const isLoggedIn = useSelector(selectIsLoggedIn);
     const userInfo =
         useSelector(selectUserInfo) ||
         JSON.parse(localStorage.getItem('userInfo'))
@@ -113,7 +72,7 @@ const Header = () => {
     ]
 
     return (
-        <div>
+        <div className={isLoginPage && "d-none"}>
             <nav className="navbar navbar-expand-lg navbar-light">
                 <div className="container">
                     <a className="navbar-brand" href="/">
@@ -128,7 +87,7 @@ const Header = () => {
                     </a>
                     <Dropdown
                         menu={{
-                            items: itemsMenu,
+                            items
                         }}
                     >
                         <button
