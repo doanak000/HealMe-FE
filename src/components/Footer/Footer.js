@@ -78,9 +78,8 @@ const FooterMission = () => {
 };
 
 const Footer = () => {
-  const isLoginPage = isLoginLayout(window.location.href)
   return (
-    <footer id="footer" className={isLoginPage && "d-none"}>
+    <footer id="footer">
       <div className="footer-top">
         <div className="container">
           <div className="row">
