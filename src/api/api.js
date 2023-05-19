@@ -212,6 +212,10 @@ export const getMap = async (data) => {
   const response = await authAxios.post(`/map`, data);
   return response.data;
 }
+export const getAddressDetail = async (addressId) => {
+  const response = await authAxios.get(`/area/address/${addressId}`);
+  return response.data;
+}
 // Export all API call functions
 export default {
   login,
@@ -252,5 +256,6 @@ export default {
   changePassword,
   forgotPassword,
   resetPassword,
-  getMap
+  getMap,
+  getAddressDetail
 };

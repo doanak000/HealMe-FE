@@ -52,11 +52,6 @@ export const ROUTES = Object.freeze({
     { path: PATH.FORGOT_PASSWORD, component: 'ForgotPasswordPage' },
     { path: PATH.RESET_PASSWORD, component: 'ResetPasswordPage' },
   ],
-
-  AUTH: [
-    { path: PATH.LOGIN, component: "LoginPage" },
-    { path: PATH.REGISTER, component: "RegisterPage" },
-  ]
 });
 
 export const NOTIFICATION_TYPE = Object.freeze({

@@ -7,3 +7,7 @@ export const debounce = (callback, wait) => {
     }, wait);
   };
 };
+
+export const isLoginLayout = (href) => {
+  return href.includes('login') || href.includes('register');
+}

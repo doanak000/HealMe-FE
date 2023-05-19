@@ -23,6 +23,7 @@ const PrivateRouteRender = (route) => {
   return <RouteRender key={route.component} {...route} />;
 };
 
+
 export const PublicRoutes = ROUTES.PUBLIC.map((route) => {
   return <RouteRender key={route.component} {...route} />;
 });
@@ -30,3 +31,4 @@ export const PublicRoutes = ROUTES.PUBLIC.map((route) => {
 export const PrivateRoutes = ROUTES.PRIVATE.map((route) => (
   <PrivateRouteRender key={route.component} {...route} />
 ));
+

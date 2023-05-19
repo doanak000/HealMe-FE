@@ -28,9 +28,6 @@ const DoctorItem = (props) => {
   //     })
   //     .catch(err => console.log(err))
   // }
-
-  console.log('doctor item reload')
-
   return (
     <div className="row my-2 doctor-item-container p-2 mb-2 bg-body rounded bg-body rounded g-2">
       {/* <div className="col-3">
