@@ -2,11 +2,9 @@ import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../../assets/styles/component/DoctorItem/DoctorItem.css";
-import { PATH } from "../../../constants/common";
 import { getClinicInfoApi, getMap } from "../../../api/api";
 import { FiPhoneCall } from "react-icons/fi"
 import { AiFillMail } from "react-icons/ai"
-import { memo } from "react";
 
 const DoctorItem = (props) => {
   const { item, businessId } = props;
@@ -16,18 +14,6 @@ const DoctorItem = (props) => {
     const result = await getClinicInfoApi(businessId || item?.id);
     setClinicInfo(result[0][0]);
   }, []);
-
-  // if (clinicInfo && localStorage.getItem('token')) {
-  //   getMap({
-  //     "destinations": [
-  //       clinicInfo?.fulladdress
-  //     ]
-  //   })
-  //     .then(result => {
-  //       if (!result) console.log('nothing')
-  //     })
-  //     .catch(err => console.log(err))
-  // }
   return (
     <div className="row my-2 doctor-item-container p-2 mb-2 bg-body rounded bg-body rounded g-2">
       {/* <div className="col-3">

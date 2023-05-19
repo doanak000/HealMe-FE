@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DoctorItem from "../DoctorItem/DoctorItem";
-import { Input, Pagination } from "antd";
+import { Col, Input, Pagination, Row } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { getMap } from "../../../api/api";
 
 const DoctorList = (props) => {
   const { clinics, pharmacy, filterValue } = props;
@@ -36,26 +35,30 @@ const DoctorList = (props) => {
     setListBusinessTemp(listBusinessCookedData);
   };
 
-  // if (localStorage.getItem('token')) {
-  //   getMap({
-  //     "destinations": [
-  //       '99 Pham Viet Chanh, Ward 19, Binh Thanh District, Ho Chi Minh City'
-  //     ]
-  //   })
-  //     .then(result => {
-  //       if (!result) console.log('nothing')
-  //     })
-  //     .catch(err => console.log(err))
-  // }
   return (
-    <div className="row">
-      <Input placeholder="Nhập tên bác sĩ/dược sĩ/phòng khám để tìm" onChange={handleSearch} size="large" className="ms-2 mb-2 w-100" prefix={<SearchOutlined />} />
-      {listBusinessTemp?.slice(state.minValue, state.maxValue).map((item) => (
-        <div className="col-12 col-md-12 col-lg-6" key={item?.id}>
-          <DoctorItem item={item} key={item?.id} />
-        </div>
-      ))}
-    </div>)
+    <Row>
+      <Col xs={24}>
+        <Input placeholder="Nhập tên bác sĩ/dược sĩ/phòng khám để tìm" onChange={handleSearch} size="large" className="ms-2 mb-2 w-100" prefix={<SearchOutlined />} />
+        <Row gutter={24}>
+          {listBusinessTemp?.slice(state.minValue, state.maxValue).map((item) => (
+            <Col xs={12} key={item?.id}>
+              <DoctorItem item={item} key={item?.id} />
+            </Col>
+          ))}
+        </Row>
+
+      </Col>
+      <Col xs={24}>
+        <Pagination
+          defaultCurrent={1}
+          defaultPageSize={ITEMS_PER_PAGE}
+          onChange={handleChange}
+          total={listBusiness.length}
+          className="mx-auto d-block"
+        />
+      </Col>
+    </Row>
+  )
 }
 
 export default DoctorList
