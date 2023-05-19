@@ -1,10 +1,13 @@
-import { Dropdown, Avatar, Button, Anchor } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import React from 'react';
-import logo from '../../assets/img/HealMe-logo.svg';
-import '../../assets/styles/component/Header/Header.css';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+
+import { Dropdown, Avatar, Button, Anchor } from 'antd'
+
+import { UserOutlined } from '@ant-design/icons'
+import React from 'react'
+import logo from '../../assets/img/HealMe-logo.svg'
+import '../../assets/styles/component/Header/Header.css'
+
+import { useSelector, useDispatch } from 'react-redux'
+
 import {
     logout,
     selectIsLoggedIn,
@@ -21,17 +24,17 @@ const Header = () => {
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const userInfo =
         useSelector(selectUserInfo) ||
-        JSON.parse(localStorage.getItem('userInfo'));
+        JSON.parse(localStorage.getItem('userInfo'))
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const logoutHandle = () => {
         confirm({
             content: 'Bạn muốn đăng xuất?',
             onOk: () => {
-                dispatch(logout());
+                dispatch(logout())
             },
-        });
-    };
+        })
+    }
     ///login Data lấy data từ cái login slice về
     const items = [
         {
@@ -66,7 +69,7 @@ const Header = () => {
                 </a>
             ),
         },
-    ];
+    ]
 
     return (
         <div className={isLoginPage && "d-none"}>
@@ -82,17 +85,25 @@ const Header = () => {
                             />
                         </div>
                     </a>
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
+                    <Dropdown
+                        menu={{
+                            items
+                        }}
                     >
-                        <span className="navbar-toggler-icon" />
-                    </button>
+                        <button
+                            className="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                            onClick={(e) => e.preventDefault()}
+                        >
+                            <span className="navbar-toggler-icon" />
+                        </button>
+                    </Dropdown>
+
                     <div
                         className="collapse navbar-collapse"
                         id="navbarSupportedContent"
@@ -128,8 +139,6 @@ const Header = () => {
                                     Phòng khám/Nhà thuốc
                                 </a>
                             </li>
-
-
 
                             {/* <li className="nav-item dropdown">
                                 <a
@@ -177,7 +186,12 @@ const Header = () => {
                         >
                             {isLoggedIn || localStorage.getItem('token') ? (
                                 <>
-                                    <span style={{ paddingRight: '10px' }}>
+                                    <span
+                                        style={{
+                                            paddingRight: '10px',
+                                            color: '#0D6EFD',
+                                        }}
+                                    >
                                         {userInfo.username}
                                     </span>
                                     <Dropdown
@@ -217,7 +231,7 @@ const Header = () => {
                 </div>
             </nav>
         </div>
-    );
-};
+    )
+}
 
-export default Header;
+export default Header
