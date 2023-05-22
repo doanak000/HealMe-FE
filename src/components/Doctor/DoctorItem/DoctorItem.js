@@ -49,7 +49,7 @@ const DoctorItem = (props) => {
                 </p>
                 <div className="row">
                     <div className="col-12 col-md-6 col-lg-6">
-                        <Button className="w-100 fw-bold">
+                        <Button className="w-100 fw-bold btn-mail">
                             <AiFillMail className="fs-5 me-2" />
                             <a
                                 className="text-decoration-none btn-text"

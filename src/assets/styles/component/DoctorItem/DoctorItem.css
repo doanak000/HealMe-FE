@@ -29,6 +29,10 @@
   color: #2d4964;
 }
 
+.doctor-item-container .btn-mail:hover {
+  color: #1990ff;
+}
+
 .doctor-item-container .btn-phone {
   background-color: #1990ff;
 }
