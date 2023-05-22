@@ -14,7 +14,10 @@ const HomePage = () => {
                 <HomeContent />
             </Col>
             <BackTop>
-                <ArrowUpOutlined className="btn btn-primary" />
+                <ArrowUpOutlined
+                    className="btn"
+                    style={{ backgroundColor: '#1990ff', color: 'white' }}
+                />
             </BackTop>
         </Row>
     )
