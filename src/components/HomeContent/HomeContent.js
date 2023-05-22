@@ -230,10 +230,14 @@ const HomeContent = () => {
                                             style={{
                                                 display: 'flex',
                                                 alignItems: 'center',
+                                                textAlign: 'left',
+                                                backgroundColor: '#E1F0FF',
+                                                borderRadius: 8,
+                                                padding: 16,
                                             }}
                                         >
                                             <RobotOutlined
-                                                style={{ marginRight: '10px' }}
+                                                style={{ marginRight: '16px' }}
                                             />
                                             {item.text}
                                         </div>
@@ -244,13 +248,15 @@ const HomeContent = () => {
                                                 width: '100%',
                                                 display: 'flex',
                                                 justifyContent: 'end',
+                                                backgroundColor: '#CAE2FA',
+                                                borderRadius: 8,
+                                                padding: 16,
                                             }}
                                         >
                                             {item.text}{' '}
                                             <UserOutlined
                                                 style={{
-                                                    marginLeft: '10px',
-                                                    marginRight: '10px',
+                                                    marginLeft: '16px',
                                                 }}
                                             />
                                         </div>
@@ -389,8 +395,7 @@ const HomeContent = () => {
                                 },
                                 {
                                     value: 5,
-                                    label:
-                                        'Vật lý trị liệu - Phục hồi chức năng',
+                                    label: 'Vật lý trị liệu - Phục hồi chức năng',
                                 },
                                 {
                                     value: 6,

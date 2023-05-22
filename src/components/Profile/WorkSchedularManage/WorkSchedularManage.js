@@ -50,9 +50,8 @@ const WorkSchedularManage = () => {
     const dispatch = useDispatch()
     const [timeId, setTimeId] = useState(1)
     const [dataWorkSchedule, setDataWorkSchedule] = useState(null)
-    const [dataApptByScheduleIdTotal, setDataApptByScheduleIdTotal] = useState(
-        null
-    )
+    const [dataApptByScheduleIdTotal, setDataApptByScheduleIdTotal] =
+        useState(null)
     const [diagnosisState, setDiagonosisState] = useState('')
     const [createPresState, setCreatePresState] = useState(null)
     const [isCreatePresModalOpen, setIsCreatePresModalOpen] = useState(false)
@@ -119,7 +118,7 @@ const WorkSchedularManage = () => {
     const columnsDetail = [
         {
             width: '100',
-            title: 'Work Day',
+            title: 'Ngày',
             dataIndex: 'workday',
             key: 'workday',
             filterDropdown: ({

@@ -16,10 +16,8 @@ import { NOTIFICATION_TYPE } from '../../../constants/common'
 const DoctorAppointment = ({ businessId }) => {
     const [selectedScheduleId, setSelectedScheduleId] = useState(null)
     const [dataWorkSchedule, setDataWorkSchedule] = useState(null)
-    const [
-        dataAppointmentByScheduleId,
-        setDataAppointmentByScheduleId,
-    ] = useState(null)
+    const [dataAppointmentByScheduleId, setDataAppointmentByScheduleId] =
+        useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo'))
@@ -73,7 +71,7 @@ const DoctorAppointment = ({ businessId }) => {
     const columnsStep1 = [
         {
             width: '100',
-            title: 'Work Day',
+            title: 'Ngày',
             dataIndex: 'workday',
             key: 'workday',
             render: (text) => <a>{moment(text).format('YYYY-MM-DD')}</a>,
@@ -89,7 +87,7 @@ const DoctorAppointment = ({ businessId }) => {
         },
         {
             width: '200',
-            title: 'Action',
+            title: 'Hành động',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
@@ -107,7 +105,7 @@ const DoctorAppointment = ({ businessId }) => {
     const columnsStep2 = [
         {
             width: '100',
-            title: 'Work Day',
+            title: 'Ngày',
             dataIndex: 'workday',
             key: 'workday',
             render: (text) => <a>{moment(text).format('YYYY-MM-DD')}</a>,
