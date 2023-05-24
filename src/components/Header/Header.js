@@ -1,4 +1,3 @@
-
 import { Dropdown, Avatar, Button, Anchor } from 'antd'
 
 import { UserOutlined } from '@ant-design/icons'
@@ -12,14 +11,13 @@ import {
     logout,
     selectIsLoggedIn,
     selectUserInfo,
-} from '../../features/login/loginSlice';
-import { PATH } from '../../constants/common';
-import { Link } from 'react-router-dom';
-import { confirm } from '../ConfirmModal/ConfirmModal';
-
+} from '../../features/login/loginSlice'
+import { PATH } from '../../constants/common'
+import { Link } from 'react-router-dom'
+import { confirm } from '../ConfirmModal/ConfirmModal'
 
 const Header = () => {
-    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const isLoggedIn = useSelector(selectIsLoggedIn)
     const userInfo =
         useSelector(selectUserInfo) ||
         JSON.parse(localStorage.getItem('userInfo'))
@@ -32,6 +30,10 @@ const Header = () => {
                 dispatch(logout())
             },
         })
+    }
+    const handleScrollToElement = () => {
+        const targetElement = document.getElementById('business')
+        targetElement.scrollIntoView({ behavior: 'smooth' })
     }
     ///login Data lấy data từ cái login slice về
     const items = [
@@ -85,7 +87,7 @@ const Header = () => {
                     </a>
                     <Dropdown
                         menu={{
-                            items
+                            items,
                         }}
                     >
                         <button
@@ -129,8 +131,8 @@ const Header = () => {
                             </li>
                             <li className="header__navbar-item">
                                 <a
+                                    onClick={handleScrollToElement}
                                     className="nav-link"
-                                    href="#business"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#navbarSupportedContent"
                                 >

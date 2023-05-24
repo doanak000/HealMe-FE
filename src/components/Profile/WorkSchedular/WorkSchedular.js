@@ -10,6 +10,7 @@ import {
     Table,
     Space,
     Modal,
+    Select,
 } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
@@ -28,7 +29,6 @@ import {
 import { NOTIFICATION_TYPE } from '../../../constants/common'
 import { Notification } from '../../Notification/Notification'
 import { confirm } from '../../ConfirmModal/ConfirmModal'
-import Select from 'react-select'
 
 const layout = {
     labelCol: {

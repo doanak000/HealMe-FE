@@ -49,6 +49,7 @@ import { Notification } from '../../Notification/Notification'
 import { Content, Footer, Header } from 'antd/lib/layout/layout'
 import Sider from 'antd/lib/layout/Sider'
 import Select from 'react-select'
+import CreateProfilePage from './CreateProfilePage'
 
 const ProfileDetail = () => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'))
@@ -66,19 +67,19 @@ const ProfileDetail = () => {
     const [wardState, setWardState] = useState(null)
 
     const getPatientProfile = async () => {
-        const res = await getPatientProfileApi(userInfo.user_role_id)
+        const res = await getPatientProfileApi(userInfo?.user_role_id)
         setUserProfile(res?.[0]?.[0])
         getFullAddressByWardId(userInfo?.ward_id)
     }
     const getBusinessProfile = async () => {
         if (userInfo?.business_type == 1) {
-            const res = await getClinicProfileApi(userInfo.user_role_id)
+            const res = await getClinicProfileApi(userInfo?.user_role_id)
             setUserProfile(res?.[0]?.[0])
-            getFullAddressByWardId(res?.[0]?.[0]?.ward_id)
+            getFullAddressByWardId(userInfo?.ward_id)
         } else if (userInfo?.business_type == 2) {
-            const res = await getPharmacyProfileApi(userInfo.user_role_id)
+            const res = await getPharmacyProfileApi(userInfo?.user_role_id)
             setUserProfile(res?.[0]?.[0])
-            getFullAddressByWardId(res?.[0]?.[0]?.ward_id)
+            getFullAddressByWardId(userInfo?.ward_id)
         }
     }
     const getAllProvinceApi = async () => {
@@ -220,7 +221,7 @@ const ProfileDetail = () => {
     return (
         <div>
             <TitleRegister>Hồ sơ cá nhân</TitleRegister>
-            {userProfile && fullAddressByWardId && (
+            {userProfile && (
                 <Form
                     layout="vertical"
                     // style={{
@@ -422,149 +423,166 @@ const ProfileDetail = () => {
                                         defaultValue={userProfile?.descr}
                                         name="descr"
                                         prefix={<HomeOutlined />}
-                                        isDisabled={isDisabled}
+                                        disabled={isDisabled}
                                         key={userProfile?.descr + 'descr'}
                                         // onChange={handleChangePatientProfile}
                                     />
                                 </Form.Item>
                             </Col>
                         )}
-                        <Col xs={24} sm={12} md={12} lg={12}>
-                            {' '}
-                            <Form.Item
-                                id="province"
-                                label={
-                                    <>
-                                        <span className="me-1">Province</span>
-                                        <span className="text-danger">*</span>
-                                    </>
-                                }
-                                name="province"
-                                size="large"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Không được để trống',
-                                    },
-                                ]}
-                            >
-                                {' '}
-                                <Select
-                                    dropdownStyle={{
-                                        maxHeight: '200px',
-                                        overflowY: 'scroll',
-                                    }}
-                                    isDisabled={isDisabled}
-                                    defaultValue={
-                                        fullAddressByWardId?.province_id
-                                    }
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                    placeholder="Select your province"
-                                    onChange={handleChangeProvince}
-                                    options={optionsProvince}
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12}>
-                            {' '}
-                            <Form.Item
-                                id="district"
-                                label={
-                                    <>
-                                        <span className="me-1">District</span>
-                                        <span className="text-danger">*</span>
-                                    </>
-                                }
-                                name="district"
-                                size="large"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Không được để trống',
-                                    },
-                                    // {
-                                    //   validator: (_, value) => {
-                                    //     if (
-                                    //       optionsDistrict.some(
-                                    //         (obj) => obj?.value === districtState
-                                    //       )
-                                    //     ) {
-                                    //       return Promise.reject("Địa chỉ không hợp lệ");
-                                    //     }
-                                    //     return Promise.resolve();
-                                    //   },
-                                    // },
-                                ]}
-                            >
-                                {' '}
-                                <Select
-                                    dropdownStyle={{
-                                        maxHeight: '200px',
-                                        overflowY: 'scroll',
-                                    }}
-                                    defaultValue={
-                                        fullAddressByWardId?.district_id
-                                    }
-                                    name="district"
-                                    // disabled={disabledDistrict}
-                                    isDisabled={isDisabled}
-                                    options={optionsDistrict}
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                    placeholder="Select your province"
-                                    onChange={handleChangeDistrict}
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12}>
-                            {' '}
-                            <Form.Item
-                                id="ward"
-                                label={
-                                    <>
-                                        <span className="me-1">Ward</span>
-                                        <span className="text-danger">*</span>
-                                    </>
-                                }
-                                name="ward"
-                                size="large"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Không được để trống',
-                                    },
-                                    // {
-                                    //   validator: (_, value) => {
-                                    //     if (optionsWard.some((obj) => obj?.value === value)) {
-                                    //       return Promise.resolve();
-                                    //     }
-                                    //     return Promise.reject("Địa chỉ không hợp lệ");
-                                    //   },
-                                    // },
-                                ]}
-                            >
-                                {' '}
-                                <Select
-                                    dropdownStyle={{
-                                        maxHeight: '200px',
-                                        overflowY: 'scroll',
-                                    }}
-                                    defaultValue={fullAddressByWardId?.ward_id}
-                                    // disabled={disabledWard}
-                                    isDisabled={isDisabled}
-                                    options={optionsWard}
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                    placeholder="Select your ward"
-                                    onChange={handleChangeWard}
-                                />
-                            </Form.Item>
-                        </Col>
-
+                        {fullAddressByWardId && (
+                            <>
+                                <Col xs={24} sm={12} md={12} lg={12}>
+                                    {' '}
+                                    <Form.Item
+                                        id="province"
+                                        label={
+                                            <>
+                                                <span className="me-1">
+                                                    Province
+                                                </span>
+                                                <span className="text-danger">
+                                                    *
+                                                </span>
+                                            </>
+                                        }
+                                        name="province"
+                                        size="large"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Không được để trống',
+                                            },
+                                        ]}
+                                    >
+                                        {' '}
+                                        <Select
+                                            dropdownStyle={{
+                                                maxHeight: '200px',
+                                                overflowY: 'scroll',
+                                            }}
+                                            isDisabled={isDisabled}
+                                            defaultValue={
+                                                fullAddressByWardId?.province_id
+                                            }
+                                            style={{
+                                                width: '100%',
+                                            }}
+                                            placeholder="Select your province"
+                                            onChange={handleChangeProvince}
+                                            options={optionsProvince}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={12}>
+                                    {' '}
+                                    <Form.Item
+                                        id="district"
+                                        label={
+                                            <>
+                                                <span className="me-1">
+                                                    District
+                                                </span>
+                                                <span className="text-danger">
+                                                    *
+                                                </span>
+                                            </>
+                                        }
+                                        name="district"
+                                        size="large"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Không được để trống',
+                                            },
+                                            // {
+                                            //   validator: (_, value) => {
+                                            //     if (
+                                            //       optionsDistrict.some(
+                                            //         (obj) => obj?.value === districtState
+                                            //       )
+                                            //     ) {
+                                            //       return Promise.reject("Địa chỉ không hợp lệ");
+                                            //     }
+                                            //     return Promise.resolve();
+                                            //   },
+                                            // },
+                                        ]}
+                                    >
+                                        {' '}
+                                        <Select
+                                            dropdownStyle={{
+                                                maxHeight: '200px',
+                                                overflowY: 'scroll',
+                                            }}
+                                            defaultValue={
+                                                fullAddressByWardId?.district_id
+                                            }
+                                            name="district"
+                                            // disabled={disabledDistrict}
+                                            isDisabled={isDisabled}
+                                            options={optionsDistrict}
+                                            style={{
+                                                width: '100%',
+                                            }}
+                                            placeholder="Select your province"
+                                            onChange={handleChangeDistrict}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={12}>
+                                    {' '}
+                                    <Form.Item
+                                        id="ward"
+                                        label={
+                                            <>
+                                                <span className="me-1">
+                                                    Ward
+                                                </span>
+                                                <span className="text-danger">
+                                                    *
+                                                </span>
+                                            </>
+                                        }
+                                        name="ward"
+                                        size="large"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Không được để trống',
+                                            },
+                                            // {
+                                            //   validator: (_, value) => {
+                                            //     if (optionsWard.some((obj) => obj?.value === value)) {
+                                            //       return Promise.resolve();
+                                            //     }
+                                            //     return Promise.reject("Địa chỉ không hợp lệ");
+                                            //   },
+                                            // },
+                                        ]}
+                                    >
+                                        {' '}
+                                        <Select
+                                            dropdownStyle={{
+                                                maxHeight: '200px',
+                                                overflowY: 'scroll',
+                                            }}
+                                            defaultValue={
+                                                fullAddressByWardId?.ward_id
+                                            }
+                                            // disabled={disabledWard}
+                                            isDisabled={isDisabled}
+                                            options={optionsWard}
+                                            style={{
+                                                width: '100%',
+                                            }}
+                                            placeholder="Select your ward"
+                                            onChange={handleChangeWard}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </>
+                        )}
                         <Col xs={24} sm={24} md={24} lg={24}>
                             <Form.Item
                                 label="Địa chỉ"
@@ -607,6 +625,9 @@ const ProfileDetail = () => {
                     </Form.Item>
                 </Form>
             )}
+
+            {(userProfile?.length < 1 || !userProfile) &&
+                userInfo?.role_id == 2 && <CreateProfilePage />}
         </div>
     )
 }

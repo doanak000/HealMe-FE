@@ -107,7 +107,7 @@ const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
         const tempRes = await getPresDetail(presId)
         setPresDetailRes(tempRes[0])
         form.setFieldsValue({
-            details: tempRes?.[0].length < 1 ? initialState : tempRes[0],
+            details: tempRes?.[0]?.length < 1 ? initialState : tempRes[0],
         })
     }
     const getOptionsMedicine = async () => {

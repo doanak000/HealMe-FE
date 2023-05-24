@@ -16,12 +16,13 @@ import { Notification } from '../Notification/Notification'
 import './HomeContent.scss'
 import { LoadingOutlined, RobotOutlined, UserOutlined } from '@ant-design/icons'
 import Select from 'react-select'
+import { useRef } from 'react'
 
 const { TextArea } = Input
 const HomeContent = () => {
     // const [question, setQuestion] = useState(null)
     // const [res, setRes] = useState(null)
-
+    const targetRef = useRef(null)
     const [filterValue, setFilterValue] = useState(1)
     const [departmentId, setDepartmentId] = useState('')
 
@@ -85,28 +86,6 @@ const HomeContent = () => {
         )
         await getAllPharmacy().then((res) => setPharmacy(res))
     }, [])
-
-    // const handleQuestion = (event) => {
-    //   setQuestion(event?.target?.value)
-    // }
-
-    // const sendQuestion = async () => {
-    //   try {
-    //     setIsLoading(true)
-    //     const chatRes = await getChatbotResponse(question)
-    //     setRes(chatRes?.content)
-    //     setIsLoading(false)
-    //   } catch (error) {
-    //     console.log(error)
-    //     Notification({
-    //       type: NOTIFICATION_TYPE.ERROR,
-    //       message: 'Chatbot got some mistakes',
-    //       description: null,
-    //     })
-    //     console.error(error)
-    //     setLoadingState(false)
-    //   }
-    // }
 
     const provincesOptions = provinces.map(
         ({ id: value, name: label, ...rest }) => ({
@@ -297,6 +276,7 @@ const HomeContent = () => {
                 className="find-business-area px-2 business"
                 id="business"
                 name="business"
+                ref={targetRef}
             >
                 <h5>Tìm kiếm phòng khám/ nhà thuốc</h5>
                 <div className="my-1" style={{ width: '200px' }}>
@@ -395,7 +375,8 @@ const HomeContent = () => {
                                 },
                                 {
                                     value: 5,
-                                    label: 'Vật lý trị liệu - Phục hồi chức năng',
+                                    label:
+                                        'Vật lý trị liệu - Phục hồi chức năng',
                                 },
                                 {
                                     value: 6,
