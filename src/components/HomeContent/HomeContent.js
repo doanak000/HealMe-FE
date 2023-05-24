@@ -283,6 +283,10 @@ const HomeContent = () => {
                     <Select
                         defaultValue={1}
                         onChange={(selectedOption) => {
+                            sessionStorage.setItem(
+                                'typeBusiness',
+                                selectedOption.value
+                            )
                             setFilterValue(selectedOption.value)
                         }}
                         options={[

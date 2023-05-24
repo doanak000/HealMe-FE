@@ -2,16 +2,21 @@ import { Button } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../../../assets/styles/component/DoctorItem/DoctorItem.css'
-import { getClinicInfoApi, getMap } from '../../../api/api'
+import {
+    getClinicInfoApi,
+    getMap,
+    getPharmacyProfileApi,
+} from '../../../api/api'
 import { FiPhoneCall } from 'react-icons/fi'
 import { AiFillMail } from 'react-icons/ai'
 
 const DoctorItem = (props) => {
     const { item, businessId } = props
     const [clinicInfo, setClinicInfo] = useState(null)
-
+    const typeBusiness = sessionStorage.getItem('typeBusiness')
     useEffect(async () => {
         const result = await getClinicInfoApi(businessId || item?.id)
+
         setClinicInfo(result[0][0])
     }, [])
     return (
@@ -23,30 +28,33 @@ const DoctorItem = (props) => {
         />
       </div> */}
             <div className="col-12 text-justify">
-                <h4 className="text-justify doctor-name">
-                    <Link
-                        to={`/doctor/${item?.id}`}
-                        style={{ textDecoration: 'none', color: '#016bb0' }}
-                    >
-                        {clinicInfo?.business_name}
-                    </Link>
-                </h4>
-                <p className="text-justify">
-                    <b>Địa chỉ:</b>{' '}
-                    <a
-                        href={`http://maps.google.com/?q=${clinicInfo?.fulladdress}`}
-                        target="_blank"
-                        style={{ color: '#016bb0' }}
-                    >
-                        {clinicInfo?.fulladdress}
-                    </a>
-                </p>
-                <p className="text-justify">
-                    <b>Mô tả:</b> {clinicInfo?.descr}
-                </p>
-                <p className="text-justify">
-                    <b>Khoảng cách:</b> 100km
-                </p>
+                <div style={{ height: '250px' }}>
+                    <h4 className="text-justify doctor-name">
+                        <Link
+                            to={`/doctor/${item?.id}`}
+                            style={{ textDecoration: 'none', color: '#016bb0' }}
+                        >
+                            {clinicInfo?.business_name}
+                        </Link>
+                    </h4>
+
+                    <p className="text-justify">
+                        <b>Địa chỉ:</b>{' '}
+                        <a
+                            href={`http://maps.google.com/?q=${clinicInfo?.fulladdress}`}
+                            target="_blank"
+                            style={{ color: '#016bb0' }}
+                        >
+                            {clinicInfo?.fulladdress}
+                        </a>
+                    </p>
+                    <p className="text-justify">
+                        <b>Mô tả:</b> {clinicInfo?.descr}
+                    </p>
+                    <p className="text-justify">
+                        <b>Khoảng cách:</b> 100km
+                    </p>
+                </div>
                 <div className="row">
                     <div className="col-12 col-md-6 col-lg-6">
                         <Button className="w-100 fw-bold btn-mail">
