@@ -50,8 +50,9 @@ const WorkSchedularManage = () => {
     const dispatch = useDispatch()
     const [timeId, setTimeId] = useState(1)
     const [dataWorkSchedule, setDataWorkSchedule] = useState(null)
-    const [dataApptByScheduleIdTotal, setDataApptByScheduleIdTotal] =
-        useState(null)
+    const [dataApptByScheduleIdTotal, setDataApptByScheduleIdTotal] = useState(
+        null
+    )
     const [diagnosisState, setDiagonosisState] = useState('')
     const [createPresState, setCreatePresState] = useState(null)
     const [isCreatePresModalOpen, setIsCreatePresModalOpen] = useState(false)
@@ -330,7 +331,7 @@ const WorkSchedularManage = () => {
                                 setIsCreatePresModalOpen(false)
                             }}
                         >
-                            Cancel
+                            Đóng
                         </Button>,
                     ]}
                 >

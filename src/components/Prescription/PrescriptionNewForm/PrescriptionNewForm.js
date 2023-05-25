@@ -1,72 +1,12 @@
-// import { Col, Row, Form, Input, Select, Button } from "antd";
-// import React from "react";
-// import { drugs } from "../../../static/drug";
-
-// const PrescriptionNewForm = () => {
-//   const onFinish = (values) => {
-//     console.log("Success:", values);
-//   };
-//   return (
-//     <Row>
-//       <Col xs={24}>
-//         <Form onFinish={onFinish}>
-//           <Row gutter={30}>
-//             <Col xs={6}>
-//               <Form.Item label="Tên thuốc">
-//                 <Select
-//                   showSearch
-//                   style={{
-//                     width: 200,
-//                   }}
-//                   placeholder="Search to Select"
-//                   optionFilterProp="children"
-//                   filterOption={(input, option) =>
-//                     (option?.label ?? "").includes(input)
-//                   }
-//                   filterSort={(optionA, optionB) =>
-//                     (optionA?.label ?? "")
-//                       .toLowerCase()
-//                       .localeCompare((optionB?.label ?? "").toLowerCase())
-//                   }
-//                   options={drugs}
-//                 />
-//               </Form.Item>
-//             </Col>
-//             <Col xs={6}>
-//               <Form.Item label="Số lượng">
-//                 <Input type="number"></Input>
-//               </Form.Item>
-//             </Col>
-//             <Col xs={6}>
-//               <Form.Item label="Cách dùng">
-//                 <Input></Input>
-//               </Form.Item>
-//             </Col>
-//             <Col xs={6}>
-//               <Form.Item label="Tên thuốc">
-//                 <Input type="number"></Input>
-//               </Form.Item>
-//             </Col>
-//           </Row>
-//         </Form>
-//       </Col>
-//       <Col xs={24}>
-//         <Button type="primary" htmlType="submit">Tạo toa thuốc</Button>
-//       </Col>
-//     </Row>
-//   );
-// };
-
-// export default PrescriptionNewForm;
-
 import React, { useEffect, useState } from 'react'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import { Button, Form, Input, Space, Select } from 'antd'
+import { Button, Form, Input, Space, Select, Modal } from 'antd'
 import debounce from 'lodash/debounce'
 import {
     getPharmacyMedicine,
     getPresDetail,
     getSearchMedicine,
+    orderPres,
     updateArrPres,
 } from '../../../api/api'
 import { Notification } from '../../Notification/Notification'
@@ -78,6 +18,9 @@ const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
     const [presDetailRes, setPresDetailRes] = useState(null)
     const [optionsMedicine, setOptionsMedicine] = useState([])
     const [loading, setLoading] = useState(false)
+    const [orders, setOrders] = useState([])
+    const [isModalVisible, setIsModalVisible] = useState(false)
+
     const initialState = [
         {
             med_id: '',
@@ -93,6 +36,7 @@ const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
                 message: 'Thành công',
                 description: null,
             })
+            showModal()
             setIsCreatePresModalOpen(false)
         } catch (error) {
             console.log(error)
@@ -134,136 +78,184 @@ const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
         }
     }
 
+    const showModal = () => {
+        setIsModalVisible(true)
+    }
+
+    const handleCancel = () => {
+        setIsModalVisible(false)
+    }
+
+    const handleOk = async () => {
+        try {
+            const data = {
+                prescription_id: presId,
+                pharmacy_id: userInfo?.user_role_id,
+            }
+            await orderPres(data)
+            Notification({
+                type: NOTIFICATION_TYPE.SUCCESS,
+                message: 'Đặt mua thành công',
+            })
+            setIsModalVisible(false)
+        } catch (error) {
+            Notification({
+                type: NOTIFICATION_TYPE.ERROR,
+                message: 'Có lỗi xảy ra',
+            })
+        }
+    }
+
     useEffect(() => {
         getPresDetailsById(presId)
         getOptionsMedicine()
     }, [])
 
     return (
-        <Form
-            name="dynamic_form_nest_item"
-            onFinish={onFinish}
-            autoComplete="off"
-            size="large"
-            form={form}
-        >
-            <Form.List name="details">
-                {(fields, { add, remove }) => (
-                    <>
-                        {fields.map(({ key, name, ...restField }) => (
-                            <Space
-                                key={key}
-                                style={{
-                                    display: 'flex',
-                                    marginBottom: 8,
-                                }}
-                                align="baseline"
-                            >
-                                {optionsMedicine?.length > 0 && (
+        <>
+            <Form
+                name="dynamic_form_nest_item"
+                onFinish={onFinish}
+                autoComplete="off"
+                size="large"
+                form={form}
+            >
+                <Form.List name="details">
+                    {(fields, { add, remove }) => (
+                        <>
+                            {fields.map(({ key, name, ...restField }) => (
+                                <Space
+                                    key={key}
+                                    style={{
+                                        display: 'flex',
+                                        marginBottom: 8,
+                                    }}
+                                    align="baseline"
+                                >
+                                    {optionsMedicine?.length > 0 && (
+                                        <Form.Item
+                                            {...restField}
+                                            name={[name, 'med_id']}
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Thiếu tên thuốc',
+                                                },
+                                            ]}
+                                        >
+                                            <Select
+                                                dropdownStyle={{
+                                                    maxHeight: '200px',
+                                                    overflowY: 'scroll',
+                                                }}
+                                                showSearch
+                                                loading={loading}
+                                                style={{
+                                                    width: 200,
+                                                }}
+                                                placeholder="Nhập tên thuốc"
+                                                optionFilterProp="children"
+                                                filterOption={(input, option) =>
+                                                    (
+                                                        option?.label ?? ''
+                                                    )?.includes(input)
+                                                }
+                                                filterSort={(
+                                                    optionA,
+                                                    optionB
+                                                ) =>
+                                                    (optionA?.label ?? '')
+                                                        ?.toLowerCase()
+                                                        ?.localeCompare(
+                                                            (
+                                                                optionB?.label ??
+                                                                ''
+                                                            )?.toLowerCase()
+                                                        )
+                                                }
+                                                options={optionsMedicine}
+                                            >
+                                                {optionsMedicine?.map(
+                                                    (option) => (
+                                                        <Select.Option
+                                                            key={option.id}
+                                                            value={option.id}
+                                                        >
+                                                            {option.title}
+                                                        </Select.Option>
+                                                    )
+                                                )}
+                                            </Select>
+                                        </Form.Item>
+                                    )}
                                     <Form.Item
                                         {...restField}
-                                        name={[name, 'med_id']}
+                                        name={[name, 'dosage']}
                                         rules={[
                                             {
                                                 required: true,
-                                                message: 'Thiếu tên thuốc',
+                                                message:
+                                                    'Xin mời nhập số lượng',
                                             },
                                         ]}
                                     >
-                                        <Select
-                                            dropdownStyle={{
-                                                maxHeight: '200px',
-                                                overflowY: 'scroll',
-                                            }}
-                                            showSearch
-                                            loading={loading}
-                                            style={{
-                                                width: 200,
-                                            }}
-                                            placeholder="Nhập tên thuốc"
-                                            optionFilterProp="children"
-                                            filterOption={(input, option) =>
-                                                (option?.label ?? '')?.includes(
-                                                    input
-                                                )
-                                            }
-                                            filterSort={(optionA, optionB) =>
-                                                (optionA?.label ?? '')
-                                                    ?.toLowerCase()
-                                                    ?.localeCompare(
-                                                        (
-                                                            optionB?.label ?? ''
-                                                        )?.toLowerCase()
-                                                    )
-                                            }
-                                            options={optionsMedicine}
-                                        >
-                                            {optionsMedicine?.map((option) => (
-                                                <Select.Option
-                                                    key={option.id}
-                                                    value={option.id}
-                                                >
-                                                    {option.title}
-                                                </Select.Option>
-                                            ))}
-                                        </Select>
+                                        <Input placeholder="Nhập số lượng" />
                                     </Form.Item>
-                                )}
-                                <Form.Item
-                                    {...restField}
-                                    name={[name, 'dosage']}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Xin mời nhập số lượng',
-                                        },
-                                    ]}
+                                    <Form.Item
+                                        {...restField}
+                                        name={[name, 'note']}
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Xin mời nhập cách dùng',
+                                            },
+                                        ]}
+                                    >
+                                        <Input placeholder="Nhập cách dùng" />
+                                    </Form.Item>
+                                    <MinusCircleOutlined
+                                        onClick={() => remove(name)}
+                                    />
+                                </Space>
+                            ))}
+                            <Form.Item>
+                                <Button
+                                    type="dashed"
+                                    onClick={() => add()}
+                                    className="w-25 me-4"
                                 >
-                                    <Input placeholder="Nhập số lượng" />
-                                </Form.Item>
-                                <Form.Item
-                                    {...restField}
-                                    name={[name, 'note']}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Xin mời nhập cách dùng',
-                                        },
-                                    ]}
-                                >
-                                    <Input placeholder="Nhập cách dùng" />
-                                </Form.Item>
-                                <MinusCircleOutlined
-                                    onClick={() => remove(name)}
-                                />
-                            </Space>
-                        ))}
-                        <Form.Item>
-                            <Button
-                                type="dashed"
-                                onClick={() => add()}
-                                className="w-25 me-4"
-                            >
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'baseline',
-                                        flexDirection: 'row',
-                                    }}
-                                >
-                                    <PlusOutlined />
-                                    <p style={{ marginLeft: '5px' }}>Thêm</p>
-                                </div>
-                            </Button>
-                            <Button type="primary" htmlType="submit">
-                                Xác nhận toa thuốc
-                            </Button>
-                        </Form.Item>
-                    </>
-                )}
-            </Form.List>
-        </Form>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'baseline',
+                                            flexDirection: 'row',
+                                        }}
+                                    >
+                                        <PlusOutlined />
+                                        <p style={{ marginLeft: '5px' }}>
+                                            Thêm
+                                        </p>
+                                    </div>
+                                </Button>
+                                <Button type="primary" htmlType="submit">
+                                    Xác nhận toa thuốc
+                                </Button>
+                            </Form.Item>
+                        </>
+                    )}
+                </Form.List>
+            </Form>
+            <Modal
+                title="Book Prescription"
+                visible={isModalVisible}
+                onCancel={handleCancel}
+                onOk={handleOk}
+            >
+                <p>Xác nhận đặt đơn thuốc này cho khách hàng ?</p>
+            </Modal>
+        </>
     )
 }
 
