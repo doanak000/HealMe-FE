@@ -40,7 +40,6 @@ const layout = {
 }
 const tailLayout = {
     wrapperCol: {
-        offset: 8,
         span: 24,
     },
 }

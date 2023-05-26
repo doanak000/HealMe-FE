@@ -36,7 +36,7 @@ const PrescriptionNewForm = ({ presId, setIsCreatePresModalOpen }) => {
                 message: 'Thành công',
                 description: null,
             })
-            showModal()
+            userInfo.business_type == 2 && showModal()
             setIsCreatePresModalOpen(false)
         } catch (error) {
             console.log(error)
