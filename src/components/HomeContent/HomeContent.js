@@ -289,6 +289,7 @@ const HomeContent = () => {
                             )
                             setFilterValue(selectedOption.value)
                         }}
+                        placeholder="Phòng khám"
                         options={[
                             {
                                 value: 1,
