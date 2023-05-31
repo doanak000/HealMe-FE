@@ -23,7 +23,7 @@ const ProfileContent = () => {
         return <ProfileDetail />;
       case "2":
         return userInfo.role_id === 2 ? (
-          <PatientAppointment />
+          ""
         ) : (
           <WorkSchedular />
         );
@@ -47,10 +47,10 @@ const ProfileContent = () => {
     },
     {
       key: "2",
-      label: <>
+      label: <div className={userInfo.role_id === 2 ? "d-none" : "d-block"}>
         <BsCalendarCheck className="fs-5 me-2 mb-lg-1" />
         <span>Lịch khám</span>
-      </>,
+      </div>,
       children: <PatientAppointment />,
     },
     {
