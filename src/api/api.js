@@ -287,7 +287,7 @@ export default {
     resetPassword,
     getMap,
     getAddressDetail,
-    getBusinessSubscriptionById
+    getBusinessSubscriptionById,
     getPatientPres,
     orderPres,
     getOrderPres,
