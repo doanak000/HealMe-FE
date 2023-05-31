@@ -14,6 +14,7 @@ export const PATH = Object.freeze({
   PRICING: '/pricing',
   FORGOT_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/reset-password/:userId/:token',
+  APPOINTMENT:'/appointment',
 });
 
 export const SIDEBAR = Object.freeze({
@@ -41,7 +42,8 @@ export const ROUTES = Object.freeze({
     { path: PATH.PRESCRIPTION, component: "PrescriptionPage", exact: true },
     { path: PATH.PRESCRIPTION_NEW, component: "PrescriptionNewPage" },
     { path: PATH.PRESCRIPTION_DETAIL, component: "PrescriptionDetailPage" },
-    { path: PATH.PRICING, component: 'PricingPage' }
+    { path: PATH.PRICING, component: 'PricingPage' },
+    {path:PATH.APPOINTMENT, component: 'AppointmentPage' },
   ],
 
   PUBLIC: [

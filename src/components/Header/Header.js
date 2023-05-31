@@ -112,17 +112,7 @@ const Header = () => {
                             <li className="header__navbar-item">
                                 <a
                                     className="nav-link"
-                                    href="/"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#navbarSupportedContent"
-                                >
-                                    Trang chủ
-                                </a>
-                            </li>
-                            <li className="header__navbar-item">
-                                <a
-                                    className="nav-link"
-                                    href="/profile"
+                                    href="/appointment"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#navbarSupportedContent"
                                 >
