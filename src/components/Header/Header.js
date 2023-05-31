@@ -79,7 +79,7 @@ const Header = () => {
                         <div className="header__logo overflow-hidden p-2 rounded bg-white">
                             <img
                                 src={logo}
-                                className="healme-logo"
+                                className="healme-logo w-75"
                                 width={26}
                                 height={40}
                             />

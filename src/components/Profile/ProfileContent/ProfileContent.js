@@ -81,7 +81,7 @@ const ProfileContent = () => {
   const tabItems = userInfo.role_id === 2 ? items : itemsOfDoctor;
 
   return (
-    <Tabs activeKey={activeTab} onChange={handleChangeTab} size="large">
+    <Tabs activeKey={activeTab} onChange={handleChangeTab} size="large" className="mx-lg-5">
       {tabItems.map(({ key, label }) => (
         <Tabs.TabPane key={key} tab={label}>
           {renderContent()}

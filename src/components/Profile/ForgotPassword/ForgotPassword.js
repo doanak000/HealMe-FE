@@ -66,6 +66,13 @@ const ForgotPassword = () => {
                                 >
                                     <Input placeholder='Nhập email của bạn' allowClear />
                                 </Form.Item>
+                                <Form.Item className='mx-auto my-2'>
+                                    <Button type="primary" htmlType="submit" className='w-100' size='large'>
+                                        {isLoading ? <Spin indicator={<LoadingOutlined
+                                            className='text-white' spin
+                                        />} /> : <span>Reset Password</span>}
+                                    </Button>
+                                </Form.Item>
                                 <Row gutter={8}>
                                     <Col xs={12}>
                                         <Form.Item>
@@ -83,13 +90,6 @@ const ForgotPassword = () => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Form.Item className='mx-auto'>
-                                    <Button type="primary" htmlType="submit" className='w-100' size='large'>
-                                        {isLoading ? <Spin indicator={<LoadingOutlined
-                                            className='text-white' spin
-                                        />} /> : <span>Reset Password</span>}
-                                    </Button>
-                                </Form.Item>
                             </Form>
                         </div>
                     </div>

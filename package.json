@@ -24,6 +24,7 @@
         "graphql": "^15.5.0",
         "lodash": "^4.17.21",
         "moment": "^2.29.4",
+        "ol": "^7.3.0",
         "openai": "^3.2.1",
         "react": "^17.0.1",
         "react-bootstrap": "^2.7.2",

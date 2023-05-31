@@ -241,6 +241,10 @@ export const cancelOrder = async (id) => {
     const response = await authAxios.post(`/prescription/order/${id}/cancel`)
     return response.data
 }
+export const getBusinessSubscriptionById = async (businessId) => {
+  const response = await authAxios.get(`/subscription/get/business/${businessId}`);
+  return response.data;
+}
 // Export all API call functions
 export default {
     login,
@@ -283,6 +287,7 @@ export default {
     resetPassword,
     getMap,
     getAddressDetail,
+    getBusinessSubscriptionById
     getPatientPres,
     orderPres,
     getOrderPres,
