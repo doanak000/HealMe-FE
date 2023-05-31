@@ -1,19 +1,34 @@
-import { Button } from "antd";
+import { Button, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../../assets/styles/component/DoctorItem/DoctorItem.css";
-import { getClinicInfoApi, getMap } from "../../../api/api";
+import { getAddressDetail, getClinicInfoApi, getMap } from "../../../api/api";
 import { FiPhoneCall } from "react-icons/fi"
 import { AiFillMail } from "react-icons/ai"
 
 const DoctorItem = (props) => {
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
   const { item, businessId } = props;
   const [clinicInfo, setClinicInfo] = useState(null);
+  const [address, setAddress] = useState("")
+  const [distance, setDistance] = useState(0)
 
   useEffect(async () => {
     const result = await getClinicInfoApi(businessId || item?.id);
     setClinicInfo(result[0][0]);
+    await getAddressDetail(item.address_id).then(res => setAddress(res[0][0].fulladdress))
   }, []);
+
+  useEffect(async () => {
+    if (!userInfo) return;
+    if (address) {
+      await getMap({
+        destinations: [address]
+      })
+        .then(res => setDistance(res?.distance?.kilometers.toFixed(2)))
+    }
+  }, [address])
+
   return (
     <div className="row my-2 doctor-item-container p-2 mb-2 bg-body rounded bg-body rounded g-2">
       {/* <div className="col-3">
@@ -34,9 +49,9 @@ const DoctorItem = (props) => {
         <p className="text-justify">
           <b>Mô tả:</b> {clinicInfo?.descr}
         </p>
-        <p className="text-justify">
-          <b>Khoảng cách:</b> 100km
-        </p>
+        {userInfo && <p className="text-justify">
+          <b>Khoảng cách:</b> {distance === 0 ? <Spin/> : distance} km
+        </p>}
         <div className="row">
           <div className="col-12 col-md-6 col-lg-6">
             <Button className="w-100 bg-success text-white fw-bold">

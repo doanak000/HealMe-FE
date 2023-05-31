@@ -216,6 +216,10 @@ export const getAddressDetail = async (addressId) => {
   const response = await authAxios.get(`/area/address/${addressId}`);
   return response.data;
 }
+export const getBusinessSubscriptionById = async (businessId) => {
+  const response = await authAxios.get(`/subscription/get/business/${businessId}`);
+  return response.data;
+}
 // Export all API call functions
 export default {
   login,
@@ -257,5 +261,6 @@ export default {
   forgotPassword,
   resetPassword,
   getMap,
-  getAddressDetail
+  getAddressDetail,
+  getBusinessSubscriptionById
 };

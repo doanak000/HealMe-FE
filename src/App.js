@@ -6,23 +6,8 @@ import { PATH } from "./constants/common";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import LayoutUser from "./containers/layout/LayoutUser";
-import { getAddressDetail, getAllClinic, getAllPharmacy, getClinicInfoApi } from "./api/api";
 
 const App = () => {
-  const [listClinics, setListClinics] = useState([]);
-  const [listPharmacy, setListPharmacy] = useState([]);
-  useEffect(async () => {
-    await getAllClinic().then((res) => setListClinics(res));
-    await getAllPharmacy().then((res) => setListPharmacy(res));
-  }, [])
-  const tempClinicsArray = [], tempPharmacyArray = [];
-  listClinics?.map(async (item) => {
-    await getAddressDetail(item?.address_id)
-      .then((res) => {
-        tempClinicsArray.push(res?.[0]?.[0] || 'No Address')
-      })
-  })
-  console.log('tempClinicsArray: ', tempClinicsArray)
   return (
     <Router>
       <Suspense
