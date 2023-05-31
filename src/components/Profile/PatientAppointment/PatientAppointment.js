@@ -85,7 +85,7 @@ const PatientAppointment = () => {
     const columns = [
         {
             width: '100',
-            title: 'Work Day',
+            title: 'Ngày',
             dataIndex: 'workday',
             key: 'workday',
             render: (text, today) => <a>{moment(text).format('YYYY-MM-DD')}</a>,
@@ -97,7 +97,7 @@ const PatientAppointment = () => {
             }) => (
                 <div style={{ padding: 8 }}>
                     <Input
-                        placeholder="Search work day"
+                        placeholder="Search ngày làm việc"
                         value={selectedKeys[0]}
                         onChange={(e) =>
                             setSelectedKeys(
@@ -229,7 +229,7 @@ const PatientAppointment = () => {
         },
         {
             width: '100',
-            title: 'Action',
+            title: 'Hành động',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">

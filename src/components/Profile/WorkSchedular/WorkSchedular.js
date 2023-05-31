@@ -10,6 +10,7 @@ import {
     Table,
     Space,
     Modal,
+    Select,
 } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
@@ -28,7 +29,6 @@ import {
 import { NOTIFICATION_TYPE } from '../../../constants/common'
 import { Notification } from '../../Notification/Notification'
 import { confirm } from '../../ConfirmModal/ConfirmModal'
-import Select from 'react-select'
 
 const layout = {
     labelCol: {
@@ -40,7 +40,6 @@ const layout = {
 }
 const tailLayout = {
     wrapperCol: {
-        offset: 8,
         span: 24,
     },
 }
@@ -135,7 +134,7 @@ const WorkSchedular = () => {
     const columns = [
         {
             width: '100',
-            title: 'Work Day',
+            title: 'Ngày',
             dataIndex: 'workday',
             key: 'workday',
             render: (text) => <a>{moment(text).format('YYYY-MM-DD')}</a>,
@@ -158,7 +157,7 @@ const WorkSchedular = () => {
         },
         {
             width: '200',
-            title: 'Action',
+            title: 'Hành động',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
@@ -178,7 +177,7 @@ const WorkSchedular = () => {
     const columnsDetail = [
         {
             width: '100',
-            title: 'Work Day',
+            title: 'Ngày',
             dataIndex: 'workday',
             key: 'workday',
             render: (text) => <a>{moment(text).format('YYYY-MM-DD')}</a>,
@@ -263,11 +262,11 @@ const WorkSchedular = () => {
                     }}
                     onFinish={onRegisterSchedular}
                 >
-                    <TitleRegister>Register Work Schedular</TitleRegister>
+                    <TitleRegister>Đăng Kí Lịch Khám</TitleRegister>
                     <Form.Item
                         size="large"
                         id="date"
-                        label={<RegisterLable>Full name</RegisterLable>}
+                        label={<RegisterLable>Chọn ngày</RegisterLable>}
                         name="date"
                         rules={[
                             {
@@ -309,13 +308,13 @@ const WorkSchedular = () => {
 
                     <Form.Item {...tailLayout}>
                         <RegisterButton type="primary" htmlType="submit">
-                            Submit
+                            Đăng kí
                         </RegisterButton>
                     </Form.Item>
                 </Form>
                 <Table columns={columns} dataSource={dataWorkSchedule} />
                 <Modal
-                    title="Edit Work Schedular"
+                    title="Chỉnh sửa lịch làm việc"
                     open={isModalOpen}
                     onOk={handleOk}
                     onCancel={() => {

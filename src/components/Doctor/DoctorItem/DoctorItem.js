@@ -37,6 +37,7 @@ const DoctorItem = (props) => {
           className="rounded"
         />
       </div> */}
+
       <div className="col-12 text-justify">
         <h4 className="text-justify doctor-name">
           <Link to={`/doctor/${item?.id}`} style={{ textDecoration: "none" }}>
@@ -65,10 +66,11 @@ const DoctorItem = (props) => {
               <a className="text-decoration-none text-white" href={`tel:${clinicInfo?.phone}`}>{clinicInfo?.phone || "No Phone"}</a>
             </Button>
           </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+          </div>
+            </div>
 
-export default DoctorItem;
+        </div>
+    )
+}
+
+export default DoctorItem

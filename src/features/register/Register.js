@@ -28,12 +28,12 @@ import {
 } from '../../api/api.js'
 import { useEffect } from 'react'
 import Select from 'react-select'
-import registerBanner from "../../assets/img/register-banner.png";
-import { FaUserAlt } from "react-icons/fa"
-import { RiLockPasswordFill } from "react-icons/ri"
-import { MdEmail } from "react-icons/md"
-import { FaRegUserCircle, FaBirthdayCake } from "react-icons/fa"
-import { AiFillHome } from "react-icons/ai"
+import registerBanner from '../../assets/img/register-banner.png'
+import { FaUserAlt } from 'react-icons/fa'
+import { RiLockPasswordFill } from 'react-icons/ri'
+import { MdEmail } from 'react-icons/md'
+import { FaRegUserCircle, FaBirthdayCake } from 'react-icons/fa'
+import { AiFillHome } from 'react-icons/ai'
 
 const layout = {
     labelCol: {
@@ -112,7 +112,7 @@ const Register = () => {
         await setDisabledWard(false)
     }
     const handleChangeWard = async (selectedOption) => {
-        setSelectedWard(selectedOption)
+        setSelectedWard(selectedOption.value)
     }
 
     const handleChange = (event) => {
@@ -169,6 +169,7 @@ const Register = () => {
             birthday: moment(values?.birthday).format('YYYY-MM-DD'),
             ward: selectedWard,
             userid: userId,
+            gender: values.gender.value,
         }
         try {
             const profileDataResponse = await createPatientProfile(profileData)
@@ -198,7 +199,11 @@ const Register = () => {
     return (
         <Row>
             <Col xs={8}>
-                <img src={registerBanner} alt="register-banner" className='w-100' />
+                <img
+                    src={registerBanner}
+                    alt="register-banner"
+                    className="w-100"
+                />
             </Col>
             <Col xs={16}>
                 <WrapperRegister>
@@ -223,7 +228,8 @@ const Register = () => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please input your username!',
+                                            message:
+                                                'Please input your username!',
                                         },
                                     ]}
                                 >
@@ -242,7 +248,8 @@ const Register = () => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please input your password!',
+                                            message:
+                                                'Please input your password!',
                                         },
                                     ]}
                                 >
@@ -263,7 +270,8 @@ const Register = () => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please input your password!',
+                                            message:
+                                                'Please input your password!',
                                         },
                                     ]}
                                 >
@@ -295,12 +303,21 @@ const Register = () => {
                                     />
                                 </Form.Item>
 
-
                                 <Form.Item>
-                                    <Button type="primary" htmlType="submit" className="w-100 mb-2" >
+                                    <Button
+                                        type="primary"
+                                        htmlType="submit"
+                                        className="w-100 mb-2"
+                                    >
                                         Đăng ký
                                     </Button>
-                                    Đã có tài khoản? <Link to={PATH.LOGIN} className="text-decoration-none text-secondary">Đăng nhập</Link>
+                                    Đã có tài khoản?{' '}
+                                    <Link
+                                        to={PATH.LOGIN}
+                                        className="text-decoration-none text-secondary"
+                                    >
+                                        Đăng nhập
+                                    </Link>
                                 </Form.Item>
                             </Form>
                         )}
@@ -314,7 +331,9 @@ const Register = () => {
                                 }}
                                 onFinish={onCreateProfile}
                             >
-                                <TitleRegister>Create Your Profile</TitleRegister>
+                                <TitleRegister>
+                                    Create Your Profile
+                                </TitleRegister>
                                 <Form.Item
                                     size="large"
                                     id="fullname"
@@ -323,11 +342,16 @@ const Register = () => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please input your fullname!',
+                                            message:
+                                                'Please input your fullname!',
                                         },
                                     ]}
                                 >
-                                    <Input prefix={<FaRegUserCircle />} placeholder="fullname" name="fullname" />
+                                    <Input
+                                        prefix={<FaRegUserCircle />}
+                                        placeholder="fullname"
+                                        name="fullname"
+                                    />
                                 </Form.Item>
                                 <div
                                     style={{
@@ -343,7 +367,8 @@ const Register = () => {
                                         rules={[
                                             {
                                                 required: true,
-                                                message: 'Please input your birthday!',
+                                                message:
+                                                    'Please input your birthday!',
                                             },
                                         ]}
                                     >
@@ -361,7 +386,8 @@ const Register = () => {
                                         rules={[
                                             {
                                                 required: true,
-                                                message: 'Please select your gender!',
+                                                message:
+                                                    'Please select your gender!',
                                             },
                                         ]}
                                     >
@@ -386,7 +412,9 @@ const Register = () => {
 
                                 <Form.Item
                                     id="province"
-                                    label={<RegisterLable>Province</RegisterLable>}
+                                    label={
+                                        <RegisterLable>Province</RegisterLable>
+                                    }
                                     name="province"
                                     size="large"
                                 >
@@ -412,7 +440,11 @@ const Register = () => {
                                 >
                                     <Form.Item
                                         id="district"
-                                        label={<RegisterLable>District</RegisterLable>}
+                                        label={
+                                            <RegisterLable>
+                                                District
+                                            </RegisterLable>
+                                        }
                                         name="district"
                                         size="large"
                                     >
@@ -434,7 +466,9 @@ const Register = () => {
                                     </Form.Item>
                                     <Form.Item
                                         id="ward"
-                                        label={<RegisterLable>Ward</RegisterLable>}
+                                        label={
+                                            <RegisterLable>Ward</RegisterLable>
+                                        }
                                         name="ward"
                                         size="large"
                                     >
@@ -462,7 +496,8 @@ const Register = () => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please input your address!',
+                                            message:
+                                                'Please input your address!',
                                         },
                                     ]}
                                 >
@@ -474,7 +509,10 @@ const Register = () => {
                                 </Form.Item>
 
                                 <Form.Item {...tailLayout}>
-                                    <RegisterButton type="primary" htmlType="submit">
+                                    <RegisterButton
+                                        type="primary"
+                                        htmlType="submit"
+                                    >
                                         Submit
                                     </RegisterButton>
                                 </Form.Item>

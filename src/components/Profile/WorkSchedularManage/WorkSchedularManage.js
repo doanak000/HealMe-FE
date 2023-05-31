@@ -119,7 +119,7 @@ const WorkSchedularManage = () => {
     const columnsDetail = [
         {
             width: '100',
-            title: 'Work Day',
+            title: 'Ngày',
             dataIndex: 'workday',
             key: 'workday',
             filterDropdown: ({
@@ -331,7 +331,7 @@ const WorkSchedularManage = () => {
                                 setIsCreatePresModalOpen(false)
                             }}
                         >
-                            Cancel
+                            Đóng
                         </Button>,
                     ]}
                 >
