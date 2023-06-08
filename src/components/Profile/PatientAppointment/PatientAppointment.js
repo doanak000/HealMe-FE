@@ -11,6 +11,7 @@ import {
 } from '../../../api/api'
 import { confirm } from '../../ConfirmModal/ConfirmModal'
 import { SearchOutlined } from '@ant-design/icons'
+import VoteModal from './VoteModal'
 const layout = {
     labelCol: {
         span: 24,
@@ -30,6 +31,16 @@ const PatientAppointment = () => {
     const [isModalPresOpen, setIsModalPresOpen] = useState(false)
     const [pres, setPres] = useState(null)
     const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    const [voteModalVisible, setVoteModalVisible] = useState(false)
+    const [voteData, setVoteData] = useState()
+    const handleVoteButtonClick = (record) => {
+        setVoteData(record)
+        setVoteModalVisible(true)
+    }
+
+    const handleVoteModalClose = () => {
+        setVoteModalVisible(false)
+    }
     const getApptData = async () => {
         const data = await getAppt(userInfo?.user_role_id)
         setApptData(data[0])
@@ -242,6 +253,9 @@ const PatientAppointment = () => {
                     <Button onClick={() => handleShowModalPres(record)}>
                         Xem toa thuốc được kê
                     </Button>
+                    <Button onClick={() => handleVoteButtonClick(record)}>
+                        Đánh giá
+                    </Button>
                 </Space>
             ),
         },
@@ -250,8 +264,6 @@ const PatientAppointment = () => {
     useEffect(() => {
         getApptData()
     }, [])
-
-    console.log(pres)
 
     return (
         <div>
@@ -313,6 +325,11 @@ const PatientAppointment = () => {
                         })}
                     </div>
                 </Modal>
+                <VoteModal
+                    visible={voteModalVisible}
+                    onClose={handleVoteModalClose}
+                    data={voteData}
+                />
             </div>
         </div>
     )

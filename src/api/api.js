@@ -242,8 +242,18 @@ export const cancelOrder = async (id) => {
     return response.data
 }
 export const getBusinessSubscriptionById = async (businessId) => {
-  const response = await authAxios.get(`/subscription/get/business/${businessId}`);
-  return response.data;
+    const response = await authAxios.get(
+        `/subscription/get/business/${businessId}`
+    )
+    return response.data
+}
+export const createReview = async (data) => {
+    const response = await authAxios.post(`/review/create`, data)
+    return response.data
+}
+export const getReviewByBusiness = async (businessId) => {
+    const response = await authAxios.get(`/review/${businessId}`)
+    return response.data
 }
 // Export all API call functions
 export default {
@@ -292,4 +302,6 @@ export default {
     orderPres,
     getOrderPres,
     cancelOrder,
+    createReview,
+    getReviewByBusiness,
 }
