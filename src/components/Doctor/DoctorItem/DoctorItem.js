@@ -44,7 +44,7 @@ const DoctorItem = (props) => {
                 <h4 className="text-justify doctor-name">
                     <Link
                         to={`/doctor/${item?.id}`}
-                        style={{ textDecoration: 'none', color: '#1990ff' }}
+                        style={{ textDecoration: 'none', color: '#016bb0' }}
                     >
                         {clinicInfo?.business_name}
                     </Link>
