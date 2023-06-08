@@ -12,12 +12,17 @@ const DoctorItem = (props) => {
   const [clinicInfo, setClinicInfo] = useState(null);
   const [address, setAddress] = useState("")
   const [distance, setDistance] = useState(0)
+  const [isSubscribed, setIsSubscribed] = useState(false)
 
   useEffect(async () => {
     const result = await getClinicInfoApi(businessId || item?.id);
     setClinicInfo(result[0][0]);
     await getAddressDetail(item.address_id).then(res => setAddress(res[0][0].fulladdress))
   }, []);
+
+  useEffect(async ()=>{
+    await getBusinessSubscriptionById(userInfo?.user_role_id).then(res=>res[0].length>0 && setIsSubscribed(true))
+  },[])
 
   // useEffect(async () => {
   //   if (!userInfo) return;
@@ -50,9 +55,9 @@ const DoctorItem = (props) => {
         <p className="text-justify">
           <b>Mô tả:</b> {clinicInfo?.descr}
         </p>
-        {userInfo && <p className="text-justify">
-          <b>Khoảng cách:</b> {distance === 0 ? <Spin/> : distance} km
-        </p>}
+        {userInfo && isSubscribed ? <p className="text-justify">
+          <b>Khoảng cách:</b> {distance === 0 ? <Spin/> : distance + 'km'}
+        </p>: <small className="px-2">Bạn phải đăng ký gói Prenium để xem khoảng cách <a href="/pricing">Đăng ký tại đây</a></small>}
         <div className="row">
           <div className="col-12 col-md-6 col-lg-6">
             <Button className="w-100 bg-success text-white fw-bold">
