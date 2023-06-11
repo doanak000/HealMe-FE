@@ -31,8 +31,12 @@ const Header = () => {
             },
         })
     }
-    const handleScrollToElement = () => {
+    const handleScrollToBusiness = () => {
         const targetElement = document.getElementById('business')
+        targetElement.scrollIntoView({ behavior: 'smooth' })
+    }
+    const handleScrollToChatbot = () => {
+        const targetElement = document.getElementById('chatbotAI')
         targetElement.scrollIntoView({ behavior: 'smooth' })
     }
     ///login Data lấy data từ cái login slice về
@@ -111,25 +115,34 @@ const Header = () => {
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="header__navbar-item">
                                 <a
+                                    onClick={handleScrollToChatbot}
+                                    className="nav-link"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navbarSupportedContent"
+                                >
+                                    Tư vấn bởi AI
+                                </a>
+                            </li>
+                            <li className="header__navbar-item">
+                                <a
                                     className="nav-link"
                                     href="/appointment"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#navbarSupportedContent"
                                 >
-                                    Đặt lịch
+                                    Đặt lịch tư vấn bởi bác sĩ/dược sĩ
                                 </a>
                             </li>
                             <li className="header__navbar-item">
                                 <a
-                                    onClick={handleScrollToElement}
+                                    onClick={handleScrollToBusiness}
                                     className="nav-link"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#navbarSupportedContent"
                                 >
-                                    Phòng khám/Nhà thuốc
+                                    Tìm phòng khám/nhà thuốc
                                 </a>
                             </li>
-
                             {/* <li className="nav-item dropdown">
                                 <a
                                     className="nav-link dropdown-toggle"
