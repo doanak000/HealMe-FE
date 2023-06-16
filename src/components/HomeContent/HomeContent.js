@@ -188,7 +188,11 @@ const HomeContent = () => {
 
     return (
         <div className="my-3 content-area">
-            <div className="chatbox-area mx-3 mx-lg-0">
+            <div
+                className="chatbox-area mx-3 mx-lg-0"
+                id="chatbotAI"
+                name="chatbotAI"
+            >
                 <h5 className="text-center">AI tư vấn sức khỏe </h5>
                 <div className="chatbot-container w-100 px-2">
                     {showChatbot && (
@@ -278,7 +282,7 @@ const HomeContent = () => {
                 name="business"
                 ref={targetRef}
             >
-                <h5>Tìm kiếm phòng khám/ nhà thuốc</h5>
+                <h5>Tìm kiếm phòng khám/nhà thuốc</h5>
                 <div className="my-1" style={{ width: '200px' }}>
                     <Select
                         defaultValue={1}
@@ -380,8 +384,7 @@ const HomeContent = () => {
                                 },
                                 {
                                     value: 5,
-                                    label:
-                                        'Vật lý trị liệu - Phục hồi chức năng',
+                                    label: 'Vật lý trị liệu - Phục hồi chức năng',
                                 },
                                 {
                                     value: 6,
