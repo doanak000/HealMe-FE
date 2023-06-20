@@ -1,7 +1,7 @@
-import { Dropdown, Avatar, Button, Anchor } from 'antd'
+import { Dropdown, Avatar, Button, Anchor, Tag } from 'antd'
 
 import { UserOutlined } from '@ant-design/icons'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import logo from '../../assets/img/HealMe-logo.svg'
 import '../../assets/styles/component/Header/Header.css'
 
@@ -15,14 +15,19 @@ import {
 import { PATH } from '../../constants/common'
 import { Link } from 'react-router-dom'
 import { confirm } from '../ConfirmModal/ConfirmModal'
+import { getBusinessSubscriptionById } from '../../api/api'
 
 const Header = () => {
+    const [isSubscribed, setIsSubscribed] = useState(false)
     const isLoggedIn = useSelector(selectIsLoggedIn)
     const userInfo =
         useSelector(selectUserInfo) ||
         JSON.parse(localStorage.getItem('userInfo'))
 
     const dispatch = useDispatch()
+    useEffect(async () => {
+        await getBusinessSubscriptionById(userInfo?.user_role_id).then(res => res[0].length > 0 && setIsSubscribed(true))
+    }, [])
     const logoutHandle = () => {
         confirm({
             content: 'Bạn muốn đăng xuất?',
@@ -195,7 +200,7 @@ const Header = () => {
                                             color: '#0D6EFD',
                                         }}
                                     >
-                                        {userInfo.username}
+                                        {isSubscribed ? <Tag color="gold">Tài khoản Prenium</Tag> : <Tag>Tài khoản thường</Tag>} {userInfo.username}
                                     </span>
                                     <Dropdown
                                         menu={{ items }}
