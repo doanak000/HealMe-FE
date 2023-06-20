@@ -1,8 +1,8 @@
-import { Button, Spin } from 'antd'
+import { Button, Spin, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../../../assets/styles/component/DoctorItem/DoctorItem.css'
-import { getAddressDetail, getClinicInfoApi, getMap } from '../../../api/api'
+import { getAddressDetail, getBusinessSubscriptionById, getClinicInfoApi, getMap } from '../../../api/api'
 import { FiPhoneCall } from 'react-icons/fi'
 import { AiFillMail } from 'react-icons/ai'
 
@@ -17,10 +17,8 @@ const DoctorItem = (props) => {
   useEffect(async () => {
     const result = await getClinicInfoApi(businessId || item?.id)
     setClinicInfo(result[0][0])
-    await getAddressDetail(item.address_id).then((res) =>
-      setAddress(res[0][0].fulladdress)
-    )
   }, [])
+
 
   useEffect(async () => {
     await getBusinessSubscriptionById(userInfo?.user_role_id).then(res => res[0].length > 0 && setIsSubscribed(true))
@@ -57,6 +55,9 @@ const DoctorItem = (props) => {
         <p className="text-justify">
           <b>Mô tả:</b> {clinicInfo?.descr}
         </p>
+        <p className="text-justify">
+          <b>Chuyên khoa:</b> {clinicInfo?.departments.map(item => <Tag color='geekblue'>{item.title}</Tag>)}
+        </p>
         {userInfo && isSubscribed ? <p className="text-justify">
           <b>Khoảng cách:</b> {distance === 0 ? <Spin /> : distance + 'km'}
         </p> : <small className="px-2">Bạn phải đăng ký gói Prenium để xem khoảng cách <a href="/pricing">Đăng ký tại đây</a></small>}
@@ -75,7 +76,7 @@ const DoctorItem = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

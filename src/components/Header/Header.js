@@ -25,9 +25,9 @@ const Header = () => {
         JSON.parse(localStorage.getItem('userInfo'))
 
     const dispatch = useDispatch()
-    useEffect(async ()=>{
-        await getBusinessSubscriptionById(userInfo?.user_role_id).then(res=>res[0].length>0 && setIsSubscribed(true))
-    },[])
+    useEffect(async () => {
+        await getBusinessSubscriptionById(userInfo?.user_role_id).then(res => res[0].length > 0 && setIsSubscribed(true))
+    }, [])
     const logoutHandle = () => {
         confirm({
             content: 'Bạn muốn đăng xuất?',
@@ -200,7 +200,7 @@ const Header = () => {
                                             color: '#0D6EFD',
                                         }}
                                     >
-                                        {isSubscribed ? <Tag color="gold">Prenium</Tag> : <Tag>Mặc định</Tag>} {userInfo.username} 
+                                        {isSubscribed ? <Tag color="gold">Tài khoản Prenium</Tag> : <Tag>Tài khoản thường</Tag>} {userInfo.username}
                                     </span>
                                     <Dropdown
                                         menu={{ items }}
