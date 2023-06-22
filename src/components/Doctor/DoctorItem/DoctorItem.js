@@ -2,15 +2,20 @@ import { Button, Spin, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../../../assets/styles/component/DoctorItem/DoctorItem.css'
-import { getAddressDetail, getBusinessSubscriptionById, getClinicInfoApi, getMap } from '../../../api/api'
+import {
+  getAddressDetail,
+  getBusinessSubscriptionById,
+  getClinicInfoApi,
+  getMap,
+} from '../../../api/api'
 import { FiPhoneCall } from 'react-icons/fi'
 import { AiFillMail } from 'react-icons/ai'
 
 const DoctorItem = (props) => {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-  const { item, businessId } = props;
-  const [clinicInfo, setClinicInfo] = useState(null);
-  const [address, setAddress] = useState("")
+  const { item, businessId } = props
+  const [clinicInfo, setClinicInfo] = useState(null)
+  const [address, setAddress] = useState('')
   const [distance, setDistance] = useState(0)
   const [isSubscribed, setIsSubscribed] = useState(false)
 
@@ -22,10 +27,13 @@ const DoctorItem = (props) => {
   useEffect(() => {
     if (clinicInfo) setAddress(clinicInfo.fulladdress)
   })
-
   useEffect(async () => {
-    await getBusinessSubscriptionById(userInfo?.user_role_id).then(res => res[0].length > 0 && setIsSubscribed(true))
+    await getBusinessSubscriptionById(userInfo?.user_role_id).then(
+      (res) => res[0].length > 0 && setIsSubscribed(true)
+    )
   }, [])
+
+
 
   // Call API to calculate distance
   // useEffect(async () => {
@@ -47,15 +55,24 @@ const DoctorItem = (props) => {
           className="rounded"
         />
       </div> */}
-
       <div className="col-12 text-justify">
         <h4 className="text-justify doctor-name">
-          <Link to={`/doctor/${item?.id}`} style={{ textDecoration: "none" }}>
+          <Link
+            to={`/doctor/${item?.id}`}
+            style={{ textDecoration: 'none', color: '#1990ff' }}
+          >
             {clinicInfo?.business_name}
           </Link>
         </h4>
         <p className="text-justify">
-          <b>Địa chỉ:</b> <a href={`http://maps.google.com/?q=${clinicInfo?.fulladdress}`} target="_blank">{clinicInfo?.fulladdress}</a>
+          <b>Địa chỉ:</b>{' '}
+          <a
+            href={`http://maps.google.com/?q=${clinicInfo?.fulladdress}`}
+            target="_blank"
+            style={{ color: '#1990ff' }}
+          >
+            {clinicInfo?.fulladdress}
+          </a>
         </p>
         <p className="text-justify">
           <b>Mô tả:</b> {clinicInfo?.descr}
@@ -63,20 +80,33 @@ const DoctorItem = (props) => {
         <p className="text-justify">
           <b>Chuyên khoa:</b> {clinicInfo?.departments.map(item => <Tag color='geekblue'>{item.title}</Tag>)}
         </p>
-        {userInfo && <p className="text-justify">
-          <b>Khoảng cách:</b> {distance === 0 ? <Spin /> : distance + 'km'}
-        </p>}
+        {userInfo && (
+          <p className="text-justify">
+            <b>Khoảng cách:</b>{' '}
+            {distance === 0 ? <Spin /> : distance} km
+          </p>
+        )}
         <div className="row">
           <div className="col-12 col-md-6 col-lg-6">
-            <Button className="w-100 bg-success text-white fw-bold">
+            <Button className="w-100 text-white fw-bold btn-mail">
               <AiFillMail className="fs-5 me-2" />
-              <a className="text-decoration-none text-white" href={`mailto:${clinicInfo?.email}`}>{clinicInfo?.email || "No Email"}</a>
+              <a
+                className="text-decoration-none btn-text"
+                href={`mailto:${clinicInfo?.email}`}
+              >
+                {clinicInfo?.email || 'No Email'}
+              </a>
             </Button>
           </div>
           <div className="col-12 col-md-6 col-lg-6">
-            <Button className="w-100 bg-primary text-white fw-bold">
+            <Button className="w-100 text-white fw-bold btn-phone">
               <FiPhoneCall className="fs-5 me-2" />
-              <a className="text-decoration-none text-white" href={`tel:${clinicInfo?.phone}`}>{clinicInfo?.phone || "No Phone"}</a>
+              <a
+                className="text-decoration-none text-white "
+                href={`tel:${clinicInfo?.phone}`}
+              >
+                {clinicInfo?.phone || 'No Phone'}
+              </a>
             </Button>
           </div>
         </div>

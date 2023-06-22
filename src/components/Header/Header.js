@@ -80,6 +80,33 @@ const Header = () => {
         },
     ]
 
+    const itemsIsNotLogin = [
+        {
+            key: 1,
+            label: (
+                <a
+                    target="_self"
+                    href={PATH.LOGIN}
+                    className="text-decoration-none"
+                >
+                    Đăng nhập
+                </a>
+            ),
+        },
+        {
+            key: 2,
+            label: (
+                <a
+                    target="_self"
+                    href={PATH.REGISTER}
+                    className="text-decoration-none"
+                >
+                    Đăng ki
+                </a>
+            ),
+        },
+    ]
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light">
@@ -94,24 +121,50 @@ const Header = () => {
                             />
                         </div>
                     </a>
-                    <Dropdown
-                        menu={{
-                            items,
-                        }}
-                    >
-                        <button
-                            className="navbar-toggler"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation"
-                            onClick={(e) => e.preventDefault()}
+                    {isLoggedIn ? (
+                        <Dropdown
+                            menu={{
+                                items,
+                            }}
                         >
-                            <span className="navbar-toggler-icon" />
-                        </button>
-                    </Dropdown>
+                            <button
+                                className="navbar-toggler"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation"
+                                onClick={(e) => e.preventDefault()}
+                            >
+                                <span className="navbar-toggler-icon" />
+                            </button>
+                        </Dropdown>
+                    ) : (
+                        <div className="navbar-toggler">
+                            {' '}
+                            <Button className="mx-2 login-btn">
+                                <Link
+                                    to={PATH.LOGIN}
+                                    style={{ textDecoration: 'none' }}
+                                >
+                                    Đăng nhập
+                                </Link>
+                            </Button>
+                            <Button
+                                className="mx-2 register-btn"
+                                type="primary"
+                            >
+                                <Link
+                                    to={PATH.REGISTER}
+                                    style={{ textDecoration: 'none' }}
+                                >
+                                    {' '}
+                                    Đăng kí
+                                </Link>
+                            </Button>
+                        </div>
+                    )}
 
                     <div
                         className="collapse navbar-collapse"
