@@ -1,10 +1,11 @@
-import { Button, Col, Row } from 'antd'
+import { Button, Col, Image, Row, Spin } from 'antd'
 import React, { useEffect } from 'react'
 import DoctorAppointment from '../components/Doctor/DoctorAppointment/DoctorAppointment'
 import DoctorItem from '../components/Doctor/DoctorItem/DoctorItem'
 import { useParams } from 'react-router-dom'
 import PrescriptionBuy from '../components/Prescription/PrescriptionBuy/PrescriptionBuy'
-import { getPatientPres, getReviewByBusiness } from '../api/api'
+import { getMediaByBusinessId, getPatientPres } from '../api/api'
+import { getReviewByBusiness } from '../api/api'
 import { useState } from 'react'
 import { Rate, List } from 'antd'
 import moment from 'moment'
@@ -42,6 +43,7 @@ const DoctorDetailPage = () => {
     const typeBusiness = sessionStorage.getItem('typeBusiness')
     const userInfo = JSON.parse(localStorage.getItem('userInfo'))
     const [presState, setPresState] = useState()
+    const [img, setImg] = useState("")
     const [reviews, setReviews] = useState([])
     useEffect(async () => {
         const res = await getPatientPres(userInfo?.user_role_id)
@@ -49,11 +51,19 @@ const DoctorDetailPage = () => {
         const resReviews = await getReviewByBusiness(id)
         setReviews(resReviews?.details)
     }, [])
+    useEffect(async () => {
+        await getMediaByBusinessId(id)
+            .then(res => setImg(res[0][0].url))
+            .catch(err => console.error(err))
+    })
     return (
         <div>
             <Row gutter={24}>
-                <Col lg={24} md={24} className="my-2">
+                <Col lg={12} md={12} className="my-2">
                     <DoctorItem businessId={id} />
+                </Col>
+                <Col lg={12} md={12}>
+                    {img ? <Image src={img} className='w-50 my-2' /> : <Spin />}
                 </Col>
                 {typeBusiness == 2 && (
                     <PrescriptionBuy prescription={presState} businessId={id} />

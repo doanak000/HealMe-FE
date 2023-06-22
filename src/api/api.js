@@ -242,10 +242,12 @@ export const cancelOrder = async (id) => {
     return response.data
 }
 export const getBusinessSubscriptionById = async (businessId) => {
-    const response = await authAxios.get(
-        `/subscription/get/business/${businessId}`
-    )
-    return response.data
+    const response = await authAxios.get(`/subscription/get/business/${businessId}`);
+    return response.data;
+}
+export const getMediaByBusinessId = async (businessId) => {
+    const response = await authAxios.get(`/media/get/business/${businessId}`);
+    return response.data;
 }
 export const createReview = async (data) => {
     const response = await authAxios.post(`/review/create`, data)
@@ -302,6 +304,7 @@ export default {
     orderPres,
     getOrderPres,
     cancelOrder,
+    getMediaByBusinessId,
     createReview,
     getReviewByBusiness,
 }
