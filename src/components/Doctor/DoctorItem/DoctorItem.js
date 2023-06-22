@@ -19,11 +19,15 @@ const DoctorItem = (props) => {
     setClinicInfo(result[0][0])
   }, [])
 
+  useEffect(() => {
+    if (clinicInfo) setAddress(clinicInfo.fulladdress)
+  })
 
   useEffect(async () => {
     await getBusinessSubscriptionById(userInfo?.user_role_id).then(res => res[0].length > 0 && setIsSubscribed(true))
   }, [])
 
+  // Call API to calculate distance
   // useEffect(async () => {
   //   if (!userInfo) return;
   //   if (address) {
@@ -31,6 +35,7 @@ const DoctorItem = (props) => {
   //       destinations: [address]
   //     })
   //       .then(res => setDistance(res?.distance?.kilometers.toFixed(2)))
+  //       .catch(err => console.log(err))
   //   }
   // }, [address])
 
@@ -58,9 +63,9 @@ const DoctorItem = (props) => {
         <p className="text-justify">
           <b>Chuyên khoa:</b> {clinicInfo?.departments.map(item => <Tag color='geekblue'>{item.title}</Tag>)}
         </p>
-        {userInfo && isSubscribed ? <p className="text-justify">
+        {userInfo && <p className="text-justify">
           <b>Khoảng cách:</b> {distance === 0 ? <Spin /> : distance + 'km'}
-        </p> : <small className="px-2">Bạn phải đăng ký gói Prenium để xem khoảng cách <a href="/pricing">Đăng ký tại đây</a></small>}
+        </p>}
         <div className="row">
           <div className="col-12 col-md-6 col-lg-6">
             <Button className="w-100 bg-success text-white fw-bold">
