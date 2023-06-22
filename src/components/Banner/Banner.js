@@ -1,10 +1,13 @@
-
 import { Button } from 'antd'
 import React from 'react'
 import '../../assets/styles/component/Banner/Banner.css'
-import { memo } from "react";
+import { memo } from 'react'
 
 const Banner = () => {
+    const handleScrollToChatbot = () => {
+        const targetElement = document.getElementById('chatbotAI')
+        targetElement.scrollIntoView({ behavior: 'smooth' })
+    }
     return (
         <div className="banner row my-3 align-items-center overflow-hidden">
             <div className="col-lg-6 col-md-12 col-12">
@@ -24,6 +27,7 @@ const Banner = () => {
                         size="large"
                         type="primary"
                         className="text-uppercase fw-bold banner__button"
+                        onClick={handleScrollToChatbot}
                     >
                         Tư vấn ngay
                     </Button>
