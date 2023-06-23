@@ -36,16 +36,16 @@ const DoctorItem = (props) => {
 
 
   // Call API to calculate distance
-  // useEffect(async () => {
-  //   if (!userInfo) return;
-  //   if (address) {
-  //     await getMap({
-  //       destinations: [address]
-  //     })
-  //       .then(res => setDistance(res?.distance?.kilometers.toFixed(2)))
-  //       .catch(err => console.log(err))
-  //   }
-  // }, [address])
+  useEffect(async () => {
+    if (!userInfo) return;
+    if (address) {
+      await getMap({
+        destinations: [address]
+      })
+        .then(res => setDistance(res?.distance?.kilometers.toFixed(2)))
+        .catch(err => console.log(err))
+    }
+  }, [address])
 
   return (
     <div className="row my-2 doctor-item-container p-2 mb-2 bg-body rounded bg-body rounded g-2">
