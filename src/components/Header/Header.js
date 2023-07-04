@@ -26,7 +26,9 @@ const Header = () => {
 
     const dispatch = useDispatch()
     useEffect(async () => {
-        await getBusinessSubscriptionById(userInfo?.user_role_id).then(res => res[0].length > 0 && setIsSubscribed(true))
+        await getBusinessSubscriptionById(userInfo?.user_role_id).then(
+            (res) => res[0]?.length > 0 && setIsSubscribed(true)
+        )
     }, [])
     const logoutHandle = () => {
         confirm({
@@ -253,7 +255,14 @@ const Header = () => {
                                             color: '#0D6EFD',
                                         }}
                                     >
-                                        {isSubscribed ? <Tag color="gold">Tài khoản Prenium</Tag> : <Tag>Tài khoản thường</Tag>} {userInfo.username}
+                                        {isSubscribed ? (
+                                            <Tag color="gold">
+                                                Tài khoản Prenium
+                                            </Tag>
+                                        ) : (
+                                            <Tag>Tài khoản thường</Tag>
+                                        )}{' '}
+                                        {userInfo.username}
                                     </span>
                                     <Dropdown
                                         menu={{ items }}

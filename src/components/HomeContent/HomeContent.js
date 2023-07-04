@@ -76,7 +76,7 @@ const HomeContent = () => {
                 message: 'Chatbot got some mistakes',
                 description: null,
             })
-            setLoadingState(false)
+            setIsLoading(false)
         }
     }
     useEffect(async () => {
@@ -384,7 +384,8 @@ const HomeContent = () => {
                                 },
                                 {
                                     value: 5,
-                                    label: 'Vật lý trị liệu - Phục hồi chức năng',
+                                    label:
+                                        'Vật lý trị liệu - Phục hồi chức năng',
                                 },
                                 {
                                     value: 6,
