@@ -142,7 +142,7 @@ const Pricing = () => {
                         <li>Kê đơn thuốc online</li>
                     </ul>
 
-                    <a href="/home">
+                    <a href="/">
                         <button
                             className="pricingTable-firstTable_table__getstart"
                             disabled
