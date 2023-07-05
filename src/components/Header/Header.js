@@ -203,6 +203,7 @@ const Header = () => {
                                     Tìm phòng khám/nhà thuốc
                                 </a>
                             </li>
+
                             {/* <li className="nav-item dropdown">
                                 <a
                                     className="nav-link dropdown-toggle"
@@ -255,13 +256,19 @@ const Header = () => {
                                             color: '#0D6EFD',
                                         }}
                                     >
-                                        {isSubscribed ? (
-                                            <Tag color="gold">
-                                                Tài khoản Prenium
-                                            </Tag>
-                                        ) : (
-                                            <Tag>Tài khoản thường</Tag>
-                                        )}{' '}
+                                        {userInfo.role_id !== 2 &&
+                                            (isSubscribed ? (
+                                                <Tag color="gold">
+                                                    Tài khoản Prenium
+                                                </Tag>
+                                            ) : (
+                                                <Tag>
+                                                    Tài khoản thường{' '}
+                                                    <a href="/pricing">
+                                                        (Ấn để nâng cấp)
+                                                    </a>{' '}
+                                                </Tag>
+                                            ))}{' '}
                                         {userInfo.username}
                                     </span>
                                     <Dropdown
