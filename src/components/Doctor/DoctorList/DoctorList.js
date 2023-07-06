@@ -35,16 +35,42 @@ const DoctorList = (props) => {
     setListBusinessTemp(listBusinessCookedData);
   };
 
+  const callbackFunction = (data) => {
+    localStorage.setItem(`distance-${data?.id}`, JSON.stringify(data))
+  }
+
+
+  const arrayAfterPagination = listBusinessTemp?.slice(state.minValue, state.maxValue).map(item => {
+    if (JSON.parse(localStorage.getItem(`distance-${item?.id}`))?.id === item?.id) {
+      return { ...item, distance: JSON.parse(localStorage.getItem(`distance-${item?.id}`)).distance }
+    }
+  })
+
+  const sortedData = arrayAfterPagination.sort((firstValue, secondValue) => {
+    return firstValue.distance - secondValue.distance;
+  })
+
+  console.log('sortedData', sortedData)
+
   return (
     <Row>
       <Col xs={24}>
         <Input placeholder="Nhập tên bác sĩ/dược sĩ/phòng khám để tìm" onChange={handleSearch} size="large" className="ms-2 mb-2 w-100" prefix={<SearchOutlined />} />
         <Row gutter={24}>
-          {listBusinessTemp?.slice(state.minValue, state.maxValue).map((item) => (
+          {sortedData[0] ? sortedData?.slice(state.minValue, state.maxValue).map((item) => (
             <Col xs={12} key={item?.id}>
-              <DoctorItem item={item} key={item?.id} />
+              <DoctorItem item={item} key={item?.id} parentCallback={callbackFunction} />
+            </Col>
+          )) : listBusinessTemp?.slice(state.minValue, state.maxValue).map((item) => (
+            <Col xs={12} key={item?.id}>
+              <DoctorItem item={item} key={item?.id} parentCallback={callbackFunction} />
             </Col>
           ))}
+          {/* {listBusinessTemp?.slice(state.minValue, state.maxValue).map((item) => (
+            <Col xs={12} key={item?.id}>
+              <DoctorItem item={item} key={item?.id} parentCallback={callbackFunction} />
+            </Col>
+          ))} */}
         </Row>
 
       </Col>
