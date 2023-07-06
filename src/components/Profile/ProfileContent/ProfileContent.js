@@ -8,6 +8,7 @@ import { CgProfile } from 'react-icons/cg'
 import { BsCalendarCheck } from 'react-icons/bs'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import ChangePassword from '../ChangePassword/ChangePassword'
+import DrugManagement from '../../Drug/DrugManagement/DrugManagement'
 
 const ProfileContent = () => {
     const [activeTab, setActiveTab] = useState('1')
@@ -33,6 +34,8 @@ const ProfileContent = () => {
                 ) : (
                     <WorkSchedularManage />
                 )
+            case '4':
+                return userInfo.role_id === 3 && <DrugManagement />
             default:
                 return null
         }
@@ -69,6 +72,16 @@ const ProfileContent = () => {
             ),
             children: <ChangePassword />,
         },
+        {
+            key: '4',
+            label: (
+                <div className={(userInfo.role_id === 3 && userInfo.username.includes('pharmacy') || userInfo.username.includes('doctor')) ? 'd-block' : 'd-none'}>
+                    <BsCalendarCheck className="fs-5 me-2 mb-lg-1" />
+                    <span>Quản lý thuốc</span>
+                </div>
+            ),
+            children: <p>TEST TEST</p>,
+        },
     ]
 
     const itemsOfDoctor = [
@@ -84,6 +97,7 @@ const ProfileContent = () => {
             key: '3',
             label: 'Quản lý lịch khám',
         },
+        { key: '4', label: 'Quản lý thuốc' }
     ]
 
     const tabItems = userInfo.role_id === 2 ? items : itemsOfDoctor

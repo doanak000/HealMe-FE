@@ -47,6 +47,15 @@ const DoctorItem = (props) => {
         }
     }, [address])
 
+    const sendDistance = () => {
+        props.parentCallback({ id: item?.id, distance: distance });
+    }
+
+    useEffect(() => {
+        if (distance > 0) sendDistance();
+    }, [])
+
+
     return (
         <div className="row my-2 doctor-item-container p-2 mb-2 bg-body rounded bg-body rounded g-2">
             {/* <div className="col-3">
