@@ -35,7 +35,6 @@ import jsPDF from "jspdf";
 import axios from "axios";
 
 const DrugManagement = () => {
-    const params = useParams();
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
@@ -54,9 +53,12 @@ const DrugManagement = () => {
 
     useEffect(async () => {
         await getMediaByBusinessId(+userInfo.user_role_id)
-            .then(res => setPharmacyImg(res[0][0].url))
+            .then(res => {
+                const lastIndex = res[0].length - 1;
+                setPharmacyImg(res[0][lastIndex].url)
+            })
             .catch(err => console.log(err))
-    })
+    }, [])
 
     useEffect(async () => {
         await getMedicineInPharmacy(+userInfo.user_role_id).then((res) =>
@@ -245,12 +247,21 @@ const DrugManagement = () => {
         headers: {
             authorization: 'authorization-text',
         },
-        onChange(info) {
+        async onChange(info) {
             if (info.file.status !== 'uploading') {
                 console.log(info.file, info.fileList);
             }
             if (info.file.status === 'done') {
+
                 message.success(`${info.file.name} file uploaded successfully`);
+                await getPharmacyDetail(+userInfo.user_role_id).then((res) => setPharmacyDetail(res[0]));
+                await getMediaByBusinessId(+userInfo.user_role_id)
+                    .then(res => {
+                        const lastIndex = res[0].length - 1;
+                        setPharmacyImg(res[0][lastIndex].url)
+                    })
+                    .catch(err => console.log(err))
+
             } else if (info.file.status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
